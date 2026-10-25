@@ -1,0 +1,37 @@
+{
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**",
+      "main.js",
+      "preload.js",
+      "server.js",
+      "ai_service.js",
+      "assistant_service.js",
+      "audio_manager.js",
+      "config_manager.js",
+      "memory_store.js",
+      "minimax_tts.js",
+      "pov_photo_service.js",
+      "package.json",
+      "package-lock.json",
+      "*.bat",
+      "*.ps1",
+      "*.vbs",
+      "build_all_mouths.js"
+    ],
+    "headers": [
+      {
+        "source": "/sw.js",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "name": "鮎川まどか 隨身伴侶與生活助理",
+  "short_name": "鮎川まどか",
+  "description": "《古靈精怪》鮎川圓 專屬互動桌面與手機隨身伴侶（支援離線鬧鐘、待辦助理與戀人療癒模式）",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1c152d",
+  "theme_color": "#ff5e7e",
+  "icons": [
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "coupleMode": "clingy",
+  "alarms": [
+    {
+      "id": "alarm_morning_default",
+      "time": "07:30",
+      "label": "☀️ まどか早安晨間喚醒",
+      "mode": "sweet",
+      "enabled": true,
+      "sceneImage": "assets/pov_photos/pov_13_morning_wakeup.jpg",
+      "snoozeUntil": null,
+      "lastTriggeredDate": ""
+    },
+    {
+      "id": "alarm_work_stretch",
+      "time": "08:30",
+      "label": "🍱 出門前愛心便當叮嚀",
+      "mode": "bento_morning",
+      "enabled": false,
+      "sceneImage": "assets/pov_photos/pov_12_morning_kitchen.png",
+      "snoozeUntil": null,
+      "lastTriggeredDate": ""
+    }
+  ],
+  "todos": [
+    {
+      "id": "todo_1792862249214_o5ke",
+      "title": "睡覺",
+      "category": "night",
+      "time": "10:30",
+      "reminderTime": "10:30",
+      "sceneImage": "assets/costumes/variant_night_blue.png",
+      "completed": false,
+      "createdAt": "2026-10-24T17:17:29.214Z"
+    },
+    {
+      "id": "todo_1792862189999_jg9w",
+      "title": "和まどか寶貝一起逛街",
+      "category": "date",
+      "time": "09:30",
+      "reminderTime": "09:30",
+      "sceneImage": "assets/costumes/variant_date_wheat.png",
+      "completed": false,
+      "createdAt": "2026-10-24T17:16:29.999Z"
+    },
+    {
+      "id": "todo_1792862164607_nqg1",
+      "title": "起床",
+      "category": "home",
+      "time": "06:30",
+      "reminderTime": "06:30",
+      "sceneImage": "assets/costumes/boyfriend_shirt.png",
+      "completed": false,
+      "createdAt": "2026-10-24T17:16:04.607Z"
+    }
+  ],
+  "partnerMoodLog": [
+    {
+      "moodId": "tired",
+      "label": "😫 工作好累",
+      "timestamp": "2026-10-24T16:15:08.460Z"
+    }
+  ],
+  "updatedAt": "2026-10-24T17:17:29.214Z"
+}

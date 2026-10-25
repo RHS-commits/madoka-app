@@ -1,0 +1,21 @@
+{
+  "name": "madoka-desktop-pet",
+  "version": "1.0.0",
+  "description": "鮎川まどか 桌面互動精靈 - Kimagure Orange Road Ayukawa Madoka Desktop Companion",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [
+    "madoka",
+    "desktop-pet",
+    "ai-companion",
+    "minimax",
+    "gemini"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^44.4.3"
+  }
+}

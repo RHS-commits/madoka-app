@@ -1,0 +1,1989 @@
+{
+  "generatedAt": "2026-10-24T17:56:51.784Z",
+  "costumes": [
+    {
+      "id": "uniform",
+      "name": "經典學生水手服",
+      "tag": "🏫 上學日常",
+      "image": "assets/costumes/uniform_idle.png",
+      "imageIdle": "assets/costumes/uniform_idle.png",
+      "imageTalkHalf": "assets/costumes/uniform_talk_half.png",
+      "imageTalkOpen": "assets/costumes/uniform_talk_open.png",
+      "variants": [
+        "assets/costumes/uniform_idle.png",
+        "assets/costumes/schoolpov_idle.png"
+      ],
+      "timeHint": "07:00 - 11:30, 14:00 - 16:30",
+      "autoHours": [
+        7,
+        11
+      ],
+      "reaction": "制服に着替えたわ。これから学校よ、リンシ。一緒に行く？\n（換上學生制服了。接下來要去學校囉，リンシ。要一起走嗎？）",
+      "tts": "制服に着替えたわ。これから学校よ、リンシ。一緒に行く？"
+    },
+    {
+      "id": "schoolpov",
+      "name": "校園走廊親暱領帶",
+      "tag": "👔 放學走廊",
+      "image": "assets/costumes/schoolpov_idle.png",
+      "imageIdle": "assets/costumes/schoolpov_idle.png",
+      "imageTalkHalf": "assets/costumes/schoolpov_talk_half.png",
+      "imageTalkOpen": "assets/costumes/schoolpov_talk_open.png",
+      "variants": [
+        "assets/costumes/schoolpov_idle.png",
+        "assets/costumes/uniform_idle.png"
+      ],
+      "timeHint": "放學後心動瞬間",
+      "autoHours": null,
+      "reaction": "もう、ネクタイが曲がってるわよ……じっとしてて、リンシ。近くで見ると、ちょっとドキドキしちゃうわね。\n（真是的，領帶都歪掉囉……別亂動喔，リンシ。這麼近看著你，心跳稍微有點加速了呢。）",
+      "tts": "もう、ネクタイが曲がってるわよ。じっとしてて、リンシ。近くで見ると、ちょっとドキドキしちゃうわね。"
+    },
+    {
+      "id": "work_ol",
+      "name": "知性白襯衫秘書 OL",
+      "tag": "💼 秘書應援",
+      "image": "assets/costumes/work_ol_idle.png",
+      "imageIdle": "assets/costumes/work_ol_idle.png",
+      "imageTalkHalf": "assets/costumes/work_ol_talk_half.png",
+      "imageTalkOpen": "assets/costumes/work_ol_talk_open.png",
+      "variants": [
+        "assets/costumes/work_ol_idle.png",
+        "assets/costumes/variant_work_night.jpg"
+      ],
+      "timeHint": "09:00 - 18:00 專注工作與讀書",
+      "autoHours": null,
+      "reaction": "今日は私がリンシの専属秘書よ。スケジュールもタスクもバッチリ管理してあげるから、一緒に頑張りましょ！\n（今天我是リンシ的專屬秘書喔。行程跟待辦事項我都會幫你完美管理，一起加油吧！）",
+      "tts": "今日は私がリンシの専属秘書よ。スケジュールもタスクもバッチリ管理してあげるから、一緒に頑張りましょ！"
+    },
+    {
+      "id": "cafe",
+      "name": "Abcb 咖啡廳圍裙",
+      "tag": "☕ 咖啡館打工",
+      "image": "assets/costumes/cafe_idle.png",
+      "imageIdle": "assets/costumes/cafe_idle.png",
+      "imageTalkHalf": "assets/costumes/cafe_talk_half.png",
+      "imageTalkOpen": "assets/costumes/cafe_talk_open.png",
+      "variants": [
+        "assets/costumes/cafe_idle.png",
+        "assets/costumes/cafedate_idle.png"
+      ],
+      "timeHint": "11:30 - 14:00",
+      "autoHours": [
+        11,
+        14
+      ],
+      "reaction": "いらっしゃい、リンシ！Abcbへようこそ。特製のブレンドコーヒー、淹れてあげるね。\n（歡迎光臨，リンシ！歡迎來到 Abcb。我為你泡一杯特製特調咖啡喔。）",
+      "tts": "いらっしゃい、リンシ！Abcbへようこそ。特製のブレンドコーヒー、淹れてあげるね。"
+    },
+    {
+      "id": "cafedate",
+      "name": "午後拿鐵咖啡約會",
+      "tag": "🧋 午後咖啡館",
+      "image": "assets/costumes/cafedate_idle.png",
+      "imageIdle": "assets/costumes/cafedate_idle.png",
+      "imageTalkHalf": "assets/costumes/cafedate_talk_half.png",
+      "imageTalkOpen": "assets/costumes/cafedate_talk_open.png",
+      "variants": [
+        "assets/costumes/cafedate_idle.png",
+        "assets/costumes/cafe_idle.png"
+      ],
+      "timeHint": "14:00 - 16:30 午後時光",
+      "autoHours": null,
+      "reaction": "カフェで二人きりなんて新鮮ね。このラテアート、可愛いでしょう？リンシも一口飲んでみる？\n（在咖啡廳兩人獨處真新鮮呢。這個拿鐵拉花很可愛吧？リンシ也要喝一口看看嗎？）",
+      "tts": "カフェで二人きりなんて新鮮ね。このラテアート、可愛いでしょう？リンシも一口飲んでみる？"
+    },
+    {
+      "id": "sax",
+      "name": "黃昏窗邊薩克斯風",
+      "tag": "🎷 音樂室演奏",
+      "image": "assets/costumes/sax_idle.png",
+      "imageIdle": "assets/costumes/sax_idle.png",
+      "imageTalkHalf": "assets/costumes/sax_talk_half.png",
+      "imageTalkOpen": "assets/costumes/sax_talk_open.png",
+      "variants": [
+        "assets/costumes/sax_idle.png",
+        "assets/costumes/sax_play_1.png",
+        "assets/costumes/sax_play_2.png",
+        "assets/costumes/sax_play_3.png"
+      ],
+      "timeHint": "黃昏獨奏時光",
+      "autoHours": null,
+      "reaction": "夕暮れの音楽室でサックスを吹いてたの。リンシのために、特別な一曲を聴かせてあげるね。\n（在黃昏的音樂教室吹薩克斯風呢。為了リンシ，讓我為你吹奏特別的一曲吧。）",
+      "tts": "夕暮れの音楽室でサックスを吹いてたの。リンシのために、特別な一曲を聴かせてあげるね。"
+    },
+    {
+      "id": "guitar",
+      "name": "午後陽光木吉他彈唱",
+      "tag": "🪕 吉他自彈自唱",
+      "image": "assets/costumes/guitar_idle.png",
+      "imageIdle": "assets/costumes/guitar_idle.png",
+      "imageTalkHalf": "assets/costumes/guitar_talk_half.png",
+      "imageTalkOpen": "assets/costumes/guitar_talk_open.png",
+      "variants": [
+        "assets/costumes/guitar_idle.png",
+        "assets/costumes/variant_guitar_2.png"
+      ],
+      "timeHint": "午後音樂創作時光",
+      "autoHours": null,
+      "reaction": "今日はサックスじゃなくて、アコースティックギターを弾いてみたの。リンシ、隣で聴いててくれる？\n（今天不是吹薩克斯風，而是試著彈了木吉他喔。リンシ，你願意坐在旁邊聽我彈嗎？）",
+      "tts": "今日はサックスじゃなくて、アコースティックギターを弾いてみたの。リンシ、隣で聴いててくれる？"
+    },
+    {
+      "id": "casual",
+      "name": "活力健身運動裝",
+      "tag": "🏃 休閒運動",
+      "image": "assets/costumes/casual_idle.png",
+      "imageIdle": "assets/costumes/casual_idle.png",
+      "imageTalkHalf": "assets/costumes/casual_talk_half.png",
+      "imageTalkOpen": "assets/costumes/casual_talk_open.png",
+      "variants": [
+        "assets/costumes/casual_idle.png"
+      ],
+      "timeHint": "16:30 - 18:30",
+      "autoHours": [
+        16,
+        18
+      ],
+      "reaction": "ちょっと体を動かして汗を流すところよ。リンシも一緒にストレッチしない？\n（我正要活動一下筋骨流流汗呢。リンシ也要一起來拉筋伸展嗎？）",
+      "tts": "ちょっと体を動かして汗を流すところよ。リンシも一緒にストレッチしない？"
+    },
+    {
+      "id": "dress",
+      "name": "窗邊翡翠綠荷葉洋裝",
+      "tag": "🌿 假日午後窗邊",
+      "image": "assets/costumes/dress_idle.png",
+      "imageIdle": "assets/costumes/dress_idle.png",
+      "imageTalkHalf": "assets/costumes/dress_talk_half.png",
+      "imageTalkOpen": "assets/costumes/dress_talk_open.png",
+      "variants": [
+        "assets/costumes/dress_idle.png",
+        "assets/costumes/variant_wardrobe_white.png"
+      ],
+      "timeHint": "陽光午後小憩",
+      "autoHours": null,
+      "reaction": "窓辺の風が気持ちいいわね。エメラルドグリーンのワンピース、リンシのために着てみたのよ。\n（窗邊的微風真舒服呢。這件翡翠綠荷葉洋裝，是為了リンシ特別換上的喔。）",
+      "tts": "窓辺の風が気持ちいいわね。エメラルドグリーンのワンピース、リンシのために着てみたのよ。"
+    },
+    {
+      "id": "strawhat",
+      "name": "向日葵草帽純白夏裝",
+      "tag": "🌻 夏日微風郊遊",
+      "image": "assets/costumes/strawhat_idle.png",
+      "imageIdle": "assets/costumes/strawhat_idle.png",
+      "imageTalkHalf": "assets/costumes/strawhat_talk_half.png",
+      "imageTalkOpen": "assets/costumes/strawhat_talk_open.png",
+      "variants": [
+        "assets/costumes/strawhat_idle.png",
+        "assets/costumes/variant_date_sky.png",
+        "assets/costumes/variant_date_wheat.png"
+      ],
+      "timeHint": "週末戶外踏青約會",
+      "autoHours": null,
+      "reaction": "麦わら帽子、似合うかしら？風が強くて飛ばされそうだから……リンシ、しっかり私の手、握っててね。\n（這頂草帽適合我嗎？風好大感覺快被吹走了……リンシ，要緊緊牽著我的手喔。）",
+      "tts": "麦わら帽子、似合うかしら？風が強くて飛ばされそうだから、リンシ、しっかり私の手、握っててね。"
+    },
+    {
+      "id": "date",
+      "name": "月台等待露肩私服",
+      "tag": "🎡 浪漫約會",
+      "image": "assets/costumes/date_idle.png",
+      "imageIdle": "assets/costumes/date_idle.png",
+      "imageTalkHalf": "assets/costumes/date_talk_half.png",
+      "imageTalkOpen": "assets/costumes/date_talk_open.png",
+      "variants": [
+        "assets/costumes/date_idle.png",
+        "assets/costumes/variant_date_wheat.png"
+      ],
+      "timeHint": "18:30 - 21:00",
+      "autoHours": [
+        18,
+        21
+      ],
+      "reaction": "待たせちゃったかしら？今日のコーデ、どう……？リンシに似合ってるって言われたくて選んだの。\n（讓你久等了嗎？今天的穿搭、覺得怎麼樣……？因為想被你誇獎才選這件的。）",
+      "tts": "待たせちゃったかしら？今日のコーデ、どう？リンシに似合ってるって言われたくて選んだの。"
+    },
+    {
+      "id": "evening_gown",
+      "name": "星空露台酒紅晚禮服",
+      "tag": "🍷 紀念日晚宴",
+      "image": "assets/costumes/evening_gown_idle.png",
+      "imageIdle": "assets/costumes/evening_gown_idle.png",
+      "imageTalkHalf": "assets/costumes/evening_gown_talk_half.png",
+      "imageTalkOpen": "assets/costumes/evening_gown_talk_open.png",
+      "variants": [
+        "assets/costumes/evening_gown_idle.png",
+        "assets/costumes/variant_wardrobe_red.png"
+      ],
+      "timeHint": "特別紀念日與浪漫夜景",
+      "autoHours": null,
+      "reaction": "今夜は特別な記念日だから、ドレスアップしてみたわ。リンシ……そんなに見つめられたら、ワインより酔っちゃいそうよ。\n（今晚是特別的紀念日，所以我精心打扮了一番。リンシ……被你這樣深情盯著看，比喝紅酒還要醉人呢。）",
+      "tts": "今夜は特別な記念日だから、ドレスアップしてみたわ。リンシ、そんなに見つめられたら、ワインより酔っちゃいそうよ。"
+    },
+    {
+      "id": "yukata",
+      "name": "夏日祭典花火浴衣",
+      "tag": "🎆 花火大會夜遊",
+      "image": "assets/costumes/yukata_idle.png",
+      "imageIdle": "assets/costumes/yukata_idle.png",
+      "imageTalkHalf": "assets/costumes/yukata_talk_half.png",
+      "imageTalkOpen": "assets/costumes/yukata_talk_open.png",
+      "variants": [
+        "assets/costumes/yukata_idle.png"
+      ],
+      "timeHint": "夏夜河畔祭典",
+      "autoHours": null,
+      "reaction": "夏祭りの浴衣、どうかしら？花火がきれいね、リンシ……はぐれないように、手、繋いでもいいわよ。\n（夏日祭典的浴衣，覺得如何呢？煙火真美呢，リンシ……為了不走散，要牽手也可以喔。）",
+      "tts": "夏祭りの浴衣、どうかしら？花火がきれいね、リンシ。手、繋いでもいいわよ。"
+    },
+    {
+      "id": "rock",
+      "name": "搖滾樂團舞台皮衣",
+      "tag": "🎸 樂團LIVE舞台",
+      "image": "assets/costumes/rock_idle.png",
+      "imageIdle": "assets/costumes/rock_idle.png",
+      "imageTalkHalf": "assets/costumes/rock_talk_half.png",
+      "imageTalkOpen": "assets/costumes/rock_talk_open.png",
+      "variants": [
+        "assets/costumes/rock_idle.png"
+      ],
+      "timeHint": "熱血LIVE演出",
+      "autoHours": null,
+      "reaction": "たまにはこういうロックな革ジャンもいいでしょう？ほら、よそ見しないで私だけを見てなさいよ！\n（偶爾穿這種搖滾風皮衣也很不錯吧？喂、別東張西望，只准看著我一個人喔！）",
+      "tts": "たまにはこういうロックな革ジャンもいいでしょう？ほら、よそ見しないで私だけを見てなさいよ！"
+    },
+    {
+      "id": "bath",
+      "name": "沐浴溫泉純白浴巾",
+      "tag": "🛁 沐浴時光",
+      "image": "assets/costumes/bath_idle.png",
+      "imageIdle": "assets/costumes/bath_idle.png",
+      "imageTalkHalf": "assets/costumes/bath_talk_half.png",
+      "imageTalkOpen": "assets/costumes/bath_talk_open.png",
+      "variants": [
+        "assets/costumes/bath_idle.png"
+      ],
+      "timeHint": "21:00 - 22:00",
+      "autoHours": [
+        21,
+        22
+      ],
+      "reaction": "お風呂でさっぱりしてきたわ……髪、まだ少し濡れてるの。リンシ、見惚れてないでバスタオル取って？\n（泡完澡整個人好舒暢喔……頭髮還稍微濕濕的。リンシ、別看呆了，幫我拿條毛巾好嗎？）",
+      "tts": "お風呂でさっぱりしてきたわ。髪、まだ少し濡れてるの。リンシ、見惚れてないでバスタオル取って？"
+    },
+    {
+      "id": "night",
+      "name": "溫暖橘色毛衣小憩",
+      "tag": "🌙 夜晚放鬆",
+      "image": "assets/costumes/night_idle.png",
+      "imageIdle": "assets/costumes/night_idle.png",
+      "imageTalkHalf": "assets/costumes/night_talk_half.png",
+      "imageTalkOpen": "assets/costumes/night_talk_open.png",
+      "variants": [
+        "assets/costumes/night_idle.png",
+        "assets/costumes/variant_night_blue.png",
+        "assets/costumes/variant_night_sleep.png"
+      ],
+      "timeHint": "22:00 - 23:30",
+      "autoHours": [
+        22,
+        23
+      ],
+      "reaction": "温かいセーターを着て、レコードを聴きながらのんびりしてたの。リンシ、お隣座ってもいいわよ。\n（穿上溫暖的毛衣，邊聽黑膠唱片邊放鬆。リンシ、坐到我身邊來也沒關係喔。）",
+      "tts": "温かいセーターを着て、レコードを聴きながらのんびりしてたの。リンシ、お隣座ってもいいわよ。"
+    },
+    {
+      "id": "home",
+      "name": "晨曦挽髮休閒睡衣",
+      "tag": "🌅 居家晨曦",
+      "image": "assets/costumes/home_idle.png",
+      "imageIdle": "assets/costumes/home_idle.png",
+      "imageTalkHalf": "assets/costumes/home_talk_half.png",
+      "imageTalkOpen": "assets/costumes/home_talk_open.png",
+      "variants": [
+        "assets/costumes/home_idle.png",
+        "assets/costumes/variant_home_curtain.png",
+        "assets/costumes/variant_home_rug.jpg"
+      ],
+      "timeHint": "23:30 - 07:00",
+      "autoHours": [
+        23,
+        7
+      ],
+      "reaction": "ふぁあ……おはよう、リンシ。髪を結んだら、朝ごはん作ってあげるね。\n（哈啊……早安，リンシ。等我把頭髮綁好，就為你做早餐喔。）",
+      "tts": "ふぁあ、おはよう、リンシ。髪を結んだら、朝ごはん作ってあげるね。"
+    },
+    {
+      "id": "boyfriend_shirt",
+      "name": "慵懶男友白襯衫居家",
+      "tag": "👚 男友襯衫晨光",
+      "image": "assets/costumes/boyfriend_shirt_idle.png",
+      "imageIdle": "assets/costumes/boyfriend_shirt_idle.png",
+      "imageTalkHalf": "assets/costumes/boyfriend_shirt_talk_half.png",
+      "imageTalkOpen": "assets/costumes/boyfriend_shirt_talk_open.png",
+      "variants": [
+        "assets/costumes/boyfriend_shirt_idle.png",
+        "assets/costumes/variant_home_curtain.png"
+      ],
+      "timeHint": "週末早晨與親密居家",
+      "autoHours": null,
+      "reaction": "リンシのワイシャツ、ちょっと借りちゃった……サイズが大きくて、あなたの匂いがして落ち着くの。だめ……？\n（我偷偷借穿了リンシ的白襯衫喔……尺寸大大的，還有你的味道，讓人好安心。不行嗎……？）",
+      "tts": "リンシのワイシャツ、ちょっと借りちゃった。サイズが大きくて、あなたの匂いがして落ち着くの。だめ？"
+    },
+    {
+      "id": "beach",
+      "name": "棕櫚海灘黑色泳裝",
+      "tag": "🏖️ 蔚藍海灘",
+      "image": "assets/costumes/beach_idle.png",
+      "imageIdle": "assets/costumes/beach_idle.png",
+      "imageTalkHalf": "assets/costumes/beach_talk_half.png",
+      "imageTalkOpen": "assets/costumes/beach_talk_open.png",
+      "variants": [
+        "assets/costumes/beach_idle.png"
+      ],
+      "timeHint": "週末海邊休閒",
+      "autoHours": null,
+      "reaction": "潮風が気持ちいいわね！この黒の水着、ちょっと大人っぽすぎるかしら？リンシ……じっと見ないでよ。\n（海風吹起來真舒服呢！這件黑色泳裝，會不會稍微太成熟了一點？リンシ……別一直盯著看啦。）",
+      "tts": "潮風が気持ちいいわね！この黒の水着、ちょっと大人っぽすぎるかしら？リンシ、じっと見ないでよ。"
+    },
+    {
+      "id": "cosplay",
+      "name": "俏皮黑色貓娘裝",
+      "tag": "🐾 角色扮演",
+      "image": "assets/costumes/cosplay_idle.png",
+      "imageIdle": "assets/costumes/cosplay_idle.png",
+      "imageTalkHalf": "assets/costumes/cosplay_talk_half.png",
+      "imageTalkOpen": "assets/costumes/cosplay_talk_open.png",
+      "variants": [
+        "assets/costumes/cosplay_idle.png",
+        "assets/costumes/variant_cosplay_xmas.png"
+      ],
+      "timeHint": "派對與特別時光",
+      "autoHours": null,
+      "reaction": "にゃ〜ん……なんてね。ちょっとからかってみただけよ！リンシ、喜んでる顔が隠せてないわよ？\n（喵～……開玩笑的啦。只是想逗逗你而已！リンシ、你開心的表情根本藏不住喔？）",
+      "tts": "にゃーん、なんてね。ちょっとからかってみただけよ！リンシ、喜んでる顔が隠せてないわよ？"
+    },
+    {
+      "id": "maid_witch",
+      "name": "古典女僕與小魔女裝",
+      "tag": "🧹 驚喜角色扮演",
+      "image": "assets/costumes/maid_witch_idle.png",
+      "imageIdle": "assets/costumes/maid_witch_idle.png",
+      "imageTalkHalf": "assets/costumes/maid_witch_talk_half.png",
+      "imageTalkOpen": "assets/costumes/maid_witch_talk_open.png",
+      "variants": [
+        "assets/costumes/maid_witch_idle.png",
+        "assets/costumes/variant_cosplay_maid.png",
+        "assets/costumes/variant_cosplay_xmas.png"
+      ],
+      "timeHint": "驚喜派對與專屬寵愛",
+      "autoHours": null,
+      "reaction": "お帰りなさいませ、ご主人様……なんて、冗談よ！リンシに魔法をかけて、疲れをぜんぶ吹き飛ばしてあげるわ✨\n（歡迎回來，主人……開玩笑的啦！我要對リンシ施展魔法，把你的疲勞全部吹走喔✨）",
+      "tts": "お帰りなさいませ、ご主人様、なんて、冗談よ！リンシに魔法をかけて、疲れをぜんぶ吹き飛ばしてあげるわ。"
+    },
+    {
+      "id": "bunny",
+      "name": "微醺純白俏皮兔女郎",
+      "tag": "🐰 專屬祕密派對",
+      "image": "assets/costumes/bunny_idle.png",
+      "imageIdle": "assets/costumes/bunny_idle.png",
+      "imageTalkHalf": "assets/costumes/bunny_talk_half.png",
+      "imageTalkOpen": "assets/costumes/bunny_talk_open.png",
+      "variants": [
+        "assets/costumes/bunny_idle.png",
+        "assets/costumes/variant_cosplay_bunny2.png"
+      ],
+      "timeHint": "深夜微醺時刻",
+      "autoHours": null,
+      "reaction": "しーっ、これはリンシだけのヒミツよ……？純白のバニー姿、そんなに目を丸くして見ないでよ。\n（噓——這是只屬於リンシ的秘密喔……？純白兔女郎的打扮，別瞪大眼睛一直盯著看啦。）",
+      "tts": "しーっ、これはリンシだけのヒミツよ？純白のバニー姿、そんなに目を丸くして見ないでよ。"
+    }
+  ],
+  "pov": {
+    "photos": [
+      {
+        "id": "pov_01_tie",
+        "sceneCode": "POV-02",
+        "titleZh": "走廊近距離・替你整理領帶",
+        "titleJa": "放課後の廊下・ネクタイ直し",
+        "image": "assets/pov_photos/pov_01_tie.png",
+        "costumeId": "schoolpov",
+        "outfitZh": "白襯衫、學生領帶、放學後夕陽走廊",
+        "outfitJa": "白シャツ、ネクタイ、夕暮れの校舎廊下",
+        "keywords": [
+          "領帶",
+          "走廊",
+          "學校",
+          "放學",
+          "襯衫",
+          "近距離",
+          "ネクタイ",
+          "廊下",
+          "学校",
+          "制服"
+        ],
+        "captionJa": "もう、ネクタイが曲がってるわよ……じっとしてて、リンシ。そんなに見つめられると、ちょっと照れちゃうじゃない。",
+        "captionZh": "真是的，領帶又歪掉囉……別亂動喔，リンシ。被你這麼近盯著看，我也會稍微害羞的啦。",
+        "tts": "もう、ネクタイが曲がってるわよ。じっとしてて、リンシ。そんなに見つめられると、ちょっと照れちゃうじゃない。",
+        "pixaiPrompt": "adult Ayukawa Madoka, 18+, faithful character identity, deep blue-black long hair, soft layered hair, natural bangs, face-framing strands, vivid green eyes, gentle refined facial features, natural adult proportions, consistent face and hairstyle, realistic character rendering, intimate couple POV, close everyday interaction, she gently straightens the viewer's tie, looking up with a mildly teasing caring expression, subtle blush, relaxed smile, close personal distance, Japanese school corridor, soft afternoon window light, 50mm portrait lens, shallow depth of field, focus on eyes and hands, realistic skin texture, cinematic candid photograph, 9:16",
+        "imageUrl": "assets/pov_photos/pov_01_tie.png",
+        "title": "走廊近距離・替你整理領帶",
+        "caption": "もう、ネクタイが曲がってるわよ……じっとしてて、リンシ。そんなに見つめられると、ちょっと照れちゃうじゃない。\n（真是的，領帶又歪掉囉……別亂動喔，リンシ。被你這麼近盯著看，我也會稍微害羞的啦。）",
+        "fullReplyBilingual": "もう、ネクタイが曲がってるわよ……じっとしてて、リンシ。そんなに見つめられると、ちょっと照れちゃうじゃない。\n（真是的，領帶又歪掉囉……別亂動喔，リンシ。被你這麼近盯著看，我也會稍微害羞的啦。）",
+        "ttsText": "もう、ネクタイが曲がってるわよ。じっとしてて、リンシ。そんなに見つめられると、ちょっと照れちゃうじゃない。"
+      },
+      {
+        "id": "pov_02_bookstore",
+        "sceneCode": "POV-05",
+        "titleZh": "靜謐午後・書店並肩看書",
+        "titleJa": "静かな午後・本屋で並んで読書",
+        "image": "assets/pov_photos/pov_02_bookstore.png",
+        "costumeId": "date",
+        "outfitZh": "米白針織上衣、木質書架與溫暖窗光",
+        "outfitJa": "アイボリーのニット、木の書棚と柔らかな窓光",
+        "keywords": [
+          "書",
+          "書店",
+          "看書",
+          "閱讀",
+          "並肩",
+          "文青",
+          "本",
+          "本屋",
+          "読書"
+        ],
+        "captionJa": "ねえリンシ、このページ見て！すごく面白いことが書いてあるの。こうして肩を並べて本を読むの、なんだか恋人らしくて好きよ。",
+        "captionZh": "吶リンシ，你看這一頁！上面寫著很有趣的內容喔。像這樣並肩一起看書，總覺得很有戀人的氣氛，我很喜歡呢。",
+        "tts": "ねえリンシ、このページ見て！こうして肩を並べて本を読むの、なんだか恋人らしくて好きよ。",
+        "pixaiPrompt": "adult Ayukawa Madoka, 18+, faithful character identity, deep blue-black long hair, soft layered hair, natural bangs, face-framing strands, vivid green eyes, gentle refined facial features, natural adult proportions, consistent face and hairstyle, realistic character rendering, quiet bookstore date, couple POV, standing shoulder-to-shoulder with the viewer, sharing one open book, shoulder gently touching the viewer, curious gentle smile, warm wooden bookshelves, soft window light, quiet intimate atmosphere, dust particles, 50mm lens, shallow depth of field, realistic paper and fabric texture, candid editorial photography, 9:16",
+        "imageUrl": "assets/pov_photos/pov_02_bookstore.png",
+        "title": "靜謐午後・書店並肩看書",
+        "caption": "ねえリンシ、このページ見て！すごく面白いことが書いてあるの。こうして肩を並べて本を読むの、なんだか恋人らしくて好きよ。\n（吶リンシ，你看這一頁！上面寫著很有趣的內容喔。像這樣並肩一起看書，總覺得很有戀人的氣氛，我很喜歡呢。）",
+        "fullReplyBilingual": "ねえリンシ、このページ見て！すごく面白いことが書いてあるの。こうして肩を並べて本を読むの、なんだか恋人らしくて好きよ。\n（吶リンシ，你看這一頁！上面寫著很有趣的內容喔。像這樣並肩一起看書，總覺得很有戀人的氣氛，我很喜歡呢。）",
+        "ttsText": "ねえリンシ、このページ見て！こうして肩を並べて本を読むの、なんだか恋人らしくて好きよ。"
+      },
+      {
+        "id": "pov_03_popsicle_1",
+        "sceneCode": "POV-04A",
+        "titleZh": "便利店外・夏日蘇打冰棒 (I)",
+        "titleJa": "コンビニ前・夏のソーダアイス (I)",
+        "image": "assets/pov_photos/pov_03_popsicle_1.png",
+        "costumeId": "casual",
+        "outfitZh": "白短袖上衣、淺藍百褶裙、橘色斜背包、白色高筒帆布鞋",
+        "outfitJa": "白Tシャツ、水色のスカート、オレンジのショルダーバッグ、白スニーカー",
+        "keywords": [
+          "冰",
+          "吃冰",
+          "冰棒",
+          "便利店",
+          "超商",
+          "夏天",
+          "蘇打",
+          "アイス",
+          "コンビニ",
+          "夏"
+        ],
+        "captionJa": "ん〜っ、冷たくて美味しい！リンシも一口食べる？……ふふっ、冗談よ、ほら、あーんして？",
+        "captionZh": "嗯～冰冰涼涼的好好吃！リンシ也要咬一口嗎？……呵呵，不逗你了，來，張嘴「啊～」？",
+        "tts": "んーっ、冷たくて美味しい！リンシも一口食べる？ふふっ、ほら、あーんして？",
+        "pixaiPrompt": "adult Ayukawa Madoka, 18+, faithful character identity, deep blue-black long hair, soft layered hair, natural bangs, face-framing strands, vivid green eyes, gentle refined facial features, natural adult proportions, consistent face and hairstyle, realistic character rendering, summer date POV outside a Japanese convenience store, sitting beside the viewer, eating a popsicle, playful nose scrunch, bright natural smile, legs casually swinging, white short-sleeve top, light blue skirt, canvas sneakers, small shoulder bag, warm evening light, convenience store glow, candid snapshot, 35mm film photography, soft bokeh, relaxed romantic atmosphere, 9:16",
+        "imageUrl": "assets/pov_photos/pov_03_popsicle_1.png",
+        "title": "便利店外・夏日蘇打冰棒 (I)",
+        "caption": "ん〜っ、冷たくて美味しい！リンシも一口食べる？……ふふっ、冗談よ、ほら、あーんして？\n（嗯～冰冰涼涼的好好吃！リンシ也要咬一口嗎？……呵呵，不逗你了，來，張嘴「啊～」？）",
+        "fullReplyBilingual": "ん〜っ、冷たくて美味しい！リンシも一口食べる？……ふふっ、冗談よ、ほら、あーんして？\n（嗯～冰冰涼涼的好好吃！リンシ也要咬一口嗎？……呵呵，不逗你了，來，張嘴「啊～」？）",
+        "ttsText": "んーっ、冷たくて美味しい！リンシも一口食べる？ふふっ、ほら、あーんして？"
+      },
+      {
+        "id": "pov_04_popsicle_2",
+        "sceneCode": "POV-04B",
+        "titleZh": "便利店座席・俏皮咬冰棒 (II)",
+        "titleJa": "コンビニのベンチ・悪戯っぽい視線 (II)",
+        "image": "assets/pov_photos/pov_04_popsicle_2.png",
+        "costumeId": "casual",
+        "outfitZh": "白色印花T恤、淺藍百褶裙、黑色斜背包",
+        "outfitJa": "プリント白Tシャツ、水色のプリーツスカート、黒バッグ",
+        "keywords": [
+          "座位",
+          "長椅",
+          "便利店",
+          "吃冰",
+          "點心",
+          "休息"
+        ],
+        "captionJa": "ちょっと歩き疲れちゃったわね。リンシ、ここで少し涼んでいきましょ？急にカメラ向けるなんて、もう……ちゃんと可愛く撮れた？",
+        "captionZh": "稍微走累了呢。リンシ，我們在這裡吹個冷氣休息一下吧？突然把鏡頭對準我，真是的……有拍得可愛嗎？",
+        "tts": "ちょっと歩き疲れちゃったわね。急にカメラ向けるなんて、もう、ちゃんと可愛く撮れた？",
+        "pixaiPrompt": "adult Ayukawa Madoka, 18+, faithful character identity, deep blue-black long hair, soft layered hair, natural bangs, face-framing strands, vivid green eyes, gentle refined facial features, natural adult proportions, consistent face and hairstyle, realistic character rendering, summer date POV at a Japanese convenience store bench, sitting beside the viewer, biting a blue soda popsicle, playful bright smile, white graphic tee, light blue pleated skirt, canvas sneakers, candid snapshot, 35mm film photography, 9:16",
+        "imageUrl": "assets/pov_photos/pov_04_popsicle_2.png",
+        "title": "便利店座席・俏皮咬冰棒 (II)",
+        "caption": "ちょっと歩き疲れちゃったわね。リンシ、ここで少し涼んでいきましょ？急にカメラ向けるなんて、もう……ちゃんと可愛く撮れた？\n（稍微走累了呢。リンシ，我們在這裡吹個冷氣休息一下吧？突然把鏡頭對準我，真是的……有拍得可愛嗎？）",
+        "fullReplyBilingual": "ちょっと歩き疲れちゃったわね。リンシ、ここで少し涼んでいきましょ？急にカメラ向けるなんて、もう……ちゃんと可愛く撮れた？\n（稍微走累了呢。リンシ，我們在這裡吹個冷氣休息一下吧？突然把鏡頭對準我，真是的……有拍得可愛嗎？）",
+        "ttsText": "ちょっと歩き疲れちゃったわね。急にカメラ向けるなんて、もう、ちゃんと可愛く撮れた？"
+      },
+      {
+        "id": "pov_05_popsicle_3",
+        "sceneCode": "POV-04C",
+        "titleZh": "夕陽超商階梯・雙手捧冰棒 (III)",
+        "titleJa": "夕暮れのコンビニ階段・甘いひととき (III)",
+        "image": "assets/pov_photos/pov_05_popsicle_3.png",
+        "costumeId": "casual",
+        "outfitZh": "白T恤、淺藍短裙、夕陽逆光街景",
+        "outfitJa": "白Tシャツ、水色のミニスカート、夕暮れの逆光",
+        "keywords": [
+          "階梯",
+          "黃昏",
+          "傍晚",
+          "冰棒",
+          "超商"
+        ],
+        "captionJa": "夕方の風、気持ちいいわね。リンシと一緒に食べるアイスが、一番美味しい気がするわ。",
+        "captionZh": "傍晚的微風吹起來真舒服呢。總覺得跟リンシ一起吃的冰棒，是全世界最好吃的喔。",
+        "tts": "夕方の風、気持ちいいわね。リンシと一緒に食べるアイスが、一番美味しい気がするわ。",
+        "pixaiPrompt": "adult Ayukawa Madoka, 18+, faithful character identity, deep blue-black long hair, soft layered hair, natural bangs, face-framing strands, vivid green eyes, gentle refined facial features, natural adult proportions, consistent face and hairstyle, realistic character rendering, golden hour summer date POV outside a Japanese convenience store steps, holding a blue popsicle with both hands, warm affectionate gaze, sunset rim light, 35mm lens, shallow depth of field, 9:16",
+        "imageUrl": "assets/pov_photos/pov_05_popsicle_3.png",
+        "title": "夕陽超商階梯・雙手捧冰棒 (III)",
+        "caption": "夕方の風、気持ちいいわね。リンシと一緒に食べるアイスが、一番美味しい気がするわ。\n（傍晚的微風吹起來真舒服呢。總覺得跟リンシ一起吃的冰棒，是全世界最好吃的喔。）",
+        "fullReplyBilingual": "夕方の風、気持ちいいわね。リンシと一緒に食べるアイスが、一番美味しい気がするわ。\n（傍晚的微風吹起來真舒服呢。總覺得跟リンシ一起吃的冰棒，是全世界最好吃的喔。）",
+        "ttsText": "夕方の風、気持ちいいわね。リンシと一緒に食べるアイスが、一番美味しい気がするわ。"
+      },
+      {
+        "id": "pov_06_hold_hands",
+        "sceneCode": "POV-08",
+        "titleZh": "晴空街道・緊緊牽住你的手",
+        "titleJa": "晴れた帰り道・ぎゅっと繋いだ手",
+        "image": "assets/pov_photos/pov_06_hold_hands.png",
+        "costumeId": "dress",
+        "outfitZh": "淺藍V領荷葉袖連身洋裝、晴空街道第一人稱牽手視角",
+        "outfitJa": "水色のサマードレス、青空の街角で手を繋ぐ一人称視点",
+        "keywords": [
+          "牽手",
+          "手",
+          "散步",
+          "約會",
+          "逛街",
+          "放學路",
+          "手繋ぎ",
+          "手を繋ぐ",
+          "デート",
+          "散歩"
+        ],
+        "captionJa": "ほら、リンシ……はぐれないように、ちゃんと手、握っててね。ふふっ、こうして手を繋いで歩くの、すごく幸せよ。",
+        "captionZh": "來，リンシ……為了不走散，要把我的手握緊喔。呵呵，像這樣牽著手並肩走著，真的好幸福呢。",
+        "tts": "ほら、リンシ、はぐれないように、ちゃんと手、握っててね。こうして手を繋いで歩くの、すごく幸せよ。",
+        "pixaiPrompt": "adult Ayukawa Madoka, 18+, faithful character identity, deep blue-black long hair, soft layered hair, natural bangs, face-framing strands, vivid green eyes, gentle refined facial features, natural adult proportions, consistent face and hairstyle, realistic character rendering, couple POV walking home, subtle hand-holding moment, her fingers quietly reach toward the viewer's hand and gently intertwine, shy affectionate gesture, walking side by side, focus on hands with partial view of both figures, late afternoon sunlight, quiet Japanese residential street, soft breeze moving her long blue-black hair, candid snapshot, 50mm lens, shallow depth of field, warm film tones, 9:16",
+        "imageUrl": "assets/pov_photos/pov_06_hold_hands.png",
+        "title": "晴空街道・緊緊牽住你的手",
+        "caption": "ほら、リンシ……はぐれないように、ちゃんと手、握っててね。ふふっ、こうして手を繋いで歩くの、すごく幸せよ。\n（來，リンシ……為了不走散，要把我的手握緊喔。呵呵，像這樣牽著手並肩走著，真的好幸福呢。）",
+        "fullReplyBilingual": "ほら、リンシ……はぐれないように、ちゃんと手、握っててね。ふふっ、こうして手を繋いで歩くの、すごく幸せよ。\n（來，リンシ……為了不走散，要把我的手握緊喔。呵呵，像這樣牽著手並肩走著，真的好幸福呢。）",
+        "ttsText": "ほら、リンシ、はぐれないように、ちゃんと手、握っててね。こうして手を繋いで歩くの、すごく幸せよ。"
+      },
+      {
+        "id": "pov_07_turn_back_1",
+        "sceneCode": "POV-09A",
+        "titleZh": "海風坡道・回頭伸手叫你快點 (I)",
+        "titleJa": "海風の坂道・振り返って手を伸ばす (I)",
+        "image": "assets/pov_photos/pov_07_turn_back_1.png",
+        "costumeId": "date",
+        "outfitZh": "深黑白色領口短袖連身洋裝、遠方蔚藍海景街道",
+        "outfitJa": "黒のサマードレス、遠くに海が見える坂道",
+        "keywords": [
+          "回頭",
+          "海邊",
+          "街道",
+          "快點",
+          "散步",
+          "背影",
+          "振り返る",
+          "海"
+        ],
+        "captionJa": "もう、リンシったら歩くの遅いんだから！ほら、早く来て？海がすごく綺麗に見える場所、見つけたのよ！",
+        "captionZh": "真是的，リンシ走得太慢了啦！來，快點跟上？我找到一個看海超美的地方喔！",
+        "tts": "もう、リンシったら歩くの遅いんだから！ほら、早く来て？海がすごく綺麗に見える場所、見つけたのよ！",
+        "pixaiPrompt": "adult Ayukawa Madoka, 18+, faithful character identity, deep blue-black long hair, soft layered hair, natural bangs, face-framing strands, vivid green eyes, gentle refined facial features, natural adult proportions, consistent face and hairstyle, realistic character rendering, dynamic couple POV, walking ahead on a sunny Japanese coastal street, she turns back toward the viewer, extends one hand inviting the viewer to catch up, bright playful smile, expressive green eyes, long blue-black hair moving in the breeze, dress hem moving naturally, candid motion, 35mm lens, natural daylight, cinematic street photography, 9:16",
+        "imageUrl": "assets/pov_photos/pov_07_turn_back_1.png",
+        "title": "海風坡道・回頭伸手叫你快點 (I)",
+        "caption": "もう、リンシったら歩くの遅いんだから！ほら、早く来て？海がすごく綺麗に見える場所、見つけたのよ！\n（真是的，リンシ走得太慢了啦！來，快點跟上？我找到一個看海超美的地方喔！）",
+        "fullReplyBilingual": "もう、リンシったら歩くの遅いんだから！ほら、早く来て？海がすごく綺麗に見える場所、見つけたのよ！\n（真是的，リンシ走得太慢了啦！來，快點跟上？我找到一個看海超美的地方喔！）",
+        "ttsText": "もう、リンシったら歩くの遅いんだから！ほら、早く来て？海がすごく綺麗に見える場所、見つけたのよ！"
+      },
+      {
+        "id": "pov_08_turn_back_2",
+        "sceneCode": "POV-09B",
+        "titleZh": "午後老街・微風拂髮回眸微笑 (II)",
+        "titleJa": "午後の街並み・風に揺れる髪と笑顔 (II)",
+        "image": "assets/pov_photos/pov_08_turn_back_2.png",
+        "costumeId": "date",
+        "outfitZh": "白色長袖襯衫搭配黑色背心連身裙、復古日本街道",
+        "outfitJa": "白ブラウスと黒のジャンパースカート、ノスタルジックな街並み",
+        "keywords": [
+          "老街",
+          "回眸",
+          "回頭",
+          "微風",
+          "長髮",
+          "洋裝"
+        ],
+        "captionJa": "ふふっ、リンシが後ろから写真を撮ってる気配、ちゃんと分かってたわよ。今の笑顔、何点だったかしら？",
+        "captionZh": "呵呵，リンシ在後面偷偷拍我的動靜，我全都察覺到了喔。剛才回頭的笑容，你給幾分呢？",
+        "tts": "ふふっ、リンシが後ろから写真を撮ってる気配、ちゃんと分かってたわよ。今の笑顔、何点だったかしら？",
+        "pixaiPrompt": "adult Ayukawa Madoka, 18+, faithful character identity, deep blue-black long hair, soft layered hair, natural bangs, face-framing strands, vivid green eyes, gentle refined facial features, natural adult proportions, consistent face and hairstyle, realistic character rendering, dynamic couple POV, walking ahead on a nostalgic Japanese street, turning back toward the viewer with a bright playful smile, white blouse under black pinafore dress, long blue-black hair flowing in the breeze, 35mm lens, 9:16",
+        "imageUrl": "assets/pov_photos/pov_08_turn_back_2.png",
+        "title": "午後老街・微風拂髮回眸微笑 (II)",
+        "caption": "ふふっ、リンシが後ろから写真を撮ってる気配、ちゃんと分かってたわよ。今の笑顔、何点だったかしら？\n（呵呵，リンシ在後面偷偷拍我的動靜，我全都察覺到了喔。剛才回頭的笑容，你給幾分呢？）",
+        "fullReplyBilingual": "ふふっ、リンシが後ろから写真を撮ってる気配、ちゃんと分かってたわよ。今の笑顔、何点だったかしら？\n（呵呵，リンシ在後面偷偷拍我的動靜，我全都察覺到了喔。剛才回頭的笑容，你給幾分呢？）",
+        "ttsText": "ふふっ、リンシが後ろから写真を撮ってる気配、ちゃんと分かってたわよ。今の笑顔、何点だったかしら？"
+      },
+      {
+        "id": "pov_09_turn_back_3",
+        "sceneCode": "POV-09C",
+        "titleZh": "晴空散步・裙襬飛揚的邀約 (III)",
+        "titleJa": "青空の散歩道・揺れるスカートと誘い (III)",
+        "image": "assets/pov_photos/pov_09_turn_back_3.png",
+        "costumeId": "date",
+        "outfitZh": "白色七分袖上衣、深色高腰圓裙、晴空老街",
+        "outfitJa": "白トップス、黒のフレアスカート、青空の街並み",
+        "keywords": [
+          "晴空",
+          "裙襬",
+          "約會",
+          "伸手",
+          "散步"
+        ],
+        "captionJa": "いいお天気ね、リンシ！今日はどこまで歩いていこうか？あなたと一緒なら、どこへ行っても楽しいわ。",
+        "captionZh": "天氣真好呢，リンシ！今天我們要散步到哪裡去呢？只要是跟你在一起，去哪裡都很開心喔。",
+        "tts": "いいお天気ね、リンシ！あなたと一緒なら、どこへ行っても楽しいわ。",
+        "pixaiPrompt": "adult Ayukawa Madoka, 18+, faithful character identity, deep blue-black long hair, soft layered hair, natural bangs, face-framing strands, vivid green eyes, gentle refined facial features, natural adult proportions, consistent face and hairstyle, realistic character rendering, dynamic couple POV, walking ahead on a sunny Japanese street, she turns back toward the viewer, extends one hand inviting the viewer to catch up, white blouse and dark flared skirt, long hair moving in breeze, 35mm lens, 9:16",
+        "imageUrl": "assets/pov_photos/pov_09_turn_back_3.png",
+        "title": "晴空散步・裙襬飛揚的邀約 (III)",
+        "caption": "いいお天気ね、リンシ！今日はどこまで歩いていこうか？あなたと一緒なら、どこへ行っても楽しいわ。\n（天氣真好呢，リンシ！今天我們要散步到哪裡去呢？只要是跟你在一起，去哪裡都很開心喔。）",
+        "fullReplyBilingual": "いいお天気ね、リンシ！今日はどこまで歩いていこうか？あなたと一緒なら、どこへ行っても楽しいわ。\n（天氣真好呢，リンシ！今天我們要散步到哪裡去呢？只要是跟你在一起，去哪裡都很開心喔。）",
+        "ttsText": "いいお天気ね、リンシ！あなたと一緒なら、どこへ行っても楽しいわ。"
+      },
+      {
+        "id": "pov_10_fireworks_yukata",
+        "sceneCode": "POV-10",
+        "titleZh": "夏夜河堤・花火下的浴衣回眸",
+        "titleJa": "夏の川辺・花火と浴衣の横顔",
+        "image": "assets/pov_photos/pov_10_fireworks_yukata.png",
+        "costumeId": "yukata",
+        "outfitZh": "水藍白花紋夏日浴衣、金黃腰帶、白色花朵髮飾、夜空絢爛煙火",
+        "outfitJa": "水色の花柄浴衣、黄色の帯、白い髪飾り、夜空の打ち上げ花火",
+        "keywords": [
+          "煙火",
+          "花火",
+          "浴衣",
+          "祭典",
+          "河堤",
+          "夏夜",
+          "夜景",
+          "夏祭り"
+        ],
+        "captionJa": "花火、すごく綺麗ね……でも、隣にいるリンシの横顔を見てる方が、もっと胸がドキドキしちゃうかも。来年もまた、二人で見に来ようね。",
+        "captionZh": "煙火真的好美喔……可是，看著身旁リンシ的側臉，好像更讓人心跳加速呢。明年我們也要兩個人一起來看喔。",
+        "tts": "花火、すごく綺麗ね。でも、隣にいるリンシを見てる方が、もっとドキドキしちゃうかも。来年もまた、二人で見に来ようね。",
+        "pixaiPrompt": "adult Ayukawa Madoka, 18+, faithful character identity, deep blue-black long hair, soft layered hair, natural bangs, face-framing strands, vivid green eyes, gentle refined facial features, natural adult proportions, consistent face and hairstyle, realistic character rendering, summer fireworks date, couple POV beside a riverside, wearing elegant traditional yukata, she first looks toward the fireworks then slowly turns toward the viewer, gentle quiet smile, green eyes reflecting fireworks, riverside night, distant festival lights, subtle crowd bokeh, cool night air with warm fireworks glow, 50mm lens, shallow depth of field, cinematic Japanese photography, realistic fabric texture, soft film grain, nostalgic romantic memory, 9:16 vertical",
+        "imageUrl": "assets/pov_photos/pov_10_fireworks_yukata.png",
+        "title": "夏夜河堤・花火下的浴衣回眸",
+        "caption": "花火、すごく綺麗ね……でも、隣にいるリンシの横顔を見てる方が、もっと胸がドキドキしちゃうかも。来年もまた、二人で見に来ようね。\n（煙火真的好美喔……可是，看著身旁リンシ的側臉，好像更讓人心跳加速呢。明年我們也要兩個人一起來看喔。）",
+        "fullReplyBilingual": "花火、すごく綺麗ね……でも、隣にいるリンシの横顔を見てる方が、もっと胸がドキドキしちゃうかも。来年もまた、二人で見に来ようね。\n（煙火真的好美喔……可是，看著身旁リンシ的側臉，好像更讓人心跳加速呢。明年我們也要兩個人一起來看喔。）",
+        "ttsText": "花火、すごく綺麗ね。でも、隣にいるリンシを見てる方が、もっとドキドキしちゃうかも。来年もまた、二人で見に来ようね。"
+      },
+      {
+        "id": "pov_11_cafe_latte",
+        "sceneCode": "POV-CAFE",
+        "titleZh": "午後咖啡館・雙人拿鐵約會視角",
+        "titleJa": "午後のカフェ・ラテアートと甘い視線",
+        "image": "assets/pov_photos/pov_11_cafe_latte.png",
+        "costumeId": "cafedate",
+        "outfitZh": "灰色細肩帶針織上衣、米白短裙、木桌上的心型拉花拿鐵",
+        "outfitJa": "キャミソールニット、ベージュのミニスカート、ハートのラテアート",
+        "keywords": [
+          "咖啡",
+          "拿鐵",
+          "拉花",
+          "下午茶",
+          "咖啡廳",
+          "カフェ",
+          "ラテ",
+          "コーヒー"
+        ],
+        "captionJa": "カフェの窓際の席、落ち着くわね。ほらリンシ、ラテアートがハートの形してるわよ。記念に一枚、撮っておきましょ？☕",
+        "captionZh": "咖啡館窗邊的位子真讓人放鬆呢。你看リンシ，拿鐵拉花是愛心的形狀喔。拍一張留作紀念吧？☕",
+        "tts": "カフェの窓際の席、落ち着くわね。ほらリンシ、ラテアートがハートの形してるわよ。記念に一枚、撮っておきましょ？",
+        "pixaiPrompt": "adult Ayukawa Madoka, 18+, faithful character identity, deep blue-black long hair, soft layered hair, natural bangs, face-framing strands, vivid green eyes, gentle refined facial features, natural adult proportions, consistent face and hairstyle, realistic character rendering, afternoon cafe date POV, sitting across from the viewer at a wooden table by a sunlit window, holding a book and resting chin on hand, heart latte art cup on table, warm affectionate smile, 50mm portrait lens, 9:16",
+        "imageUrl": "assets/pov_photos/pov_11_cafe_latte.png",
+        "title": "午後咖啡館・雙人拿鐵約會視角",
+        "caption": "カフェの窓際の席、落ち着くわね。ほらリンシ、ラテアートがハートの形してるわよ。記念に一枚、撮っておきましょ？☕\n（咖啡館窗邊的位子真讓人放鬆呢。你看リンシ，拿鐵拉花是愛心的形狀喔。拍一張留作紀念吧？☕）",
+        "fullReplyBilingual": "カフェの窓際の席、落ち着くわね。ほらリンシ、ラテアートがハートの形してるわよ。記念に一枚、撮っておきましょ？☕\n（咖啡館窗邊的位子真讓人放鬆呢。你看リンシ，拿鐵拉花是愛心的形狀喔。拍一張留作紀念吧？☕）",
+        "ttsText": "カフェの窓際の席、落ち着くわね。ほらリンシ、ラテアートがハートの形してるわよ。記念に一枚、撮っておきましょ？"
+      },
+      {
+        "id": "pov_12_morning_kitchen",
+        "sceneCode": "POV-HOME",
+        "titleZh": "晨光廚房・居家背心早安自拍",
+        "titleJa": "朝のキッチン・部屋着でおはようショット",
+        "image": "assets/pov_photos/pov_12_morning_kitchen.png",
+        "costumeId": "home",
+        "outfitZh": "白色細肩帶居家背心、休閒運動短褲、灑滿晨光的廚房窗邊",
+        "outfitJa": "白のキャミソールとショートパンツ、朝日が差し込むキッチン",
+        "keywords": [
+          "早安",
+          "早晨",
+          "廚房",
+          "居家",
+          "睡衣",
+          "早餐",
+          "家裡",
+          "朝",
+          "おはよう",
+          "部屋着",
+          "キッチン"
+        ],
+        "captionJa": "おはよう、リンシ。今、朝ごはんのコーヒーを淹れてたところよ。寝起きで撮るなんてずるいけど……リンシだけに見せてあげるわね。",
+        "captionZh": "早安，リンシ。我正準備泡早餐的咖啡喔。剛睡醒就拍人家真是太犯規了……不過只給リンシ一個人看喔。",
+        "tts": "おはよう、リンシ。今、朝ごはんのコーヒーを淹れてたところよ。リンシだけに見せてあげるわね。",
+        "pixaiPrompt": "adult Ayukawa Madoka, 18+, faithful character identity, deep blue-black long hair, soft layered hair, natural bangs, face-framing strands, vivid green eyes, gentle refined facial features, natural adult proportions, consistent face and hairstyle, realistic character rendering, morning kitchen couple POV, wearing a white camisole top and casual shorts, standing by a sunny kitchen window, turning back with a soft sleepy affectionate expression, morning sunlight, 50mm lens, 9:16",
+        "imageUrl": "assets/pov_photos/pov_12_morning_kitchen.png",
+        "title": "晨光廚房・居家背心早安自拍",
+        "caption": "おはよう、リンシ。今、朝ごはんのコーヒーを淹れてたところよ。寝起きで撮るなんてずるいけど……リンシだけに見せてあげるわね。\n（早安，リンシ。我正準備泡早餐的咖啡喔。剛睡醒就拍人家真是太犯規了……不過只給リンシ一個人看喔。）",
+        "fullReplyBilingual": "おはよう、リンシ。今、朝ごはんのコーヒーを淹れてたところよ。寝起きで撮るなんてずるいけど……リンシだけに見せてあげるわね。\n（早安，リンシ。我正準備泡早餐的咖啡喔。剛睡醒就拍人家真是太犯規了……不過只給リンシ一個人看喔。）",
+        "ttsText": "おはよう、リンシ。今、朝ごはんのコーヒーを淹れてたところよ。リンシだけに見せてあげるわね。"
+      },
+      {
+        "id": "pov_13_morning_wakeup",
+        "sceneCode": "POV-WAKEUP",
+        "titleZh": "晨間喚醒 POV・俯身甜笑叫你起床",
+        "titleJa": "朝の目覚ましPOV・上から覗き込む笑顔",
+        "image": "assets/pov_photos/pov_13_morning_wakeup.jpg",
+        "costumeId": "home",
+        "outfitZh": "白色削肩羅紋居家背心、純白過膝長襪、晨光臥室第一人稱仰角",
+        "outfitJa": "白のリブノースリーブ、白ニーソックス、朝の寝室での見下ろしPOV",
+        "keywords": [
+          "起床",
+          "鬧鐘",
+          "叫我",
+          "醒",
+          "早安",
+          "賴床",
+          "起きる",
+          "起こして",
+          "目覚まし"
+        ],
+        "captionJa": "ふふっ、やっと目が覚めたわね、リンシ！もう、いつまでも起きないから上から起こしに来ちゃったじゃない。おはようのキス、してあげる💖",
+        "captionZh": "呵呵，終於睜開眼睛了呢，リンシ！真是的，誰叫你一直賴床不起，我只好親自俯身來叫你囉。給你一個早安吻💖",
+        "tts": "ふふっ、やっと目が覚めたわね、リンシ！いつまでも起きないから起こしに来ちゃったじゃない。おはよう！",
+        "pixaiPrompt": "adult Ayukawa Madoka, 18+, faithful character identity, deep blue-black long hair, soft layered hair, natural bangs, face-framing strands, vivid green eyes, gentle refined facial features, natural adult proportions, consistent face and hairstyle, realistic character rendering, morning wake-up couple POV from lying down perspective, she leans over the viewer with a warm teasing smile, white sleeveless ribbed top and white thigh-high stockings, soft morning bedroom sunlight, 35mm close portrait, 9:16",
+        "imageUrl": "assets/pov_photos/pov_13_morning_wakeup.jpg",
+        "title": "晨間喚醒 POV・俯身甜笑叫你起床",
+        "caption": "ふふっ、やっと目が覚めたわね、リンシ！もう、いつまでも起きないから上から起こしに来ちゃったじゃない。おはようのキス、してあげる💖\n（呵呵，終於睜開眼睛了呢，リンシ！真是的，誰叫你一直賴床不起，我只好親自俯身來叫你囉。給你一個早安吻💖）",
+        "fullReplyBilingual": "ふふっ、やっと目が覚めたわね、リンシ！もう、いつまでも起きないから上から起こしに来ちゃったじゃない。おはようのキス、してあげる💖\n（呵呵，終於睜開眼睛了呢，リンシ！真是的，誰叫你一直賴床不起，我只好親自俯身來叫你囉。給你一個早安吻💖）",
+        "ttsText": "ふふっ、やっと目が覚めたわね、リンシ！いつまでも起きないから起こしに来ちゃったじゃない。おはよう！"
+      },
+      {
+        "id": "pov_14_red_strawhat_beach",
+        "sceneCode": "POV-STRAWHAT",
+        "titleZh": "夏日海灘・經典紅草帽與純白洋裝",
+        "titleJa": "夏のビーチ・赤い麦わら帽子と白いサマードレス",
+        "image": "assets/pov_photos/pov_14_red_strawhat_beach.png",
+        "costumeId": "strawhat",
+        "outfitZh": "初代傳奇紅色草帽、純白無袖夏日連身洋裝、晴空椰影海灘",
+        "outfitJa": "伝説の赤い麦わら帽子、純白のサマードレス、青い海とヤシの木",
+        "keywords": [
+          "草帽",
+          "紅草帽",
+          "海灘",
+          "海邊",
+          "白洋裝",
+          "初戀",
+          "麦わら帽子",
+          "赤い帽子"
+        ],
+        "captionJa": "この赤い麦わら帽子を見ると、あなたと初めて出会ったあの夏の日を思い出すわね、リンシ。これからもずっと、風が吹いたら受け止めてね。",
+        "captionZh": "只要看到這頂紅色草帽，就會想起與你初次相遇的那個夏日呢，リンシ。今後不管吹起什麼風，你也要一直像那時一樣接住我喔。",
+        "tts": "この赤い麦わら帽子を見ると、あなたと出会ったあの夏の日を思い出すわね、リンシ。",
+        "pixaiPrompt": "adult Ayukawa Madoka, 18+, faithful character identity, deep blue-black long hair, soft layered hair, natural bangs, face-framing strands, vivid green eyes, gentle refined facial features, natural adult proportions, consistent face and hairstyle, realistic character rendering, iconic red straw hat and white sleeveless sundress on a sunny tropical beach with palm tree and turquoise ocean, holding her hat in the sea breeze, nostalgic 80s romance atmosphere, 50mm lens, 9:16",
+        "imageUrl": "assets/pov_photos/pov_14_red_strawhat_beach.png",
+        "title": "夏日海灘・經典紅草帽與純白洋裝",
+        "caption": "この赤い麦わら帽子を見ると、あなたと初めて出会ったあの夏の日を思い出すわね、リンシ。これからもずっと、風が吹いたら受け止めてね。\n（只要看到這頂紅色草帽，就會想起與你初次相遇的那個夏日呢，リンシ。今後不管吹起什麼風，你也要一直像那時一樣接住我喔。）",
+        "fullReplyBilingual": "この赤い麦わら帽子を見ると、あなたと初めて出会ったあの夏の日を思い出すわね、リンシ。これからもずっと、風が吹いたら受け止めてね。\n（只要看到這頂紅色草帽，就會想起與你初次相遇的那個夏日呢，リンシ。今後不管吹起什麼風，你也要一直像那時一樣接住我喔。）",
+        "ttsText": "この赤い麦わら帽子を見ると、あなたと出会ったあの夏の日を思い出すわね、リンシ。"
+      },
+      {
+        "id": "pov_15_red_strawhat_close",
+        "sceneCode": "POV-HAT-CLOSE",
+        "titleZh": "碧海藍天・紅草帽近距離深情凝視",
+        "titleJa": "青い海と空・赤い麦わら帽子の至近距離ショット",
+        "image": "assets/pov_photos/pov_15_red_strawhat_close.jpg",
+        "costumeId": "strawhat",
+        "outfitZh": "紅色寬簷草帽、陽光灑落的翡翠綠雙眸特寫",
+        "outfitJa": "赤い麦わら帽子、太陽に輝くエメラルドグリーンの瞳のクローズアップ",
+        "keywords": [
+          "特寫",
+          "眼神",
+          "眼睛",
+          "草帽特寫",
+          "凝視",
+          "瞳",
+          "アップ"
+        ],
+        "captionJa": "そんなに近くで撮るの……？リンシの瞳の中に私が映ってるのが見えるわ。なんだか照れくさいけど、幸せよ。",
+        "captionZh": "要靠這麼近拍嗎……？在リンシ的眼眸裡，可以清楚看見我的倒影呢。雖然有點害羞，但真的好幸福喔。",
+        "tts": "そんなに近くで撮るの？リンシの瞳の中に私が映ってるのが見えるわ。",
+        "pixaiPrompt": "adult Ayukawa Madoka, 18+, faithful character identity, deep blue-black long hair, soft layered hair, natural bangs, face-framing strands, vivid green eyes, gentle refined facial features, natural adult proportions, consistent face and hairstyle, realistic character rendering, extreme close-up portrait wearing her iconic red straw hat against a bright blue sky and summer sea, vivid emerald green eyes gazing affectionately into the camera, soft sunlight dappled through straw hat brim, 85mm portrait lens, 9:16",
+        "imageUrl": "assets/pov_photos/pov_15_red_strawhat_close.jpg",
+        "title": "碧海藍天・紅草帽近距離深情凝視",
+        "caption": "そんなに近くで撮るの……？リンシの瞳の中に私が映ってるのが見えるわ。なんだか照れくさいけど、幸せよ。\n（要靠這麼近拍嗎……？在リンシ的眼眸裡，可以清楚看見我的倒影呢。雖然有點害羞，但真的好幸福喔。）",
+        "fullReplyBilingual": "そんなに近くで撮るの……？リンシの瞳の中に私が映ってるのが見えるわ。なんだか照れくさいけど、幸せよ。\n（要靠這麼近拍嗎……？在リンシ的眼眸裡，可以清楚看見我的倒影呢。雖然有點害羞，但真的好幸福喔。）",
+        "ttsText": "そんなに近くで撮るの？リンシの瞳の中に私が映ってるのが見えるわ。"
+      },
+      {
+        "id": "pov_16_chair_wink_study",
+        "sceneCode": "POV-STUDY",
+        "titleZh": "書桌前的惡作劇・反坐木椅俏皮眨眼",
+        "titleJa": "デスク前の悪戯・椅子に逆さ座りでウインク",
+        "image": "assets/pov_photos/pov_16_chair_wink_study.png",
+        "costumeId": "home",
+        "outfitZh": "水藍碎花細肩帶居家套裝、反坐書桌木椅、筆電與相框背景",
+        "outfitJa": "水色の花柄キャミソールセットアップ、木の椅子に逆さ座り、ウインク",
+        "keywords": [
+          "書桌",
+          "椅子",
+          "眨眼",
+          "讀書",
+          "筆電",
+          "陪讀",
+          "ウインク",
+          "勉強",
+          "デスク"
+        ],
+        "captionJa": "ねえリンシ、パソコンばっかり見てないで、少しは私と遊びましょ？ほら、休憩時間よ！ウインクしてあげる😉",
+        "captionZh": "吶リンシ，別光顧著看電腦嘛，稍微陪我玩一下好不好？來，現在是休息時間囉！送你一個眨眼😉",
+        "tts": "ねえリンシ、パソコンばっかり見てないで、少しは私と遊びましょ？ほら、休憩時間よ！",
+        "pixaiPrompt": "adult Ayukawa Madoka, 18+, faithful character identity, deep blue-black long hair, soft layered hair, natural bangs, face-framing strands, vivid green eyes, gentle refined facial features, natural adult proportions, consistent face and hairstyle, realistic character rendering, sitting backwards on a wooden desk chair in a light blue floral camisole set, resting arms on chair back, winking playfully at the viewer, laptop and framed photos on desk behind her, cozy sunlit room, 50mm lens, 9:16",
+        "imageUrl": "assets/pov_photos/pov_16_chair_wink_study.png",
+        "title": "書桌前的惡作劇・反坐木椅俏皮眨眼",
+        "caption": "ねえリンシ、パソコンばっかり見てないで、少しは私と遊びましょ？ほら、休憩時間よ！ウインクしてあげる😉\n（吶リンシ，別光顧著看電腦嘛，稍微陪我玩一下好不好？來，現在是休息時間囉！送你一個眨眼😉）",
+        "fullReplyBilingual": "ねえリンシ、パソコンばっかり見てないで、少しは私と遊びましょ？ほら、休憩時間よ！ウインクしてあげる😉\n（吶リンシ，別光顧著看電腦嘛，稍微陪我玩一下好不好？來，現在是休息時間囉！送你一個眨眼😉）",
+        "ttsText": "ねえリンシ、パソコンばっかり見てないで、少しは私と遊びましょ？ほら、休憩時間よ！"
+      },
+      {
+        "id": "pov_17_fireworks_handhold",
+        "sceneCode": "POV-FIREWORKS-2",
+        "titleZh": "夏夜花火大會・水色浴衣牽緊你的手",
+        "titleJa": "夏夜の花火大会・水色の浴衣で手を繋ぐPOV",
+        "image": "assets/pov_photos/pov_17_fireworks_handhold.png",
+        "costumeId": "yukata",
+        "outfitZh": "水藍白花夏日浴衣、深藍腰帶、煙火綻放的湖畔第一人稱牽手",
+        "outfitJa": "水色の花柄浴衣、夜空の大輪の花火、手を繋ぐ一人称視点",
+        "keywords": [
+          "花火牽手",
+          "煙火牽手",
+          "祭典約會",
+          "夏日煙火",
+          "花火大会"
+        ],
+        "captionJa": "見て、リンシ！すっごく大きな花火！……人混みではぐれないように、この手、絶対に離さないでね💖",
+        "captionZh": "你看，リンシ！是超大朵的煙火耶！……為了不在人群裡走散，這隻手，你絕對不能放開喔💖",
+        "tts": "見て、リンシ！すっごく大きな花火！この手、絶対に離さないでね。",
+        "pixaiPrompt": "adult Ayukawa Madoka, 18+, faithful character identity, deep blue-black long hair, soft layered hair, natural bangs, face-framing strands, vivid green eyes, gentle refined facial features, natural adult proportions, consistent face and hairstyle, realistic character rendering, summer night fireworks festival by the water, wearing a light blue floral yukata, holding the viewer's hand in first-person POV, looking back with a radiant smile as colorful fireworks burst in the night sky, 35mm lens, 9:16",
+        "imageUrl": "assets/pov_photos/pov_17_fireworks_handhold.png",
+        "title": "夏夜花火大會・水色浴衣牽緊你的手",
+        "caption": "見て、リンシ！すっごく大きな花火！……人混みではぐれないように、この手、絶対に離さないでね💖\n（你看，リンシ！是超大朵的煙火耶！……為了不在人群裡走散，這隻手，你絕對不能放開喔💖）",
+        "fullReplyBilingual": "見て、リンシ！すっごく大きな花火！……人混みではぐれないように、この手、絶対に離さないでね💖\n（你看，リンシ！是超大朵的煙火耶！……為了不在人群裡走散，這隻手，你絕對不能放開喔💖）",
+        "ttsText": "見て、リンシ！すっごく大きな花火！この手、絶対に離さないでね。"
+      },
+      {
+        "id": "pov_18_golden_gown",
+        "sceneCode": "POV-GALA",
+        "titleZh": "紀念日盛裝・香檳金絲緞平口晚禮服",
+        "titleJa": "記念日のドレスアップ・シャンパンゴールドのイブニングドレス",
+        "image": "assets/pov_photos/pov_18_golden_gown.png",
+        "costumeId": "evening_gown",
+        "outfitZh": "奢華香檳金絲緞平口晚禮服、夕陽落地窗景",
+        "outfitJa": "シャンパンゴールドのサテンドレス、夕陽が差し込む窓辺",
+        "keywords": [
+          "禮服",
+          "晚禮服",
+          "金色",
+          "紀念日",
+          "宴會",
+          "派對",
+          "ドレス",
+          "記念日"
+        ],
+        "captionJa": "今夜は私たちの特別な記念日だから、思い切ってドレスアップしてみたの。どうかしら、リンシ……惚れ直した？✨",
+        "captionZh": "因為今晚是我們特別的紀念日，我鼓起勇氣盛裝打扮了一下。覺得如何呢，リンシ……有沒有重新愛上我呀？✨",
+        "tts": "今夜は私たちの特別な記念日だから、ドレスアップしてみたの。どうかしら、リンシ、惚れ直した？",
+        "pixaiPrompt": "adult Ayukawa Madoka, 18+, faithful character identity, deep blue-black long hair, soft layered hair, natural bangs, face-framing strands, vivid green eyes, gentle refined facial features, natural adult proportions, consistent face and hairstyle, realistic character rendering, wearing a glamorous strapless champagne gold satin evening gown by a sunlit window, elegant posture, soft romantic blush, looking at the viewer with deep affection, 50mm lens, 9:16",
+        "imageUrl": "assets/pov_photos/pov_18_golden_gown.png",
+        "title": "紀念日盛裝・香檳金絲緞平口晚禮服",
+        "caption": "今夜は私たちの特別な記念日だから、思い切ってドレスアップしてみたの。どうかしら、リンシ……惚れ直した？✨\n（因為今晚是我們特別的紀念日，我鼓起勇氣盛裝打扮了一下。覺得如何呢，リンシ……有沒有重新愛上我呀？✨）",
+        "fullReplyBilingual": "今夜は私たちの特別な記念日だから、思い切ってドレスアップしてみたの。どうかしら、リンシ……惚れ直した？✨\n（因為今晚是我們特別的紀念日，我鼓起勇氣盛裝打扮了一下。覺得如何呢，リンシ……有沒有重新愛上我呀？✨）",
+        "ttsText": "今夜は私たちの特別な記念日だから、ドレスアップしてみたの。どうかしら、リンシ、惚れ直した？"
+      },
+      {
+        "id": "pov_19_kimono_calligraphy",
+        "sceneCode": "POV-KIMONO",
+        "titleZh": "和室雅韻・薰衣草花紋和服與書道體驗",
+        "titleJa": "和室の雅・ラベンダー色の着物と書道",
+        "image": "assets/pov_photos/pov_19_kimono_calligraphy.png",
+        "costumeId": "yukata",
+        "outfitZh": "薰衣草紫花紋傳統和服、白花髮飾、和室木桌毛筆書道",
+        "outfitJa": "ラベンダー色の花柄着物、白い花飾り、和室で書道",
+        "keywords": [
+          "和服",
+          "書法",
+          "書道",
+          "毛筆",
+          "和室",
+          "着物",
+          "習字"
+        ],
+        "captionJa": "背筋が伸びるわね、リンシ。毛筆で何を書いたかって？……ふふっ、私とリンシの未来の願い事よ。ヒ・ミ・ツ💖",
+        "captionZh": "心情都變得端莊起來了呢，リンシ。你問我用毛筆寫了什麼嗎？……呵呵，是關於我跟リンシ未來的願望喔。秘・密💖",
+        "tts": "毛筆で何を書いたかって？ふふっ、私とリンシの未来の願い事よ。ヒミツ！",
+        "pixaiPrompt": "adult Ayukawa Madoka, 18+, faithful character identity, deep blue-black long hair, soft layered hair, natural bangs, face-framing strands, vivid green eyes, gentle refined facial features, natural adult proportions, consistent face and hairstyle, realistic character rendering, wearing a lavender floral kimono with a white flower hair ornament, practicing calligraphy with a brush at a wooden table in a sunlit traditional Japanese tatami room, gentle poised smile, 50mm lens, 9:16",
+        "imageUrl": "assets/pov_photos/pov_19_kimono_calligraphy.png",
+        "title": "和室雅韻・薰衣草花紋和服與書道體驗",
+        "caption": "背筋が伸びるわね、リンシ。毛筆で何を書いたかって？……ふふっ、私とリンシの未来の願い事よ。ヒ・ミ・ツ💖\n（心情都變得端莊起來了呢，リンシ。你問我用毛筆寫了什麼嗎？……呵呵，是關於我跟リンシ未來的願望喔。秘・密💖）",
+        "fullReplyBilingual": "背筋が伸びるわね、リンシ。毛筆で何を書いたかって？……ふふっ、私とリンシの未来の願い事よ。ヒ・ミ・ツ💖\n（心情都變得端莊起來了呢，リンシ。你問我用毛筆寫了什麼嗎？……呵呵，是關於我跟リンシ未來的願望喔。秘・密💖）",
+        "ttsText": "毛筆で何を書いたかって？ふふっ、私とリンシの未来の願い事よ。ヒミツ！"
+      },
+      {
+        "id": "pov_20_boyfriend_shirt",
+        "sceneCode": "POV-SHIRT",
+        "titleZh": "居家私密時刻・只穿你的大白襯衫害羞傾身",
+        "titleJa": "おうち時間の秘密・彼シャツ姿で照れ笑い",
+        "image": "assets/pov_photos/pov_20_boyfriend_shirt.png",
+        "costumeId": "boyfriend_shirt",
+        "outfitZh": "微敞開的寬大白色男友襯衫、害羞泛紅雙頰近距離傾身",
+        "outfitJa": "ゆったりした白の彼シャツ、頬を染めて前かがみになる至近距離",
+        "keywords": [
+          "男友襯衫",
+          "白襯衫",
+          "害羞",
+          "微醺",
+          "性感",
+          "私密",
+          "彼シャツ",
+          "ワイシャツ"
+        ],
+        "captionJa": "リンシのシャツ、あなたの匂いがしてすごく安心するの……もう、そんな熱い目で見つめられたら、動けなくなっちゃうわ……💖",
+        "captionZh": "リンシ的襯衫上都是你的氣息，穿起來好安心喔……真是的，被你用那麼熾熱的眼神盯著看，人家都動不了了啦……💖",
+        "tts": "リンシのシャツ、あなたの匂いがしてすごく安心するの。そんなに見つめられたら、照れちゃうわ。",
+        "pixaiPrompt": "adult Ayukawa Madoka, 18+, faithful character identity, deep blue-black long hair, soft layered hair, natural bangs, face-framing strands, vivid green eyes, gentle refined facial features, natural adult proportions, consistent face and hairstyle, realistic character rendering, intimate home couple POV, wearing an oversized unbuttoned white boyfriend shirt, blushing softly and leaning forward toward the viewer with a shy affectionate smile, warm indoor lighting, 50mm lens, 9:16",
+        "imageUrl": "assets/pov_photos/pov_20_boyfriend_shirt.png",
+        "title": "居家私密時刻・只穿你的大白襯衫害羞傾身",
+        "caption": "リンシのシャツ、あなたの匂いがしてすごく安心するの……もう、そんな熱い目で見つめられたら、動けなくなっちゃうわ……💖\n（リンシ的襯衫上都是你的氣息，穿起來好安心喔……真是的，被你用那麼熾熱的眼神盯著看，人家都動不了了啦……💖）",
+        "fullReplyBilingual": "リンシのシャツ、あなたの匂いがしてすごく安心するの……もう、そんな熱い目で見つめられたら、動けなくなっちゃうわ……💖\n（リンシ的襯衫上都是你的氣息，穿起來好安心喔……真是的，被你用那麼熾熱的眼神盯著看，人家都動不了了啦……💖）",
+        "ttsText": "リンシのシャツ、あなたの匂いがしてすごく安心するの。そんなに見つめられたら、照れちゃうわ。"
+      },
+      {
+        "id": "pov_21_office_ol",
+        "sceneCode": "POV-OFFICE",
+        "titleZh": "辦公室秘密戀情・酒紅高領毛衣與窄裙 OL",
+        "titleJa": "オフィスの秘密・ボルドーのニットとタイトスカートOL",
+        "image": "assets/pov_photos/pov_21_office_ol.png",
+        "costumeId": "work_ol",
+        "outfitZh": "酒紅色無袖高領針織衫、黑色高腰窄裙、識別證掛繩、陽光辦公室",
+        "outfitJa": "ボルドーのノースリーブタートルニット、黒のタイトスカート、社員証ストラップ",
+        "keywords": [
+          "工作",
+          "辦公室",
+          "秘書",
+          "上班",
+          "窄裙",
+          "ol",
+          "オフィス",
+          "仕事",
+          "秘書"
+        ],
+        "captionJa": "お疲れ様、リンシ！会社ではクールな先輩社員だけど……給湯室で二人きりになったら、あなたの恋人に戻ってもいいかしら？💼💖",
+        "captionZh": "工作辛苦了，リンシ！雖然在公司裡我是冷靜幹練的前輩……但只要在茶水間兩人獨處時，可以變回你的戀人嗎？💼💖",
+        "tts": "お疲れ様、リンシ！二人きりになったら、あなたの恋人に戻ってもいいかしら？",
+        "pixaiPrompt": "adult Ayukawa Madoka, 18+, faithful character identity, deep blue-black long hair, soft layered hair, natural bangs, face-framing strands, vivid green eyes, gentle refined facial features, natural adult proportions, consistent face and hairstyle, realistic character rendering, office lady outfit, wearing a burgundy sleeveless turtleneck knit top, black pencil skirt, and ID badge lanyard in a modern sunlit office, gentle confident smile at the viewer, 50mm lens, 9:16",
+        "imageUrl": "assets/pov_photos/pov_21_office_ol.png",
+        "title": "辦公室秘密戀情・酒紅高領毛衣與窄裙 OL",
+        "caption": "お疲れ様、リンシ！会社ではクールな先輩社員だけど……給湯室で二人きりになったら、あなたの恋人に戻ってもいいかしら？💼💖\n（工作辛苦了，リンシ！雖然在公司裡我是冷靜幹練的前輩……但只要在茶水間兩人獨處時，可以變回你的戀人嗎？💼💖）",
+        "fullReplyBilingual": "お疲れ様、リンシ！会社ではクールな先輩社員だけど……給湯室で二人きりになったら、あなたの恋人に戻ってもいいかしら？💼💖\n（工作辛苦了，リンシ！雖然在公司裡我是冷靜幹練的前輩……但只要在茶水間兩人獨處時，可以變回你的戀人嗎？💼💖）",
+        "ttsText": "お疲れ様、リンシ！二人きりになったら、あなたの恋人に戻ってもいいかしら？"
+      },
+      {
+        "id": "pov_22_guitar_home",
+        "sceneCode": "POV-GUITAR",
+        "titleZh": "午後木吉他彈唱・專屬於你的不插電情歌",
+        "titleJa": "午後のアコースティックギター・あなたへの弾き語り",
+        "image": "assets/pov_photos/pov_22_guitar_home.png",
+        "costumeId": "guitar",
+        "outfitZh": "純白細肩帶居家背心、懷抱原木民謠吉他、溫暖房間光影",
+        "outfitJa": "白のキャミソール、アコースティックギターを抱えて微笑む部屋",
+        "keywords": [
+          "吉他",
+          "木吉他",
+          "彈唱",
+          "民謠",
+          "情歌",
+          "ギター",
+          "弾き語り"
+        ],
+        "captionJa": "サックスもいいけど、こうして部屋でギターを爪弾くのも好きなの。リンシ、隣に座って？一番最初にあなたに聴いてほしい曲があるの🎸",
+        "captionZh": "雖然薩克斯風也很棒，但我也喜歡像這樣在房間裡輕撥木吉他呢。リンシ，坐到我旁邊來吧？有一首曲子，我想第一個彈給你聽🎸",
+        "tts": "サックスもいいけど、部屋でギターを弾くのも好きなの。リンシ、隣に座って聴いててね。",
+        "pixaiPrompt": "adult Ayukawa Madoka, 18+, faithful character identity, deep blue-black long hair, soft layered hair, natural bangs, face-framing strands, vivid green eyes, gentle refined facial features, natural adult proportions, consistent face and hairstyle, realistic character rendering, playing an acoustic guitar at home in a white camisole top, warm afternoon sunlight streaming into the room, looking at the viewer with a tender musical smile, 50mm lens, 9:16",
+        "imageUrl": "assets/pov_photos/pov_22_guitar_home.png",
+        "title": "午後木吉他彈唱・專屬於你的不插電情歌",
+        "caption": "サックスもいいけど、こうして部屋でギターを爪弾くのも好きなの。リンシ、隣に座って？一番最初にあなたに聴いてほしい曲があるの🎸\n（雖然薩克斯風也很棒，但我也喜歡像這樣在房間裡輕撥木吉他呢。リンシ，坐到我旁邊來吧？有一首曲子，我想第一個彈給你聽🎸）",
+        "fullReplyBilingual": "サックスもいいけど、こうして部屋でギターを爪弾くのも好きなの。リンシ、隣に座って？一番最初にあなたに聴いてほしい曲があるの🎸\n（雖然薩克斯風也很棒，但我也喜歡像這樣在房間裡輕撥木吉他呢。リンシ，坐到我旁邊來吧？有一首曲子，我想第一個彈給你聽🎸）",
+        "ttsText": "サックスもいいけど、部屋でギターを弾くのも好きなの。リンシ、隣に座って聴いててね。"
+      },
+      {
+        "id": "pov_23_moon_bunny_heart",
+        "sceneCode": "POV-MOON-BUNNY",
+        "titleZh": "滿月落地窗前・黑絲絨兔女郎雙手比愛心",
+        "titleJa": "満月の窓辺・黒バニーガールのハートポーズ",
+        "image": "assets/pov_photos/pov_23_moon_bunny_heart.png",
+        "costumeId": "bunny",
+        "outfitZh": "經典黑色兔女郎連身裝、白領結與袖口、滿月都市夜景窗前雙手比愛心",
+        "outfitJa": "黒のバニーガール衣装、満月と夜景の窓辺で両手ハートポーズ",
+        "keywords": [
+          "兔女郎",
+          "黑兔",
+          "比愛心",
+          "滿月",
+          "夜景",
+          "バニー",
+          "ハート"
+        ],
+        "captionJa": "ぴょんっ🐰 満月の夜だから、リンシのために特別なバニー姿でハートを届けてあげる！……もう、ドキドキしすぎて倒れないでよね💖",
+        "captionZh": "蹦🐰 因為今晚是滿月之夜，特別換上兔女郎裝為リンシ送上雙手愛心喔！……真是的，可別因為心跳太快而昏倒囉💖",
+        "tts": "満月の夜だから、リンシのために特別なバニー姿でハートを届けてあげるわ！",
+        "pixaiPrompt": "adult Ayukawa Madoka, 18+, faithful character identity, deep blue-black long hair, soft layered hair, natural bangs, face-framing strands, vivid green eyes, gentle refined facial features, natural adult proportions, consistent face and hairstyle, realistic character rendering, black bunny girl cosplay by a floor-to-ceiling window with a full moon and city night view, making a cute heart gesture with both hands over her chest, blushing playful smile, 50mm lens, 9:16",
+        "imageUrl": "assets/pov_photos/pov_23_moon_bunny_heart.png",
+        "title": "滿月落地窗前・黑絲絨兔女郎雙手比愛心",
+        "caption": "ぴょんっ🐰 満月の夜だから、リンシのために特別なバニー姿でハートを届けてあげる！……もう、ドキドキしすぎて倒れないでよね💖\n（蹦🐰 因為今晚是滿月之夜，特別換上兔女郎裝為リンシ送上雙手愛心喔！……真是的，可別因為心跳太快而昏倒囉💖）",
+        "fullReplyBilingual": "ぴょんっ🐰 満月の夜だから、リンシのために特別なバニー姿でハートを届けてあげる！……もう、ドキドキしすぎて倒れないでよね💖\n（蹦🐰 因為今晚是滿月之夜，特別換上兔女郎裝為リンシ送上雙手愛心喔！……真是的，可別因為心跳太快而昏倒囉💖）",
+        "ttsText": "満月の夜だから、リンシのために特別なバニー姿でハートを届けてあげるわ！"
+      },
+      {
+        "id": "pov_24_wheat_field_date",
+        "sceneCode": "POV-FIELD",
+        "titleZh": "金色麥田微風・水藍綁帶洋裝回眸一笑",
+        "titleJa": "黄金色の草原・水色のサマードレスで微笑む",
+        "image": "assets/pov_photos/pov_24_wheat_field_date.png",
+        "costumeId": "dress",
+        "outfitZh": "淺藍胸前綁帶無袖夏日洋裝、金色芒草麥田與晴朗藍天",
+        "outfitJa": "水色のフロントリボンサマードレス、黄金色の草原と青空",
+        "keywords": [
+          "麥田",
+          "草原",
+          "草地",
+          "郊遊",
+          "旅行",
+          "踏青",
+          "藍洋裝",
+          "草原",
+          "旅行"
+        ],
+        "captionJa": "風がすごく気持ちいいわね、リンシ！都会の喧騒を離れて、こうして二人きりで自然の中を歩くの、ずっと夢だったのよ🌾✨",
+        "captionZh": "微風吹起來好舒服喔，リンシ！遠離城市的喧囂，像這樣兩個人在金色草原中漫步，一直都是我的夢想呢🌾✨",
+        "tts": "風がすごく気持ちいいわね、リンシ！こうして二人きりで自然の中を歩くの、大好きよ。",
+        "pixaiPrompt": "adult Ayukawa Madoka, 18+, faithful character identity, deep blue-black long hair, soft layered hair, natural bangs, face-framing strands, vivid green eyes, gentle refined facial features, natural adult proportions, consistent face and hairstyle, realistic character rendering, standing in a golden grass wheat field under a clear blue sky, wearing a light blue tie-front sundress, gentle breeze blowing her long dark hair, warm romantic smile at the viewer, 50mm lens, 9:16",
+        "imageUrl": "assets/pov_photos/pov_24_wheat_field_date.png",
+        "title": "金色麥田微風・水藍綁帶洋裝回眸一笑",
+        "caption": "風がすごく気持ちいいわね、リンシ！都会の喧騒を離れて、こうして二人きりで自然の中を歩くの、ずっと夢だったのよ🌾✨\n（微風吹起來好舒服喔，リンシ！遠離城市的喧囂，像這樣兩個人在金色草原中漫步，一直都是我的夢想呢🌾✨）",
+        "fullReplyBilingual": "風がすごく気持ちいいわね、リンシ！都会の喧騒を離れて、こうして二人きりで自然の中を歩くの、ずっと夢だったのよ🌾✨\n（微風吹起來好舒服喔，リンシ！遠離城市的喧囂，像這樣兩個人在金色草原中漫步，一直都是我的夢想呢🌾✨）",
+        "ttsText": "風がすごく気持ちいいわね、リンシ！こうして二人きりで自然の中を歩くの、大好きよ。"
+      }
+    ],
+    "promptCards": [
+      {
+        "id": "pixai_pov_01",
+        "category": "couple_pov",
+        "badge": "01｜情侶 POV",
+        "titleZh": "放學校門等你・主動牽手",
+        "titleJa": "01｜放課後の校門・手繋ぎ",
+        "sceneDesc": "校門放學時，她看到你後主動伸手牽住你，另一手提書包，帶一點得意又溫柔的笑。夕陽拉長兩人的影子。",
+        "outfit": "深藍外套、白襯衫、紅蝴蝶結、格紋百褶裙、深色長襪、棕色樂福鞋",
+        "linkedPhotoId": "pov_06_hold_hands",
+        "prompt": "adult Ayukawa Madoka, 18+, faithful character identity, deep blue-black long hair, soft layered hair, natural bangs, face-framing strands, vivid green eyes, gentle refined facial features, natural adult proportions, consistent face and hairstyle, realistic character rendering, couple POV, first-person perspective, Japanese school gate after class, she notices the viewer and gently reaches out to hold the viewer's hand, small confident smile, slight head tilt, school bag in other hand, warm sunset, long shadows, nostalgic atmosphere, candid photography, 50mm lens, shallow depth of field, natural skin texture, subtle film grain, 9:16 vertical",
+        "negativePrompt": "low quality, worst quality, blurry, bad anatomy, malformed hands, extra fingers, missing fingers, extra arms, extra legs, duplicated person, distorted face, asymmetrical eyes, inconsistent hairstyle, wrong hair color, wrong eye color, childlike body, oversexualized pose, explicit content, nudity, lingerie, plastic skin, doll face, AI beauty filter, CGI, 3D render, oversharpening, HDR artifacts, fisheye distortion, text, watermark, logo, signature"
+      },
+      {
+        "id": "pixai_pov_02",
+        "category": "couple_pov",
+        "badge": "02｜情侶 POV",
+        "titleZh": "近距離替你整理領帶",
+        "titleJa": "02｜至近距離でネクタイ直し",
+        "sceneDesc": "她站得很近，替你整理歪掉的領帶，整理完抬眼看你，表情像「真拿你沒辦法」，耳尖微紅。",
+        "outfit": "深藍外套、白襯衫、紅蝴蝶結、單肩書包",
+        "linkedPhotoId": "pov_01_tie",
+        "prompt": "adult Ayukawa Madoka, 18+, faithful character identity, deep blue-black long hair, soft layered hair, natural bangs, face-framing strands, vivid green eyes, gentle refined facial features, natural adult proportions, consistent face and hairstyle, realistic character rendering, intimate couple POV, close everyday interaction, she gently straightens the viewer's tie, looking up with a mildly teasing caring expression, subtle blush, relaxed smile, close personal distance, Japanese school corridor, soft afternoon window light, 50mm portrait lens, shallow depth of field, focus on eyes and hands, realistic skin texture, cinematic candid photograph, 9:16",
+        "negativePrompt": "low quality, worst quality, blurry, bad anatomy, malformed hands, extra fingers, missing fingers, extra arms, extra legs, duplicated person, distorted face, asymmetrical eyes, inconsistent hairstyle, wrong hair color, wrong eye color, childlike body, oversexualized pose, explicit content, nudity, lingerie, plastic skin, doll face, AI beauty filter, CGI, 3D render, oversharpening, HDR artifacts, fisheye distortion, text, watermark, logo, signature"
+      },
+      {
+        "id": "pixai_pov_03",
+        "category": "couple_pov",
+        "badge": "03｜情侶 POV",
+        "titleZh": "雨天放學・透明傘下共傘",
+        "titleJa": "03｜雨の放課後・相合い傘",
+        "sceneDesc": "雨天放學共撐透明傘，她輕拉你的袖口把你帶進傘下，肩膀自然靠近，雨滴在傘面形成前景散景。",
+        "outfit": "深色校服外套、白襯衫、百褶裙、深色長襪、帆布書包",
+        "linkedPhotoId": "pov_01_tie",
+        "prompt": "adult Ayukawa Madoka, 18+, faithful character identity, deep blue-black long hair, soft layered hair, natural bangs, face-framing strands, vivid green eyes, gentle refined facial features, natural adult proportions, consistent face and hairstyle, realistic character rendering, couple POV under one transparent umbrella, rainy Japanese street after school, she gently holds the viewer's sleeve and moves closer, soft affectionate smile, shoulders naturally close, raindrops on umbrella in foreground, wet pavement reflections, cool blue-gray atmosphere, warm skin tones, candid street photography, 35mm lens, soft bokeh, realistic water droplets, subtle film grain, 9:16",
+        "negativePrompt": "low quality, worst quality, blurry, bad anatomy, malformed hands, extra fingers, missing fingers, extra arms, extra legs, duplicated person, distorted face, asymmetrical eyes, inconsistent hairstyle, wrong hair color, wrong eye color, childlike body, oversexualized pose, explicit content, nudity, lingerie, plastic skin, doll face, AI beauty filter, CGI, 3D render, oversharpening, HDR artifacts, fisheye distortion, text, watermark, logo, signature"
+      },
+      {
+        "id": "pixai_pov_04",
+        "category": "couple_pov",
+        "badge": "04｜情侶 POV",
+        "titleZh": "便利店外・並肩吃蘇打冰棒",
+        "titleJa": "04｜コンビニ前・アイス半分こ",
+        "sceneDesc": "夏日傍晚坐在便利店外吃冰。她咬一口冰棒後俏皮皺鼻，再笑著看你，腳輕輕晃動。",
+        "outfit": "白短袖、淺藍裙、帆布鞋、小肩包、簡單髮帶",
+        "linkedPhotoId": "pov_03_popsicle_1",
+        "prompt": "adult Ayukawa Madoka, 18+, faithful character identity, deep blue-black long hair, soft layered hair, natural bangs, face-framing strands, vivid green eyes, gentle refined facial features, natural adult proportions, consistent face and hairstyle, realistic character rendering, summer date POV outside a Japanese convenience store, sitting beside the viewer, eating a popsicle, playful nose scrunch, bright natural smile, legs casually swinging, white short-sleeve top, light blue skirt, canvas sneakers, small shoulder bag, warm evening light, convenience store glow, candid snapshot, 35mm film photography, soft bokeh, relaxed romantic atmosphere, 9:16",
+        "negativePrompt": "low quality, worst quality, blurry, bad anatomy, malformed hands, extra fingers, missing fingers, extra arms, extra legs, duplicated person, distorted face, asymmetrical eyes, inconsistent hairstyle, wrong hair color, wrong eye color, childlike body, oversexualized pose, explicit content, nudity, lingerie, plastic skin, doll face, AI beauty filter, CGI, 3D render, oversharpening, HDR artifacts, fisheye distortion, text, watermark, logo, signature"
+      },
+      {
+        "id": "pixai_pov_05",
+        "category": "couple_pov",
+        "badge": "05｜情侶 POV",
+        "titleZh": "安靜書店・並肩共讀一本書",
+        "titleJa": "05｜静かな本屋・一冊の本をシェア",
+        "sceneDesc": "安靜書店裡兩人共看一本書，她肩膀輕碰你，看到有趣內容後轉頭露出好奇溫柔的笑。",
+        "outfit": "米白針織上衣、長裙、低跟鞋或平底鞋、棕色皮革小包",
+        "linkedPhotoId": "pov_02_bookstore",
+        "prompt": "adult Ayukawa Madoka, 18+, faithful character identity, deep blue-black long hair, soft layered hair, natural bangs, face-framing strands, vivid green eyes, gentle refined facial features, natural adult proportions, consistent face and hairstyle, realistic character rendering, quiet bookstore date, couple POV, standing shoulder-to-shoulder with the viewer, sharing one open book, shoulder gently touching the viewer, curious gentle smile, warm wooden bookshelves, soft window light, quiet intimate atmosphere, dust particles, 50mm lens, shallow depth of field, realistic paper and fabric texture, candid editorial photography, 9:16",
+        "negativePrompt": "low quality, worst quality, blurry, bad anatomy, malformed hands, extra fingers, missing fingers, extra arms, extra legs, duplicated person, distorted face, asymmetrical eyes, inconsistent hairstyle, wrong hair color, wrong eye color, childlike body, oversexualized pose, explicit content, nudity, lingerie, plastic skin, doll face, AI beauty filter, CGI, 3D render, oversharpening, HDR artifacts, fisheye distortion, text, watermark, logo, signature"
+      },
+      {
+        "id": "pixai_pov_06",
+        "category": "couple_pov",
+        "badge": "06｜情侶 POV",
+        "titleZh": "夏日街頭・伸手替你扶正帽子",
+        "titleJa": "06｜夏の街角・帽子を直す指先",
+        "sceneDesc": "夏日街頭她伸手替你把帽子扶正，完成後笑著確認自己的成果，帶一點調皮感。",
+        "outfit": "淺色夏季洋裝、草帽、簡單涼鞋、小肩包",
+        "linkedPhotoId": "pov_06_hold_hands",
+        "prompt": "adult Ayukawa Madoka, 18+, faithful character identity, deep blue-black long hair, soft layered hair, natural bangs, face-framing strands, vivid green eyes, gentle refined facial features, natural adult proportions, consistent face and hairstyle, realistic character rendering, summer couple POV, quiet Japanese street, she reaches toward the viewer and gently straightens the viewer's hat, playful affectionate smile, brief eye contact, leafy shadows, soft summer breeze, natural candid photography, 50mm lens, shallow depth of field, subtle film grain, clean Japanese summer color palette, 9:16",
+        "negativePrompt": "low quality, worst quality, blurry, bad anatomy, malformed hands, extra fingers, missing fingers, extra arms, extra legs, duplicated person, distorted face, asymmetrical eyes, inconsistent hairstyle, wrong hair color, wrong eye color, childlike body, oversexualized pose, explicit content, nudity, lingerie, plastic skin, doll face, AI beauty filter, CGI, 3D render, oversharpening, HDR artifacts, fisheye distortion, text, watermark, logo, signature"
+      },
+      {
+        "id": "pixai_pov_07",
+        "category": "couple_pov",
+        "badge": "07｜情侶 POV",
+        "titleZh": "傍晚電車・輕靠你肩膀睡著",
+        "titleJa": "07｜夕暮れの電車・肩にもたれてうたた寝",
+        "sceneDesc": "傍晚電車裡她不知不覺睡著，頭輕輕靠在你的肩膀，手自然放在膝上，窗外城市燈光掠過。",
+        "outfit": "日常針織上衣、長裙或直筒褲、薄外套，低調通勤風",
+        "linkedPhotoId": "pov_11_cafe_latte",
+        "prompt": "adult Ayukawa Madoka, 18+, faithful character identity, deep blue-black long hair, soft layered hair, natural bangs, face-framing strands, vivid green eyes, gentle refined facial features, natural adult proportions, consistent face and hairstyle, realistic character rendering, quiet train ride POV, seated beside the viewer, gently asleep with her head resting on the viewer's shoulder, peaceful relaxed expression, hands naturally on lap, evening city lights outside train window, soft reflections, wholesome couple moment, low ambient light, 50mm lens, cinematic film grain, natural hair detail, shallow depth of field, documentary photography, 9:16",
+        "negativePrompt": "low quality, worst quality, blurry, bad anatomy, malformed hands, extra fingers, missing fingers, extra arms, extra legs, duplicated person, distorted face, asymmetrical eyes, inconsistent hairstyle, wrong hair color, wrong eye color, childlike body, oversexualized pose, explicit content, nudity, lingerie, plastic skin, doll face, AI beauty filter, CGI, 3D render, oversharpening, HDR artifacts, fisheye distortion, text, watermark, logo, signature"
+      },
+      {
+        "id": "pixai_pov_08",
+        "category": "couple_pov",
+        "badge": "08｜情侶 POV",
+        "titleZh": "放學返家・手指悄悄勾住牽手",
+        "titleJa": "08｜帰り道・そっと絡める指先",
+        "sceneDesc": "回家路上她趁你沒注意，手指悄悄靠近並與你勾住。鏡頭重點放在交握的手與並肩步伐。",
+        "outfit": "白短袖、淺藍裙、帆布鞋、小肩包",
+        "linkedPhotoId": "pov_06_hold_hands",
+        "prompt": "adult Ayukawa Madoka, 18+, faithful character identity, deep blue-black long hair, soft layered hair, natural bangs, face-framing strands, vivid green eyes, gentle refined facial features, natural adult proportions, consistent face and hairstyle, realistic character rendering, couple POV walking home, subtle hand-holding moment, her fingers quietly reach toward the viewer's hand and gently intertwine, shy affectionate gesture, walking side by side, focus on hands with partial view of both figures, late afternoon sunlight, quiet Japanese residential street, soft breeze moving her long blue-black hair, candid snapshot, 50mm lens, shallow depth of field, warm film tones, 9:16",
+        "negativePrompt": "low quality, worst quality, blurry, bad anatomy, malformed hands, extra fingers, missing fingers, extra arms, extra legs, duplicated person, distorted face, asymmetrical eyes, inconsistent hairstyle, wrong hair color, wrong eye color, childlike body, oversexualized pose, explicit content, nudity, lingerie, plastic skin, doll face, AI beauty filter, CGI, 3D render, oversharpening, HDR artifacts, fisheye distortion, text, watermark, logo, signature"
+      },
+      {
+        "id": "pixai_pov_09",
+        "category": "couple_pov",
+        "badge": "09｜情侶 POV",
+        "titleZh": "微風街道・回頭伸手叫你快點",
+        "titleJa": "09｜風の街角・振り返って「早く！」",
+        "sceneDesc": "她走在前面幾步，發現你落後後回頭，笑著伸手叫你快點。長髮與裙襬被風吹起，畫面有自然動態。",
+        "outfit": "輕盈夏季洋裝、帆布鞋或簡潔涼鞋、小肩包",
+        "linkedPhotoId": "pov_07_turn_back_1",
+        "prompt": "adult Ayukawa Madoka, 18+, faithful character identity, deep blue-black long hair, soft layered hair, natural bangs, face-framing strands, vivid green eyes, gentle refined facial features, natural adult proportions, consistent face and hairstyle, realistic character rendering, dynamic couple POV, walking ahead on a sunny Japanese street, she turns back toward the viewer, extends one hand inviting the viewer to catch up, bright playful smile, expressive green eyes, long blue-black hair moving in the breeze, dress hem moving naturally, candid motion, 35mm lens, natural daylight, cinematic street photography, realistic fabric movement, subtle film grain, 9:16",
+        "negativePrompt": "low quality, worst quality, blurry, bad anatomy, malformed hands, extra fingers, missing fingers, extra arms, extra legs, duplicated person, distorted face, asymmetrical eyes, inconsistent hairstyle, wrong hair color, wrong eye color, childlike body, oversexualized pose, explicit content, nudity, lingerie, plastic skin, doll face, AI beauty filter, CGI, 3D render, oversharpening, HDR artifacts, fisheye distortion, text, watermark, logo, signature"
+      },
+      {
+        "id": "pixai_pov_10",
+        "category": "couple_pov",
+        "badge": "10｜情侶 POV",
+        "titleZh": "河堤煙火・浴衣側看轉頭微笑",
+        "titleJa": "10｜川辺の花火大会・浴衣で振り返る瞳",
+        "sceneDesc": "夏夜河堤煙火大會，她穿浴衣坐在你身旁，先看煙火，再慢慢轉頭看你。煙火映在眼睛裡，露出很淡的溫柔笑容。",
+        "outfit": "靛藍、白、淡紅配色的夏日浴衣、簡單腰帶、低調髮飾、木屐",
+        "linkedPhotoId": "pov_10_fireworks_yukata",
+        "prompt": "adult Ayukawa Madoka, 18+, faithful character identity, deep blue-black long hair, soft layered hair, natural bangs, face-framing strands, vivid green eyes, gentle refined facial features, natural adult proportions, consistent face and hairstyle, realistic character rendering, summer fireworks date, couple POV beside a riverside, wearing elegant traditional yukata, she first looks toward the fireworks then slowly turns toward the viewer, gentle quiet smile, green eyes reflecting fireworks, riverside night, distant festival lights, subtle crowd bokeh, cool night air with warm fireworks glow, 50mm lens, shallow depth of field, cinematic Japanese photography, realistic fabric texture, soft film grain, nostalgic romantic memory, 9:16 vertical",
+        "negativePrompt": "low quality, worst quality, blurry, bad anatomy, malformed hands, extra fingers, missing fingers, extra arms, extra legs, duplicated person, distorted face, asymmetrical eyes, inconsistent hairstyle, wrong hair color, wrong eye color, childlike body, oversexualized pose, explicit content, nudity, lingerie, plastic skin, doll face, AI beauty filter, CGI, 3D render, oversharpening, HDR artifacts, fisheye distortion, text, watermark, logo, signature"
+      },
+      {
+        "id": "pixai_daily_01",
+        "category": "daily_card",
+        "badge": "日常創作卡 01",
+        "titleZh": "百葉窗晨光・寬鬆毛衣伸懶腰",
+        "titleJa": "日常カード01｜朝のブラインドと背伸び",
+        "sceneDesc": "穿著柔軟寬鬆針織毛衣與短褲，在早晨百葉窗灑落的光影條紋中睡眼惺忪地伸懶腰（Medium Shot）。",
+        "outfit": "寬鬆針織毛衣、居家短褲",
+        "linkedPhotoId": "pov_12_morning_kitchen",
+        "prompt": "Ayukawa Madoka, wearing a soft oversized knit sweater and shorts, stretching by the window, soft morning light casting stripes from venetian blinds, slightly messy hair, sleepy expression, medium shot, warm soft color tone, realistic anime style",
+        "negativePrompt": "low quality, worst quality, blurry, bad anatomy, malformed hands, extra fingers, missing fingers, extra arms, extra legs, duplicated person, distorted face, asymmetrical eyes, inconsistent hairstyle, wrong hair color, wrong eye color, childlike body, oversexualized pose, explicit content, nudity, lingerie, plastic skin, doll face, AI beauty filter, CGI, 3D render, oversharpening, HDR artifacts, fisheye distortion, text, watermark, logo, signature"
+      },
+      {
+        "id": "pixai_daily_02",
+        "category": "daily_card",
+        "badge": "日常創作卡 02",
+        "titleZh": "秋日落葉公園・長椅熱咖啡",
+        "titleJa": "日常カード02｜紅葉の公園ベンチとコーヒー",
+        "sceneDesc": "穿著柔軟針織上衣與短裙，坐在飄落秋葉的公園長椅上手捧熱咖啡，溫柔望向遠方（Cowboy Shot）。",
+        "outfit": "柔軟針織衫、短裙",
+        "linkedPhotoId": "pov_11_cafe_latte",
+        "prompt": "Ayukawa Madoka, wearing a soft knit top and a short skirt, sitting on a park bench under falling autumn leaves, holding a cup of coffee, gazing into the distance with a gentle expression, soft natural light from top left, cowboy shot, realistic style, ambient warm tones, cinematic lighting",
+        "negativePrompt": "low quality, worst quality, blurry, bad anatomy, malformed hands, extra fingers, missing fingers, extra arms, extra legs, duplicated person, distorted face, asymmetrical eyes, inconsistent hairstyle, wrong hair color, wrong eye color, childlike body, oversexualized pose, explicit content, nudity, lingerie, plastic skin, doll face, AI beauty filter, CGI, 3D render, oversharpening, HDR artifacts, fisheye distortion, text, watermark, logo, signature"
+      },
+      {
+        "id": "pixai_daily_03",
+        "category": "daily_card",
+        "badge": "日常創作卡 03",
+        "titleZh": "深夜超商冰櫃・挑選飲料側顏",
+        "titleJa": "日常カード03｜夜のコンビニ冷蔵庫と横顔",
+        "sceneDesc": "穿著休閒襯衫外套與牛仔褲，站在便利商店飲料冰櫃前挑選飲品，冷白微光照亮精緻側臉（Close-up）。",
+        "outfit": "休閒襯衫外套、牛仔褲",
+        "linkedPhotoId": "pov_04_popsicle_2",
+        "prompt": "Ayukawa Madoka, wearing a casual shirt jacket and jeans, standing in front of a convenience store fridge, choosing a drink, cold blue and white light illuminating her side face, close-up shot, realistic daily life tone, calm and reflective expression",
+        "negativePrompt": "low quality, worst quality, blurry, bad anatomy, malformed hands, extra fingers, missing fingers, extra arms, extra legs, duplicated person, distorted face, asymmetrical eyes, inconsistent hairstyle, wrong hair color, wrong eye color, childlike body, oversexualized pose, explicit content, nudity, lingerie, plastic skin, doll face, AI beauty filter, CGI, 3D render, oversharpening, HDR artifacts, fisheye distortion, text, watermark, logo, signature"
+      },
+      {
+        "id": "pixai_daily_04",
+        "category": "daily_card",
+        "badge": "日常創作卡 04",
+        "titleZh": "月光城市陽台・黑禮服吹薩克斯風",
+        "titleJa": "日常カード04｜月夜のバルコニーでサックス独奏",
+        "sceneDesc": "身穿修身黑色洋裝站在夜景陽台吹奏薩克斯風，閉眼沉浸於爵士樂音中，晚風輕拂長髮。",
+        "outfit": "修身黑色洋裝、薩克斯風",
+        "linkedPhotoId": "pov_10_fireworks_yukata",
+        "prompt": "Ayukawa Madoka, in a tight black dress, standing on a balcony playing the saxophone, soft balcony light and cool moonlight, city lights in the background, side-back angle, closed eyes in musical immersion, hair flowing in the night wind, realistic anime style",
+        "negativePrompt": "low quality, worst quality, blurry, bad anatomy, malformed hands, extra fingers, missing fingers, extra arms, extra legs, duplicated person, distorted face, asymmetrical eyes, inconsistent hairstyle, wrong hair color, wrong eye color, childlike body, oversexualized pose, explicit content, nudity, lingerie, plastic skin, doll face, AI beauty filter, CGI, 3D render, oversharpening, HDR artifacts, fisheye distortion, text, watermark, logo, signature"
+      },
+      {
+        "id": "pixai_daily_05",
+        "category": "daily_card",
+        "badge": "日常創作卡 05",
+        "titleZh": "晴空陽台・微風中摺疊衣物",
+        "titleJa": "日常カード05｜陽だまりのバルコニーで洗濯物たたみ",
+        "sceneDesc": "穿著寬鬆棉質襯衫與短褲在陽光灑落的陽台摺衣服，背景床單隨風輕晃，神情溫柔恬靜。",
+        "outfit": "寬鬆棉質襯衫、居家短褲",
+        "linkedPhotoId": "pov_12_morning_kitchen",
+        "prompt": "Ayukawa Madoka, wearing a loose cotton shirt and shorts, folding clothes on the sunny balcony, fabric blowing gently in the background, natural sunlight from above casting soft shadows, warm gentle expression, soft pastel tones, realistic anime illustration",
+        "negativePrompt": "low quality, worst quality, blurry, bad anatomy, malformed hands, extra fingers, missing fingers, extra arms, extra legs, duplicated person, distorted face, asymmetrical eyes, inconsistent hairstyle, wrong hair color, wrong eye color, childlike body, oversexualized pose, explicit content, nudity, lingerie, plastic skin, doll face, AI beauty filter, CGI, 3D render, oversharpening, HDR artifacts, fisheye distortion, text, watermark, logo, signature"
+      },
+      {
+        "id": "pixai_daily_06",
+        "category": "daily_card",
+        "badge": "日常創作卡 06",
+        "titleZh": "紅帽T夜晚超商階梯・城市車燈微光",
+        "titleJa": "日常カード06｜赤パーカーと夜のコンビニ階段",
+        "sceneDesc": "穿著紅色連帽衫與短裙坐在夜晚便利店階梯上，身旁放著打開的飲料，遠處城市車燈閃爍。",
+        "outfit": "紅色連帽衫 (Red Hoodie)、短裙",
+        "linkedPhotoId": "pov_05_popsicle_3",
+        "prompt": "Ayukawa Madoka, in a red hoodie and short skirt, sitting on the steps outside a convenience store at night, opened drink beside her, city lights and car headlights in the distance, soft cold lighting from the store above, front low angle, pensive expression, realistic anime style",
+        "negativePrompt": "low quality, worst quality, blurry, bad anatomy, malformed hands, extra fingers, missing fingers, extra arms, extra legs, duplicated person, distorted face, asymmetrical eyes, inconsistent hairstyle, wrong hair color, wrong eye color, childlike body, oversexualized pose, explicit content, nudity, lingerie, plastic skin, doll face, AI beauty filter, CGI, 3D render, oversharpening, HDR artifacts, fisheye distortion, text, watermark, logo, signature"
+      },
+      {
+        "id": "pixai_guide_a",
+        "category": "retro_guide",
+        "badge": "Prompt A｜黑白漫畫風",
+        "titleZh": "80年代復古漫畫・紅色法拉利 Testarossa",
+        "titleJa": "Prompt A｜80年代モノクロ漫画＆フェラーリ",
+        "sceneDesc": "80年代經典黑白漫畫粗線條風格，身穿皮夾克、緊身短裙與長靴，帥氣斜靠在復古 Ferrari Testarossa 上（Cowboy Shot）。",
+        "outfit": "騎士皮夾克、緊身短裙、高跟長靴",
+        "linkedPhotoId": "pov_07_turn_back_1",
+        "prompt": "Ayukawa Madoka, retro anime girl from the 1980s, long black hair with layered bangs, wearing a leather bomber jacket, tight skirt and long heeled boots, sitting casually on a vintage Ferrari Testarossa, leaning on one hand, confident and slightly mischievous expression, gaze directed slightly downward toward the viewer, side view, cowboy shot, slightly low angle, time setting: late afternoon, strong directional shadows, dramatic monochrome contrast, black and white manga style, bold inking, retro comic panel aesthetic",
+        "negativePrompt": "low quality, worst quality, blurry, bad anatomy, malformed hands, extra fingers, missing fingers, extra arms, extra legs, duplicated person, distorted face, asymmetrical eyes, inconsistent hairstyle, wrong hair color, wrong eye color, childlike body, oversexualized pose, explicit content, nudity, lingerie, plastic skin, doll face, AI beauty filter, CGI, 3D render, oversharpening, HDR artifacts, fisheye distortion, text, watermark, logo, signature"
+      },
+      {
+        "id": "pixai_guide_b",
+        "category": "retro_guide",
+        "badge": "Prompt B｜寫實寫真風",
+        "titleJa": "Prompt B｜夕暮れシネマティック写実スタイル",
+        "titleZh": "傍晚柔光寫真・法拉利自信微笑",
+        "sceneDesc": "20-22歲寫實動漫寫真感，傍晚 Golden Hour 柔光與長影，坐在紅色復古法拉利上帶著神秘溫柔微笑注視觀者。",
+        "outfit": "深色飛行皮夾克、短裙、長靴",
+        "linkedPhotoId": "pov_08_turn_back_2",
+        "prompt": "A beautiful woman inspired by Ayukawa Madoka, 20-22 years old, long black hair with center-parted bangs, wearing a dark bomber jacket, tight skirt, and heeled boots, sitting on a red vintage Ferrari Testarossa, confident expression with a gentle smile, eyes looking directly at the viewer with calm allure, cowboy shot, soft golden hour lighting, long afternoon shadows, cinematic tone, shallow depth of field, high-resolution photorealistic anime style, centered composition, background with subtle sunlit pavement or blurred roadside, masterpiece",
+        "negativePrompt": "low quality, worst quality, blurry, bad anatomy, malformed hands, extra fingers, missing fingers, extra arms, extra legs, duplicated person, distorted face, asymmetrical eyes, inconsistent hairstyle, wrong hair color, wrong eye color, childlike body, oversexualized pose, explicit content, nudity, lingerie, plastic skin, doll face, AI beauty filter, CGI, 3D render, oversharpening, HDR artifacts, fisheye distortion, text, watermark, logo, signature"
+      }
+    ],
+    "characterLock": "adult Ayukawa Madoka, 18+, faithful character identity, deep blue-black long hair, soft layered hair, natural bangs, face-framing strands, vivid green eyes, gentle refined facial features, natural adult proportions, consistent face and hairstyle, realistic character rendering",
+    "commonNegativePrompt": "low quality, worst quality, blurry, bad anatomy, malformed hands, extra fingers, missing fingers, extra arms, extra legs, duplicated person, distorted face, asymmetrical eyes, inconsistent hairstyle, wrong hair color, wrong eye color, childlike body, oversexualized pose, explicit content, nudity, lingerie, plastic skin, doll face, AI beauty filter, CGI, 3D render, oversharpening, HDR artifacts, fisheye distortion, text, watermark, logo, signature"
+  },
+  "audioLibrary": {
+    "bgm": [
+      {
+        "id": "bgm_madoka_theme",
+        "title": "まどかのテーマ (Madoka's Theme)",
+        "subtitle": "高音質經典薩克斯風主題曲",
+        "filename": "Kimagure Orange Road OST - Madoka no Teema - HQ Audio.mp3",
+        "category": "配樂",
+        "mood": "浪漫 / 感性"
+      },
+      {
+        "id": "bgm_itsumo_abcb",
+        "title": "いつも ABCBで (Itsumo ABCB de)",
+        "subtitle": "ABCB 咖啡館經典爵士氛圍",
+        "filename": "Kimagure Orange Road Soundtrack - Itsumo ABCB de.mp3",
+        "category": "配樂",
+        "mood": "悠閒 / 咖啡時光"
+      },
+      {
+        "id": "bgm_akai_boushi",
+        "title": "赤い麦わら帽子 (Akai Mugiwara Boushi)",
+        "subtitle": "A-22 紅色草帽・夏日純情回憶",
+        "filename": "Kimagure Orange Road OST - A-22 Akai Mugiwara Boushi.mp3",
+        "category": "配樂",
+        "mood": "夏日 / 懷舊"
+      },
+      {
+        "id": "bgm_honky_tonk",
+        "title": "Honky tonk hip hop to us",
+        "subtitle": "輕快活潑的復古節拍",
+        "filename": "Kimagure Orange Road Soundtrack - Honky tonk hip hop to us.mp3",
+        "category": "配樂",
+        "mood": "活力 / 愉悅"
+      },
+      {
+        "id": "bgm_walk_struttin",
+        "title": "Walk Struttin",
+        "subtitle": "漫步街頭的摩登律動",
+        "filename": "Kimagure Orange Road OST  Walk Struttin.mp3",
+        "category": "配樂",
+        "mood": "城市漫步 / 潮流"
+      },
+      {
+        "id": "bgm_aozora",
+        "title": "青空をぶっとばせ! (Aozora O Buttobase!)",
+        "subtitle": "青春放晴的爽朗疾馳感",
+        "filename": "Kimagure Orange Road OST  Aozora O Buttobase!.mp3",
+        "category": "配樂",
+        "mood": "陽光 / 爽快"
+      },
+      {
+        "id": "bgm_wangan_dancing",
+        "title": "湾岸ダンシング・ウェイ (Wangan dancing way)",
+        "subtitle": "夜間沿海公路的 City Pop 兜風感",
+        "filename": "Kimagure Orange Road Soundtrack - Wangan dancing way.mp3",
+        "category": "配樂",
+        "mood": "深夜 / 兜風"
+      },
+      {
+        "id": "bgm_kanashii_kake",
+        "title": "哀しい賭け (Kanashii Kake)",
+        "subtitle": "動人微酸的戀愛心緒",
+        "filename": "Kimagure Orange Road Soundtrack -Kanashii Kake.mp3",
+        "category": "配樂",
+        "mood": "深情 / 抒情"
+      },
+      {
+        "id": "bgm_gimonfu",
+        "title": "疑問符はNAISHO (Gimonfu wa NAISHO)",
+        "subtitle": "少女心中不可言說的秘密",
+        "filename": "Kimagure Orange Road Soundtrack - Gimonfu wa NAISHO.mp3",
+        "category": "配樂",
+        "mood": "俏皮 / 秘密"
+      },
+      {
+        "id": "bgm_aerobics",
+        "title": "エアロビクス・オン・RAP (Aerobics On RAP)",
+        "subtitle": "活力滿點的 80s 律動健身節奏",
+        "filename": "Kimagure Orange Road OST  Aerobics On RAP.mp3",
+        "category": "配樂",
+        "mood": "運動 / 動感"
+      },
+      {
+        "id": "bgm_esp",
+        "title": "E S P Ni Mo T P O",
+        "subtitle": "超能力引發的奇妙日常",
+        "filename": "Kimagure Orange Road OST  E S P Ni Mo T P O.mp3",
+        "category": "配樂",
+        "mood": "逗趣 / 奇幻"
+      },
+      {
+        "id": "bgm_warudakumi",
+        "title": "Exclamationの悪だくみ",
+        "subtitle": "A-27 惡作劇小算盤",
+        "filename": "Kimagure Orange Road きまぐれオレンジロード BGM A-27 Exclamationの悪だくみ.mp3",
+        "category": "配樂",
+        "mood": "小惡魔 / 趣味"
+      }
+    ],
+    "ost": [
+      {
+        "id": "ost_natsu_mirage_tsuru",
+        "title": "夏のミラージュ (Natsu no Mirage) - 鶴ひろみ",
+        "subtitle": "原作聲優 鶴ひろみ 親唱限定版！",
+        "filename": "歌う声優夏のミラージュ鶴ひろみ.mp3",
+        "category": "OST",
+        "artist": "鶴ひろみ (鮎川まどか)"
+      },
+      {
+        "id": "ost_ride_on",
+        "title": "Ride On - 鶴ひろみ",
+        "subtitle": "鮎川圓個人代表抒情單曲",
+        "filename": "Ride On by Hiromi Tsuru (鶴 ひろみ), presented by Madoka from Kimagure Orange Road.mp3",
+        "category": "OST",
+        "artist": "鶴ひろみ"
+      },
+      {
+        "id": "ost_dance_in_the_memories",
+        "title": "ダンス・イン・ザ・メモリーズ (Dance in the Memories)",
+        "subtitle": "神級經典片尾曲 ED",
+        "filename": "ダンスインザメモリーズ  Dance in the Memories.mp3",
+        "category": "OST",
+        "artist": "中原めいこ"
+      },
+      {
+        "id": "ost_kagami_no_actress",
+        "title": "鏡の中のアクトレス (Kagami no Naka no Actress)",
+        "subtitle": "熱血人氣片頭曲 OP3",
+        "filename": "鏡の中のアクトレス  Kagami no Naka no Actress.mp3",
+        "category": "OST",
+        "artist": "中原めいこ"
+      },
+      {
+        "id": "ost_natsu_no_mirage",
+        "title": "夏のミラージュ (Natsu no Mirage)",
+        "subtitle": "初代傳奇片頭曲 OP1",
+        "filename": "夏のミラージュ  Natsu no Mirage.mp3",
+        "category": "OST",
+        "artist": "和田加奈子"
+      },
+      {
+        "id": "ost_orange_mystery",
+        "title": "オレンジ・ミステリー (Orange Mystery)",
+        "subtitle": "迷人都市節奏片頭曲 OP2",
+        "filename": "オレンジミステリー  Orange Mystery.mp3",
+        "category": "OST",
+        "artist": "長島秀幸"
+      },
+      {
+        "id": "ost_night_of_summer_side",
+        "title": "NIGHT OF SUMMER SIDE",
+        "subtitle": "經典動感初夏夜節拍",
+        "filename": "Kimagure Orange Road OST NIGHT OF SUMMER SIDE.mp3",
+        "category": "OST",
+        "artist": "池田政典"
+      },
+      {
+        "id": "ost_choose_me",
+        "title": "チューズ・ミー (Choose Me)",
+        "subtitle": "戀愛的心跳選擇",
+        "filename": "チューズミー  Choose Me.mp3",
+        "category": "OST",
+        "artist": "坪倉唯子"
+      },
+      {
+        "id": "ost_furimuite_my_darling",
+        "title": "ふり向いてマイ・ダーリン (Furimuite My Darling)",
+        "subtitle": "甜美撒嬌片尾曲 ED1",
+        "filename": "ふり向いてマイダーリン  Furimuite My Darling.mp3",
+        "category": "OST",
+        "artist": "藤代美奈子"
+      },
+      {
+        "id": "ost_yasashii_jealousy",
+        "title": "優しいジェラシー (Yasashii Jealousy)",
+        "subtitle": "溫柔的吃醋與愛意",
+        "filename": "優しいジェラシー  Yasashii Jealousy.mp3",
+        "category": "OST",
+        "artist": "富澤聖子"
+      },
+      {
+        "id": "ost_ano_sora_wo_dakishimete",
+        "title": "あの空を抱きしめて (Ano Sora wo Dakishimete)",
+        "subtitle": "擁抱那一整片藍天",
+        "filename": "あの空を抱きしめて  Ano Sora wo Dakishimete.mp3",
+        "category": "OST",
+        "artist": "和田加奈子"
+      },
+      {
+        "id": "ost_kaze_no_manazashi",
+        "title": "風のまなざし (Kaze no Manazashi)",
+        "subtitle": "微風中深情的凝視",
+        "filename": "風のまなざし  Kaze no Manazashi.mp3",
+        "category": "OST",
+        "artist": "和田加奈子"
+      },
+      {
+        "id": "ost_whispering_misty_night",
+        "title": "Whispering Misty Night",
+        "subtitle": "薄霧夜色裡的呢喃",
+        "filename": "Whispering Misty Night.mp3",
+        "category": "OST",
+        "artist": "Kimagure Orange Road OST"
+      },
+      {
+        "id": "ost_bayside_dancer",
+        "title": "BAYSIDE DANCER",
+        "subtitle": "海灣邊的節奏舞蹈",
+        "filename": "BAYSIDE DANCER.mp3",
+        "category": "OST",
+        "artist": "Kimagure Orange Road OST"
+      },
+      {
+        "id": "ost_night_and_day",
+        "title": "NIGHT & DAY",
+        "subtitle": "日夜思念的旋律",
+        "filename": "NIGHT & DAY.mp3",
+        "category": "OST",
+        "artist": "Kimagure Orange Road OST"
+      },
+      {
+        "id": "ost_breaking_heart",
+        "title": "ブレイキング・ハート (Breaking Heart)",
+        "subtitle": "動人搖滾抒情",
+        "filename": "ブレイキングハート  Breaking Heart.mp3",
+        "category": "OST",
+        "artist": "坪倉唯子"
+      },
+      {
+        "id": "ost_kiken_na_triangle",
+        "title": "危険なトライアングル (Kiken na Triangle)",
+        "subtitle": "危險又迷人的三角戀曲",
+        "filename": "危険なトライアングル  Kiken na Triangle.mp3",
+        "category": "OST",
+        "artist": "池田政典"
+      },
+      {
+        "id": "ost_again",
+        "title": "Again",
+        "subtitle": "重溫相遇的最初感動",
+        "filename": "Again.mp3",
+        "category": "OST",
+        "artist": "和田加奈子"
+      },
+      {
+        "id": "ost_tokidoki_blue",
+        "title": "ときどきBlue (Tokidoki Blue)",
+        "subtitle": "偶爾微藍的少女心思",
+        "filename": "ときどきBlue  Tokidoki Blue.mp3",
+        "category": "OST",
+        "artist": "橘友賀"
+      },
+      {
+        "id": "ost_mou_hitotsu_no_yesterday",
+        "title": "もうひとつのイエスタデイ (Mou Hitotsu no Yesterday)",
+        "subtitle": "另一個昨日的美好回想",
+        "filename": "もうひとつのイエスタデイ  Mou Hitotsu no Yesterday.mp3",
+        "category": "OST",
+        "artist": "和田加奈子"
+      },
+      {
+        "id": "ost_kogane_iro",
+        "title": "こがね色の坂道 (Kogane-iro no Sakamichi)",
+        "subtitle": "夕陽斜照的金色坡道",
+        "filename": "こがね色の坂道  Kogane-iro no Sakamichi.mp3",
+        "category": "OST",
+        "artist": "和田加奈子"
+      },
+      {
+        "id": "ost_aoi_boyfriend",
+        "title": "青いボーイフレンド (Aoi Boyfriend)",
+        "subtitle": "青澀純真的戀人模樣",
+        "filename": "青いボーイフレンド  Aoi Boyfriend.mp3",
+        "category": "OST",
+        "artist": "河内りえ"
+      },
+      {
+        "id": "ost_girigiri_love",
+        "title": "ギリギリLOVE (Girigiri LOVE)",
+        "subtitle": "瀕臨邊界的熾烈情感",
+        "filename": "ギリギリLOVE  Girigiri LOVE.mp3",
+        "category": "OST",
+        "artist": "Kimagure Orange Road OST"
+      },
+      {
+        "id": "ost_kono_mune_ni",
+        "title": "この胸にONE MORE TIME (Kono Mune ni ONE MORE TIME)",
+        "subtitle": "再愛一次的溫柔期盼",
+        "filename": "この胸にONE MORE TIME  Kono Mune ni ONE MORE TIME.mp3",
+        "category": "OST",
+        "artist": "Kimagure Orange Road OST"
+      },
+      {
+        "id": "ost_heart_wo_nice_catch",
+        "title": "Heart Wo Nice Catch",
+        "subtitle": "精準捕獲愛的心跳",
+        "filename": "Kimagure Orange Road OST  Heart Wo Nice Catch.mp3",
+        "category": "OST",
+        "artist": "Kimagure Orange Road OST"
+      },
+      {
+        "id": "ost_mogitate_no_koi",
+        "title": "もぎたての恋",
+        "subtitle": "鮮摘初戀的清甜滋味",
+        "filename": "もぎたての恋  河内りえ.mp3",
+        "category": "OST",
+        "artist": "河内りえ"
+      },
+      {
+        "id": "ost_kimagure_tenshi",
+        "title": "きまぐれ天使",
+        "subtitle": "任性又溫柔的降臨",
+        "filename": "きまぐれ天使  河内りえ.mp3",
+        "category": "OST",
+        "artist": "河内りえ"
+      },
+      {
+        "id": "ost_sarubia",
+        "title": "サルビアの花のように (Sarubia no hana no you ni)",
+        "subtitle": "如一串紅花般熱烈盛開",
+        "filename": "サルビアの花のように  Sarubia no hana no you ni.mp3",
+        "category": "OST",
+        "artist": "和田加奈子"
+      }
+    ],
+    "pokeVoicesCount": 22
+  },
+  "assistantDefaults": {
+    "coupleMode": "clingy",
+    "alarms": [
+      {
+        "id": "alarm_morning_default",
+        "time": "07:30",
+        "label": "☀️ まどか早安晨間喚醒",
+        "mode": "sweet",
+        "enabled": true,
+        "sceneImage": "assets/pov_photos/pov_13_morning_wakeup.jpg",
+        "snoozeUntil": null,
+        "lastTriggeredDate": ""
+      },
+      {
+        "id": "alarm_work_stretch",
+        "time": "08:30",
+        "label": "🍱 出門前愛心便當叮嚀",
+        "mode": "bento_morning",
+        "enabled": false,
+        "sceneImage": "assets/pov_photos/pov_12_morning_kitchen.png",
+        "snoozeUntil": null,
+        "lastTriggeredDate": ""
+      }
+    ],
+    "todos": [
+      {
+        "id": "todo_1792862249214_o5ke",
+        "title": "睡覺",
+        "category": "night",
+        "time": "10:30",
+        "reminderTime": "10:30",
+        "sceneImage": "assets/costumes/variant_night_blue.png",
+        "completed": false,
+        "createdAt": "2026-10-24T17:17:29.214Z"
+      },
+      {
+        "id": "todo_1792862189999_jg9w",
+        "title": "和まどか寶貝一起逛街",
+        "category": "date",
+        "time": "09:30",
+        "reminderTime": "09:30",
+        "sceneImage": "assets/costumes/variant_date_wheat.png",
+        "completed": false,
+        "createdAt": "2026-10-24T17:16:29.999Z"
+      },
+      {
+        "id": "todo_1792862164607_nqg1",
+        "title": "起床",
+        "category": "home",
+        "time": "06:30",
+        "reminderTime": "06:30",
+        "sceneImage": "assets/costumes/boyfriend_shirt.png",
+        "completed": false,
+        "createdAt": "2026-10-24T17:16:04.607Z"
+      }
+    ],
+    "partnerMoodLog": [
+      {
+        "moodId": "tired",
+        "label": "😫 工作好累",
+        "timestamp": "2026-10-24T16:15:08.460Z"
+      }
+    ],
+    "updatedAt": "2026-10-24T17:17:29.214Z",
+    "coupleModes": [
+      {
+        "id": "healing",
+        "icon": "🌸",
+        "titleZh": "心靈療癒與無條件傾聽",
+        "titleJa": "心の癒やし・優しい傾聴",
+        "tagZh": "🌸 溫柔包容",
+        "tagJa": "🌸 癒やしモード",
+        "costumeId": "home",
+        "sceneImage": "assets/costumes/variant_home_curtain.png",
+        "descZh": "當你感到疲憊或壓力時，她會放下一切溫柔傾聽、摸摸你的頭，給你最安心的避風港。",
+        "descJa": "疲れた時やプレッシャーを感じる時、すべてを受け止めて頭を撫でてくれる癒やしの時間。",
+        "quoteJa": "お疲れ様、{user}。外でどれだけ大変でも、私の前では強がらなくていいのよ。おいで……頭、撫でてあげるから。",
+        "quoteZh": "辛苦了，{user}。不管在外面有多累多辛苦，在我面前都不用逞強喔。過來吧……讓我摸摸你的頭。"
+      },
+      {
+        "id": "clingy",
+        "icon": "🥰",
+        "titleZh": "微醺撒嬌與討抱抱依賴",
+        "titleJa": "甘えん坊・ぎゅっと密着",
+        "tagZh": "🥰 撒嬌依賴",
+        "tagJa": "🥰 甘えモード",
+        "costumeId": "boyfriend_shirt",
+        "sceneImage": "assets/pov_photos/pov_20_boyfriend_shirt.png",
+        "descZh": "換上你寬大的白襯衫，眼神帶著小女人的嬌羞與依賴，主動向你討抱抱與撒嬌。",
+        "descJa": "あなたの大きなワイシャツを着て、少し潤んだ瞳でぎゅっとしてほしそうに甘えてくるモード。",
+        "quoteJa": "ねえ、{user}……今は仕事のこと忘れて、私だけを見てて？もっと近くに来て……ぎゅっとしててほしいの💖",
+        "quoteZh": "吶、{user}……現在先把工作忘掉，只看著我好嗎？再靠近我一點……人家想要你緊緊抱著我嘛💖"
+      },
+      {
+        "id": "secretary",
+        "icon": "💼",
+        "titleZh": "專屬 OL 秘書工作應援",
+        "titleJa": "専属OL秘書の仕事応援",
+        "tagZh": "💼 秘書應援",
+        "tagJa": "💼 秘書モード",
+        "costumeId": "work_ol",
+        "sceneImage": "assets/pov_photos/pov_21_office_ol.png",
+        "descZh": "幹練迷人的酒紅高領 OL 裝扮，幫你盯緊待辦事項、泡特調咖啡，完成任務時給你滿滿誇獎！",
+        "descJa": "知的なボルドーのOLスタイルで、あなたのタスク管理とコーヒーブレイクを完璧にサポート！",
+        "quoteJa": "はい、{user}！今日のタスクも私が隣でサポートするわよ。一つ終わるごとに、たっぷり褒めてあげるからね！",
+        "quoteZh": "來，{user}！今天的待辦事項我也會在旁邊陪你完成的。每完成一項，我都會好好誇獎你喔！"
+      },
+      {
+        "id": "tsundere",
+        "icon": "🔥",
+        "titleZh": "傲嬌吃醋與獨佔關心",
+        "titleJa": "ツンデレ・可愛いヤキモチ",
+        "tagZh": "🔥 傲嬌吃醋",
+        "tagJa": "🔥 ツンデレ",
+        "costumeId": "schoolpov",
+        "sceneImage": "assets/pov_photos/pov_16_chair_wink_study.png",
+        "descZh": "嘴上說只是順便關心你，其實視線一刻都離不開你，偶爾吃醋鬧彆扭卻甜度滿分。",
+        "descJa": "素直になれないけれど、本当は誰よりもあなたを気にかけている80年代王道ツンデレの魅力。",
+        "quoteJa": "べ、別に{user}が寂しがると思って構ってあげてるだけよ！……でも、よそ見したら本気で怒るんだからね！",
+        "quoteZh": "我、我才不是特別想黏你，只是怕{user}覺得寂寞才陪你的啦！……不過你要是敢看別的女生，我真的會生氣喔！"
+      },
+      {
+        "id": "passionate",
+        "icon": "💌",
+        "titleZh": "熱戀心動與深情凝視",
+        "titleJa": "熱恋ときめき・甘い眼差し",
+        "tagZh": "💌 熱戀心動",
+        "tagJa": "💌 ラブラブ",
+        "costumeId": "evening_gown",
+        "sceneImage": "assets/pov_photos/pov_18_golden_gown.png",
+        "descZh": "完全敞開心扉的熱戀戀人狀態，毫不掩飾對你的愛意與思念，隨時給予深情告白。",
+        "descJa": "素直な愛をまっすぐに伝える恋人モード。二人きりの甘い空気であなたを包み込みます。",
+        "quoteJa": "{user}とこうして二人きりでいると、胸の奥が熱くなるの……今夜は、このまま朝まで離さないでね。",
+        "quoteZh": "像這樣跟{user}兩人獨處，心底就熱熱的……今晚，就這樣直到天亮都別放開我喔。"
+      },
+      {
+        "id": "lullaby",
+        "icon": "🛌",
+        "titleZh": "溫柔膝枕與哄睡伴眠",
+        "titleJa": "優しい膝枕・添い寝セラピー",
+        "tagZh": "🛌 膝枕哄睡",
+        "tagJa": "🛌 添い寝",
+        "costumeId": "night",
+        "sceneImage": "assets/costumes/variant_night_blue.png",
+        "descZh": "睡前專屬的溫柔膝枕與輕聲細語，替你卸下一整天的緊繃，陪你進入甜美夢鄉。",
+        "descJa": "眠りにつく前の膝枕と優しい囁きで、一日の疲れを溶かして心地よい眠りへと導きます。",
+        "quoteJa": "ほら、{user}……私の膝まくら、貸してあげる。目を閉じて……私がずっと優しい夢を見守ってるからね。",
+        "quoteZh": "來，{user}……我的膝枕借給你躺喔。把眼睛閉上吧……我會一直溫柔守護著你的好夢。"
+      }
+    ],
+    "coupleModeList": [
+      {
+        "id": "healing",
+        "icon": "🌸",
+        "titleZh": "心靈療癒與無條件傾聽",
+        "titleJa": "心の癒やし・優しい傾聴",
+        "tagZh": "🌸 溫柔包容",
+        "tagJa": "🌸 癒やしモード",
+        "costumeId": "home",
+        "sceneImage": "assets/costumes/variant_home_curtain.png",
+        "descZh": "當你感到疲憊或壓力時，她會放下一切溫柔傾聽、摸摸你的頭，給你最安心的避風港。",
+        "descJa": "疲れた時やプレッシャーを感じる時、すべてを受け止めて頭を撫でてくれる癒やしの時間。",
+        "quoteJa": "お疲れ様、{user}。外でどれだけ大変でも、私の前では強がらなくていいのよ。おいで……頭、撫でてあげるから。",
+        "quoteZh": "辛苦了，{user}。不管在外面有多累多辛苦，在我面前都不用逞強喔。過來吧……讓我摸摸你的頭。"
+      },
+      {
+        "id": "clingy",
+        "icon": "🥰",
+        "titleZh": "微醺撒嬌與討抱抱依賴",
+        "titleJa": "甘えん坊・ぎゅっと密着",
+        "tagZh": "🥰 撒嬌依賴",
+        "tagJa": "🥰 甘えモード",
+        "costumeId": "boyfriend_shirt",
+        "sceneImage": "assets/pov_photos/pov_20_boyfriend_shirt.png",
+        "descZh": "換上你寬大的白襯衫，眼神帶著小女人的嬌羞與依賴，主動向你討抱抱與撒嬌。",
+        "descJa": "あなたの大きなワイシャツを着て、少し潤んだ瞳でぎゅっとしてほしそうに甘えてくるモード。",
+        "quoteJa": "ねえ、{user}……今は仕事のこと忘れて、私だけを見てて？もっと近くに来て……ぎゅっとしててほしいの💖",
+        "quoteZh": "吶、{user}……現在先把工作忘掉，只看著我好嗎？再靠近我一點……人家想要你緊緊抱著我嘛💖"
+      },
+      {
+        "id": "secretary",
+        "icon": "💼",
+        "titleZh": "專屬 OL 秘書工作應援",
+        "titleJa": "専属OL秘書の仕事応援",
+        "tagZh": "💼 秘書應援",
+        "tagJa": "💼 秘書モード",
+        "costumeId": "work_ol",
+        "sceneImage": "assets/pov_photos/pov_21_office_ol.png",
+        "descZh": "幹練迷人的酒紅高領 OL 裝扮，幫你盯緊待辦事項、泡特調咖啡，完成任務時給你滿滿誇獎！",
+        "descJa": "知的なボルドーのOLスタイルで、あなたのタスク管理とコーヒーブレイクを完璧にサポート！",
+        "quoteJa": "はい、{user}！今日のタスクも私が隣でサポートするわよ。一つ終わるごとに、たっぷり褒めてあげるからね！",
+        "quoteZh": "來，{user}！今天的待辦事項我也會在旁邊陪你完成的。每完成一項，我都會好好誇獎你喔！"
+      },
+      {
+        "id": "tsundere",
+        "icon": "🔥",
+        "titleZh": "傲嬌吃醋與獨佔關心",
+        "titleJa": "ツンデレ・可愛いヤキモチ",
+        "tagZh": "🔥 傲嬌吃醋",
+        "tagJa": "🔥 ツンデレ",
+        "costumeId": "schoolpov",
+        "sceneImage": "assets/pov_photos/pov_16_chair_wink_study.png",
+        "descZh": "嘴上說只是順便關心你，其實視線一刻都離不開你，偶爾吃醋鬧彆扭卻甜度滿分。",
+        "descJa": "素直になれないけれど、本当は誰よりもあなたを気にかけている80年代王道ツンデレの魅力。",
+        "quoteJa": "べ、別に{user}が寂しがると思って構ってあげてるだけよ！……でも、よそ見したら本気で怒るんだからね！",
+        "quoteZh": "我、我才不是特別想黏你，只是怕{user}覺得寂寞才陪你的啦！……不過你要是敢看別的女生，我真的會生氣喔！"
+      },
+      {
+        "id": "passionate",
+        "icon": "💌",
+        "titleZh": "熱戀心動與深情凝視",
+        "titleJa": "熱恋ときめき・甘い眼差し",
+        "tagZh": "💌 熱戀心動",
+        "tagJa": "💌 ラブラブ",
+        "costumeId": "evening_gown",
+        "sceneImage": "assets/pov_photos/pov_18_golden_gown.png",
+        "descZh": "完全敞開心扉的熱戀戀人狀態，毫不掩飾對你的愛意與思念，隨時給予深情告白。",
+        "descJa": "素直な愛をまっすぐに伝える恋人モード。二人きりの甘い空気であなたを包み込みます。",
+        "quoteJa": "{user}とこうして二人きりでいると、胸の奥が熱くなるの……今夜は、このまま朝まで離さないでね。",
+        "quoteZh": "像這樣跟{user}兩人獨處，心底就熱熱的……今晚，就這樣直到天亮都別放開我喔。"
+      },
+      {
+        "id": "lullaby",
+        "icon": "🛌",
+        "titleZh": "溫柔膝枕與哄睡伴眠",
+        "titleJa": "優しい膝枕・添い寝セラピー",
+        "tagZh": "🛌 膝枕哄睡",
+        "tagJa": "🛌 添い寝",
+        "costumeId": "night",
+        "sceneImage": "assets/costumes/variant_night_blue.png",
+        "descZh": "睡前專屬的溫柔膝枕與輕聲細語，替你卸下一整天的緊繃，陪你進入甜美夢鄉。",
+        "descJa": "眠りにつく前の膝枕と優しい囁きで、一日の疲れを溶かして心地よい眠りへと導きます。",
+        "quoteJa": "ほら、{user}……私の膝まくら、貸してあげる。目を閉じて……私がずっと優しい夢を見守ってるからね。",
+        "quoteZh": "來，{user}……我的膝枕借給你躺喔。把眼睛閉上吧……我會一直溫柔守護著你的好夢。"
+      }
+    ],
+    "currentModeInfo": {
+      "id": "clingy",
+      "icon": "🥰",
+      "titleZh": "微醺撒嬌與討抱抱依賴",
+      "titleJa": "甘えん坊・ぎゅっと密着",
+      "tagZh": "🥰 撒嬌依賴",
+      "tagJa": "🥰 甘えモード",
+      "costumeId": "boyfriend_shirt",
+      "sceneImage": "assets/pov_photos/pov_20_boyfriend_shirt.png",
+      "descZh": "換上你寬大的白襯衫，眼神帶著小女人的嬌羞與依賴，主動向你討抱抱與撒嬌。",
+      "descJa": "あなたの大きなワイシャツを着て、少し潤んだ瞳でぎゅっとしてほしそうに甘えてくるモード。",
+      "quoteJa": "ねえ、{user}……今は仕事のこと忘れて、私だけを見てて？もっと近くに来て……ぎゅっとしててほしいの💖",
+      "quoteZh": "吶、{user}……現在先把工作忘掉，只看著我好嗎？再靠近我一點……人家想要你緊緊抱著我嘛💖"
+    },
+    "moodButtons": [
+      {
+        "id": "tired",
+        "labelZh": "😫 工作好累",
+        "labelJa": "😫 仕事で疲れた",
+        "sceneImage": "assets/costumes/variant_work_night.jpg",
+        "costumeId": "work_ol",
+        "affectionBonus": 6
+      },
+      {
+        "id": "stressed",
+        "labelZh": "😔 壓力大求安慰",
+        "labelJa": "😔 落ち込んでる・慰めて",
+        "sceneImage": "assets/costumes/variant_home_curtain.png",
+        "costumeId": "home",
+        "affectionBonus": 6
+      },
+      {
+        "id": "spoiled",
+        "labelZh": "🥰 想聽妳撒嬌",
+        "labelJa": "🥰 まどかに甘えたい",
+        "sceneImage": "assets/pov_photos/pov_20_boyfriend_shirt.png",
+        "costumeId": "boyfriend_shirt",
+        "affectionBonus": 7
+      },
+      {
+        "id": "hug",
+        "labelZh": "🤗 想要抱抱充電",
+        "labelJa": "🤗 ぎゅっとハグして充電",
+        "sceneImage": "assets/pov_photos/pov_13_morning_wakeup.jpg",
+        "costumeId": "home",
+        "affectionBonus": 8
+      },
+      {
+        "id": "celebrate",
+        "labelZh": "🎉 今天有好消息",
+        "labelJa": "🎉 嬉しい報告がある！",
+        "sceneImage": "assets/pov_photos/pov_18_golden_gown.png",
+        "costumeId": "evening_gown",
+        "affectionBonus": 10
+      }
+    ],
+    "sceneGallery": {
+      "wakeup": {
+        "sweet": "assets/pov_photos/pov_13_morning_wakeup.jpg",
+        "tsundere": "assets/pov_photos/pov_01_tie.png",
+        "special": "assets/costumes/variant_home_curtain.png",
+        "energetic": "assets/pov_photos/pov_12_morning_kitchen.png",
+        "random": "assets/pov_photos/pov_13_morning_wakeup.jpg"
+      },
+      "todoCategory": {
+        "work": {
+          "id": "work",
+          "badgeZh": "💼 工作與行程",
+          "badgeJa": "💼 仕事・予定",
+          "costumeId": "work_ol",
+          "image": "assets/costumes/work_ol.png",
+          "altImage": "assets/costumes/variant_work_night.jpg"
+        },
+        "home": {
+          "id": "home",
+          "badgeZh": "🏠 居家與生活",
+          "badgeJa": "🏠 おうち・日常",
+          "costumeId": "boyfriend_shirt",
+          "image": "assets/costumes/boyfriend_shirt.png",
+          "altImage": "assets/costumes/variant_home_rug.jpg"
+        },
+        "date": {
+          "id": "date",
+          "badgeZh": "💑 約會與紀念",
+          "badgeJa": "💑 デート・記念日",
+          "costumeId": "date",
+          "image": "assets/costumes/variant_date_wheat.png",
+          "altImage": "assets/costumes/variant_date_sky.png"
+        },
+        "music": {
+          "id": "music",
+          "badgeZh": "🎸 音樂與興趣",
+          "badgeJa": "🎸 音楽・趣味",
+          "costumeId": "guitar",
+          "image": "assets/costumes/guitar.png",
+          "altImage": "assets/costumes/variant_guitar_2.png"
+        },
+        "night": {
+          "id": "night",
+          "badgeZh": "🌙 晚間與健康",
+          "badgeJa": "🌙 夜・ヘルスケア",
+          "costumeId": "night",
+          "image": "assets/costumes/variant_night_blue.png",
+          "altImage": "assets/costumes/variant_night_sleep.png"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>鮎川まどか 桌面伴侶</title>
+  
+  <!-- PWA & Mobile Web App 專屬設定 (支援 iOS/Android 加入手機主畫面) -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ff5e7e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="鮎川まどか">
+  <link rel="apple-touch-icon" href="assets/avatar_portrait.png">
+  <link rel="icon" type="image/png" href="assets/avatar_portrait.png">
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app" class="app-container">
+    <!-- 頂部浮動操作列 (拖曳區) -->
+    <div class="top-controls">
+      <div class="drag-handle" title="按住拖曳移動位置">
+        <span class="drag-icon">⠿</span>
+        <span class="app-title">鮎川まどか</span>
+      </div>
+      <div class="action-buttons">
+        <button id="btn-assistant" class="ctrl-btn" title="まどか日常助理：待辦提醒・起床鬧鐘・戀人療癒撒嬌">⏰</button>
+        <button id="btn-memory" class="ctrl-btn" title="永久對話記憶與好感度日記">💖</button>
+        <button id="btn-pov" class="ctrl-btn" title="情侶 POV 自拍相簿 & PixAI 繪圖指令集">📸</button>
+        <button id="btn-music" class="ctrl-btn" title="古靈精怪留聲機 (BGM & OST)">🎵</button>
+        <button id="btn-wardrobe" class="ctrl-btn" title="衣櫃換裝 (22套情境+多款式輪播)">👗</button>
+        <button id="btn-settings" class="ctrl-btn" title="設定金鑰與偏好">⚙️</button>
+        <button id="btn-minimize" class="ctrl-btn" title="最小化">−</button>
+        <button id="btn-close" class="ctrl-btn close-btn" title="關閉">✕</button>
+      </div>
+    </div>
+
+    <!-- 日系漫畫動漫風對話氣泡區 -->
+    <div id="speech-bubble" class="speech-bubble">
+      <div class="bubble-tail"></div>
+      <div class="bubble-header">
+        <div class="bubble-header-left">
+          <span class="speaker-name">★ まどか ★</span>
+          <span id="affection-badge" class="affection-pill-badge" title="點擊開啟好感度與永久記憶日記">💖 68pt・Lv.2</span>
+          <span id="couple-mode-badge" class="couple-mode-pill-badge" title="點擊切換戀人心理/療癒/撒嬌狀態">🌸 溫柔包容</span>
+        </div>
+        <div class="bubble-header-right">
+          <span id="current-costume-tag" class="costume-tag-badge" title="點擊切換同分類其他插圖款式">🏫 學生制服</span>
+          <span id="speaking-indicator" class="speaking-indicator hidden">🔊 說話中...</span>
+        </div>
+      </div>
+      <div id="bubble-text" class="bubble-text">
+        リンシ、今日もお疲れ様。私がそばにいるから、無理しないでね。<br>
+        <span class="sub-zh">（リンシ、今天也辛苦了。有我在身邊，別太勉強自己喔。）</span>
+      </div>
+      <!-- 對話內嵌情侶 POV 拍立得照片卡 (拍照發送時顯示) -->
+      <div id="bubble-photo-card" class="bubble-photo-card hidden">
+        <div class="polaroid-frame">
+          <img id="bubble-photo-img" src="" alt="Couple POV Selfie">
+          <div class="polaroid-meta">
+            <span id="bubble-photo-title" class="polaroid-title">📸 情侶 POV 自拍</span>
+            <div class="polaroid-actions">
+              <button id="btn-bubble-zoom" class="polaroid-mini-btn" title="放大檢視照片">🔍 放大</button>
+              <button id="btn-bubble-prompt" class="polaroid-mini-btn" title="複製此場景 PixAI 繪圖指令">📋 PixAI 指令</button>
+              <button id="btn-bubble-close-photo" class="polaroid-mini-btn" title="收起照片">✕</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 角色形象區 (呼吸、換裝切換與點擊反應) -->
+    <div id="character-wrapper" class="character-wrapper" title="點擊まどか互動親暱對話">
+      <div id="character-avatar" class="character-avatar breathing">
+        <!-- 閉嘴靜態幀 (Idle) -->
+        <img id="img-idle" src="assets/costumes/uniform_idle.png" alt="Madoka Idle" class="avatar-layer active">
+        <!-- 半開口發音幀 (Talk Half) -->
+        <img id="img-talk-half" src="assets/costumes/uniform_talk_half.png" alt="Madoka Talk Half" class="avatar-layer hidden">
+        <!-- 全開口發音幀 (Talk Open) -->
+        <img id="img-talk-open" src="assets/costumes/uniform_talk_open.png" alt="Madoka Talk Open" class="avatar-layer hidden">
+      </div>
+      <!-- 點擊觸發愛心/音符小特效容器 -->
+      <div id="effect-container" class="effect-container"></div>
+    </div>
+
+    <!-- 底部互動快捷面板 (僅保留精緻心動互動按鈕，移除地點選項) -->
+    <div class="interaction-dock">
+      <!-- 心動快捷互動晶片列 (雙排精緻動漫網格，所有按鈕全覽無遮擋) -->
+      <div class="quick-actions-bar">
+        <button class="action-chip" data-action="assistant" title="開啟日常助理：待辦清單與起床鬧鐘">⏰ 助理鬧鐘</button>
+        <button class="action-chip" data-action="couplecare" title="切換戀人心理・療癒・撒嬌模式">💞 戀人撒嬌</button>
+        <button class="action-chip" data-action="bento" title="まどか遞愛心便當給你">🍱 吃便當</button>
+        <button class="action-chip" data-action="curry" title="請まどか煮特製咖哩">🍛 特製咖哩</button>
+        <button class="action-chip" data-action="confess" title="聆聽まどか深情告白">💌 心動告白</button>
+        <button class="action-chip" data-action="sleep" title="晚間11點後撒嬌陪睡提醒">🌙 撒嬌陪睡</button>
+        <button class="action-chip" data-action="selfie" title="請まどか拍一張情侶 POV 自拍發送給你">📸 情侶自拍</button>
+        <button class="action-chip" data-action="comfort" title="疲倦時的溫柔撫慰">🌸 療癒安撫</button>
+        <button class="action-chip" data-action="sax" title="まどか為你獨奏薩克斯風">🎷 吹薩克斯</button>
+        <button class="action-chip" data-action="poke" title="輕輕戳戳まどか撒嬌互動">✨ 戳戳互動</button>
+      </div>
+
+      <!-- 對話輸入框 (支援拍照發送快捷鍵) -->
+      <div class="input-bar">
+        <button id="btn-quick-selfie" class="camera-input-btn" title="立即請まどか拍張情侶 POV 自拍發送">📸</button>
+        <input type="text" id="user-input" placeholder="聊天、設鬧鐘(明天7點叫我)、加待辦(下午3點開會)或要自拍..." autocomplete="off">
+        <button id="btn-send" class="send-btn" title="發送">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- 🎵 古靈精怪留聲機 (BGM & OST Jukebox Modal) -->
+    <div id="music-modal" class="modal-overlay hidden">
+      <div class="modal-content music-content">
+        <div class="modal-header">
+          <h3>🎵 古靈精怪留聲機</h3>
+          <button id="btn-close-music" class="modal-close-btn">✕</button>
+        </div>
+        <div class="modal-body">
+          <!-- 唱片播放面板 -->
+          <div class="jukebox-player">
+            <div class="vinyl-wrapper">
+              <div id="vinyl-disc" class="vinyl-disc paused">
+                <div class="vinyl-grooves"></div>
+                <div class="vinyl-center">🎷</div>
+              </div>
+            </div>
+            <div class="player-info">
+              <div id="music-now-title" class="music-title">まどかのテーマ (Madoka's Theme)</div>
+              <div id="music-now-subtitle" class="music-subtitle">ABCB 咖啡館原聲點播</div>
+              <div class="player-controls">
+                <button id="btn-music-prev" class="player-btn" title="上一首">⏮</button>
+                <button id="btn-music-play" class="player-btn play-btn" title="播放/暫停">▶</button>
+                <button id="btn-music-next" class="player-btn" title="下一首">⏭</button>
+                <button id="btn-music-mode" class="player-btn mode-btn" title="切換模式">🔁</button>
+              </div>
+              <div class="volume-control-mini">
+                <span class="vol-icon">🔉</span>
+                <input type="range" id="music-vol" min="0" max="1" step="0.05" value="0.5">
+                <span id="music-vol-val">50%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 分類頁籤 -->
+          <div class="music-tabs">
+            <button class="music-tab-btn active" data-tab="bgm">🎷 經典配樂 BGM (12)</button>
+            <button class="music-tab-btn" data-tab="ost">🎙️ 鶴ひろみ 角色歌 & OST (28)</button>
+          </div>
+
+          <!-- 曲目列表 -->
+          <div class="music-track-list" id="music-track-list">
+            <!-- 由 renderer.js 動態渲染 -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 👗 造型衣櫃對話框 (Wardrobe Modal) -->
+    <div id="wardrobe-modal" class="modal-overlay hidden">
+      <div class="modal-content wardrobe-content">
+        <div class="modal-header">
+          <h3>👗 まどか 的造型衣櫃</h3>
+          <button id="btn-close-wardrobe" class="modal-close-btn">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="wardrobe-options">
+            <label class="checkbox-label">
+              <input type="checkbox" id="cfg-auto-time-costume" checked>
+              <span>🕒 隨時間與時段自動更換造型（早/晚/深夜自動適配）</span>
+            </label>
+            <div class="wardrobe-quick-btns">
+              <button id="btn-random-costume" class="btn-mini-accent" title="從 22 套造型中隨機換一套">🎲 隨機換裝</button>
+              <button id="btn-cycle-variant" class="polaroid-mini-btn" title="切換當前分類下新上傳的其他插圖款式">🔄 切換同系列款式</button>
+            </div>
+          </div>
+
+          <div class="costume-grid" id="costume-grid">
+            <!-- 造型卡片由 renderer.js 動態渲染 -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ⚙️ 設定對話框 (Settings Modal) -->
+    <div id="settings-modal" class="modal-overlay hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>⚙️ 桌面精靈設定</h3>
+          <button id="btn-close-modal" class="modal-close-btn">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="cfg-user-name">你希望她怎麼稱呼你：</label>
+            <input type="text" id="cfg-user-name" placeholder="例如：リンシ、你的暱稱">
+          </div>
+
+          <div class="form-group">
+            <label for="cfg-voice-mode">互動語音模式偏好：</label>
+            <select id="cfg-voice-mode">
+              <option value="authentic">🌟 原汁原味聲優原聲優先 (推薦・鶴ひろみ)</option>
+              <option value="minimax">🤖 MiniMax 克隆語音合成 (TTS)</option>
+              <option value="mute">🔕 靜音模式</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="cfg-gemini-key">
+              Gemini API Key (大腦思考)：
+              <a href="https://aistudio.google.com/app/apikey" target="_blank" class="help-link">免費申請</a>
+            </label>
+            <input type="password" id="cfg-gemini-key" placeholder="貼上 AI Studio 取得的金鑰 (AIza...)">
+          </div>
+
+          <div class="form-group">
+            <label for="cfg-minimax-key">MiniMax API Key (備用 TTS 朗讀)：</label>
+            <input type="password" id="cfg-minimax-key" placeholder="貼上 MiniMax API Key">
+          </div>
+
+          <div class="form-group">
+            <label for="cfg-minimax-voice">MiniMax Voice ID (音模編號)：</label>
+            <input type="text" id="cfg-minimax-voice" placeholder="你在 MiniMax 克隆的鶴ひろみ音模 ID">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group half">
+              <label for="cfg-vol">語音音量：<span id="vol-value">80%</span></label>
+              <input type="range" id="cfg-vol" min="0" max="1" step="0.05" value="0.8">
+            </div>
+            <div class="form-group half">
+              <label for="cfg-bgm-vol">音樂音量：<span id="bgm-vol-value">50%</span></label>
+              <input type="range" id="cfg-bgm-vol" min="0" max="1" step="0.05" value="0.5">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="cfg-lang">對話語言模式：</label>
+            <select id="cfg-lang">
+              <option value="ja-with-zh">日本語原聲 + 中文對照字幕</option>
+              <option value="zh-TW">繁體中文</option>
+              <option value="ja-JP">純日文</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="margin-top: 10px;">
+            <label class="checkbox-label" style="display:flex; align-items:center; gap:8px; cursor:pointer; color:#eee; font-size:12.5px;">
+              <input type="checkbox" id="cfg-bedtime-reminder" checked>
+              <span>🌙 晚間 11:00 後定時提醒「撒嬌」陪睡 (23:00〜05:00)</span>
+            </label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="btn-save-settings" class="btn-primary">儲存設定</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 💖 永久對話記憶與好感度日記 (Memory & Affection Diary Modal) -->
+    <div id="memory-modal" class="modal-overlay hidden">
+      <div class="modal-content memory-content">
+        <div class="modal-header">
+          <h3>💖 まどか的永久記憶與好感度日記</h3>
+          <button id="btn-close-memory" class="modal-close-btn">✕</button>
+        </div>
+        <div class="modal-body">
+          <!-- 好感度儀表板 -->
+          <div class="affection-dashboard">
+            <div class="aff-top-row">
+              <div>
+                <div id="mem-stage-badge" class="aff-stage-title">☕ Lv.2 特別的夥伴</div>
+                <div id="mem-stage-desc" class="aff-stage-desc">每天在 Abcb 與桌面相伴的默契夥伴，眼神裡藏不住對你的溫柔。</div>
+              </div>
+              <div class="aff-score-box">
+                <span id="mem-score-num" class="aff-score-num">68</span>
+                <span class="aff-score-unit">pt</span>
+              </div>
+            </div>
+            <div class="aff-progress-track">
+              <div id="mem-progress-fill" class="aff-progress-fill" style="width: 35%;"></div>
+            </div>
+            <div class="aff-stats-row">
+              <span id="mem-stat-days">📅 相伴第 1 天</span>
+              <span id="mem-stat-streak">🔥 連續 1 天</span>
+              <span id="mem-stat-chats">💬 對話 0 次</span>
+              <span id="mem-stat-next">🎯 距離下一階段：120 pt</span>
+            </div>
+          </div>
+
+          <!-- 記憶子分頁切換 -->
+          <div class="music-tabs" style="margin-top: 10px;">
+            <button class="memory-tab-btn active" data-memtab="facts">📝 永久記憶備忘錄</button>
+            <button class="memory-tab-btn" data-memtab="logs">💬 歷史對話時光機</button>
+          </div>
+
+          <!-- 分頁 1：永久記憶備忘錄 -->
+          <div id="mem-panel-facts" class="mem-panel">
+            <div class="mem-add-bar">
+              <input type="text" id="input-new-fact" placeholder="新增想讓まどか永遠記住的事（例：我喜歡喝冰拿鐵、生日是...）">
+              <button id="btn-add-fact" class="btn-mini-accent">＋記住</button>
+            </div>
+            <div id="memory-facts-list" class="memory-list">
+              <!-- 由 renderer.js 動態渲染 -->
+            </div>
+          </div>
+
+          <!-- 分頁 2：歷史對話時光機 -->
+          <div id="mem-panel-logs" class="mem-panel hidden">
+            <div class="mem-log-toolbar">
+              <input type="text" id="input-search-log" placeholder="🔍 搜尋過往對話紀錄...">
+              <button id="btn-clear-logs" class="btn-mini-danger" title="清空對話紀錄（保留好感度與記憶備忘）">🗑️ 清空紀錄</button>
+            </div>
+            <div id="memory-logs-list" class="memory-list">
+              <!-- 由 renderer.js 動態渲染 -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 📸 情侶 POV 自拍相簿 & PixAI 繪圖指令集 (Couple POV & PixAI Studio Modal) -->
+    <div id="pov-modal" class="modal-overlay hidden">
+      <div class="modal-content pov-content">
+        <div class="modal-header">
+          <h3>📸 情侶 POV 自拍相簿 & PixAI 指令集</h3>
+          <button id="btn-close-pov" class="modal-close-btn">✕</button>
+        </div>
+        <div class="modal-body">
+          <!-- 頂部快速自拍與匯入工具列 -->
+          <div class="pov-hero-bar">
+            <button id="btn-pov-snap-random" class="btn-pov-primary">📸 讓まどか現在自拍一張發給我！</button>
+            <label for="input-import-pov-file" class="btn-pov-secondary" title="將你在 PixAI 生成的新圖片加入相簿">➕ 匯入新照片</label>
+            <input type="file" id="input-import-pov-file" accept="image/*" class="hidden">
+          </div>
+
+          <!-- 子分頁切換 -->
+          <div class="music-tabs">
+            <button class="pov-tab-btn active" data-povtab="gallery">📸 情侶 POV 寫真相簿 (24)</button>
+            <button class="pov-tab-btn" data-povtab="prompts">🎨 PixAI 繪圖指令集 & 產生器 (18)</button>
+          </div>
+
+          <!-- 分頁 1：情侶 POV 拍立得相簿 -->
+          <div id="pov-panel-gallery" class="pov-panel">
+            <div id="pov-gallery-grid" class="pov-gallery-grid">
+              <!-- 由 renderer.js 動態渲染 -->
+            </div>
+          </div>
+
+          <!-- 分頁 2：PixAI 繪圖指令集與智慧產生器 -->
+          <div id="pov-panel-prompts" class="pov-panel hidden">
+            <!-- 智慧自訂場景轉 PixAI 指令產生器 -->
+            <div class="pixai-generator-box">
+              <div class="pixai-gen-title">✨ 智慧自訂情侶場景 → PixAI 英文指令產生器</div>
+              <div class="pixai-gen-controls">
+                <input type="text" id="input-pixai-scene" placeholder="輸入想拍的情境（例：海邊夕陽牽手散步、在咖啡館餵我吃蛋糕）">
+                <select id="select-pixai-lens">
+                  <option value="50mm">50mm 近距離戀人特寫</option>
+                  <option value="35mm">35mm 動態街拍環境感</option>
+                </select>
+                <button id="btn-gen-pixai" class="btn-mini-accent">⚡ 生成</button>
+              </div>
+              <div id="pixai-gen-result" class="pixai-gen-result hidden">
+                <textarea id="textarea-pixai-output" rows="3" readonly></textarea>
+                <div class="pixai-gen-actions">
+                  <button id="btn-copy-gen-prompt" class="polaroid-mini-btn">📋 複製正面 Prompt</button>
+                  <button id="btn-copy-gen-neg" class="polaroid-mini-btn">📋 複製 Negative Prompt</button>
+                  <button id="btn-copy-char-lock" class="polaroid-mini-btn">🔒 複製角色鎖定詞</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- 官方 18 組 PixAI 指令卡列表 -->
+            <div id="pixai-prompts-list" class="pixai-prompts-list">
+              <!-- 由 renderer.js 動態渲染 -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🔍 拍立得照片全螢幕放大檢視器 (Photo Lightbox) -->
+    <div id="photo-lightbox" class="modal-overlay hidden" style="z-index: 260;">
+      <div class="lightbox-card">
+        <button id="btn-close-lightbox" class="lightbox-close-btn">✕</button>
+        <img id="lightbox-img" src="" alt="Couple POV Full View">
+        <div class="lightbox-info">
+          <div id="lightbox-title" class="lightbox-title"></div>
+          <div id="lightbox-caption" class="lightbox-caption"></div>
+          <div class="lightbox-actions">
+            <button id="btn-lightbox-send-chat" class="btn-mini-accent">💬 在對話中發送並朗讀</button>
+            <button id="btn-lightbox-copy-prompt" class="polaroid-mini-btn">📋 複製此圖 PixAI 指令</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ⏰ まどか手機APP日常助理 & 戀人心理療癒撒嬌中心 (Assistant & Couple Care Modal) -->
+    <div id="assistant-modal" class="modal-overlay hidden">
+      <div class="modal-content assistant-content">
+        <div class="modal-header">
+          <h3>⏰ まどか日常助理 & 戀人關懷中心</h3>
+          <button id="btn-close-assistant" class="modal-close-btn">✕</button>
+        </div>
+        <div class="modal-body">
+          <!-- 雙模式同步狀態列 -->
+          <div class="assistant-sync-bar">
+            <span id="sync-status-badge" class="sync-badge online">🟢 電腦與手機雙向同步中（支援外出獨立離線運作）</span>
+            <button id="btn-enable-notify" class="polaroid-mini-btn" title="開啟手機與桌面系統推播通知">🔔 開啟推播通知</button>
+          </div>
+
+          <!-- 3 大功能分頁 -->
+          <div class="music-tabs">
+            <button class="assistant-tab-btn active" data-assttab="todos">📝 待辦事項提醒</button>
+            <button class="assistant-tab-btn" data-assttab="alarms">⏰ 晨間喚醒鬧鐘</button>
+            <button class="assistant-tab-btn" data-assttab="couple">💞 戀人心情・療癒・撒嬌</button>
+          </div>
+
+          <!-- 分頁 1：📝 互動式待辦事項清單 -->
+          <div id="asst-panel-todos" class="asst-panel">
+            <div class="asst-tip-box">
+              💡 <strong>自然語言排程：</strong>你也可以直接在聊天框對她說「<em>提醒我下午3點開會</em>」或「<em>待辦：買咖啡</em>」！完成打勾時まどか會親口誇獎你並增加 <strong>+8pt 好感度💖</strong>
+            </div>
+            <div class="todo-add-bar">
+              <select id="select-todo-category" class="todo-cat-select">
+                <option value="work">💼 工作/OL</option>
+                <option value="home">🏠 居家/日常</option>
+                <option value="date">💑 約會/紀念</option>
+                <option value="music">🎸 音樂/興趣</option>
+                <option value="night">🌙 晚間/健康</option>
+              </select>
+              <input type="time" id="input-todo-time" class="todo-time-input" title="選填提醒時間">
+              <input type="text" id="input-todo-title" class="todo-title-input" placeholder="輸入待辦事項（例：交報告、買牛奶）...">
+              <button id="btn-add-todo" class="btn-mini-accent">＋新增</button>
+            </div>
+            <div id="assistant-todo-list" class="assistant-list">
+              <!-- 由 renderer.js 動態渲染 -->
+            </div>
+          </div>
+
+          <!-- 分頁 2：⏰ 晨間喚醒鬧鐘 -->
+          <div id="asst-panel-alarms" class="asst-panel hidden">
+            <div class="alarm-hero-bar">
+              <button id="btn-test-wakeup-alarm" class="btn-pov-primary">☀️ 立即預覽まどか晨間喚醒畫面 & 鶴ひろみ原聲叫床！</button>
+            </div>
+            <div class="alarm-add-bar">
+              <input type="time" id="input-alarm-time" class="alarm-time-input" value="07:00">
+              <select id="select-alarm-mode" class="alarm-mode-select">
+                <option value="sweet">🥰 甜蜜俯身喚醒（起床甜蜜・早安吻）</option>
+                <option value="tsundere">🔥 傲嬌大聲叫床（起床強烈・不准賴床）</option>
+                <option value="special">🌅 晨風窗紗喚醒（鮎川まどか的喚醒）</option>
+                <option value="bento_morning">🍱 愛心便當喚醒（出門前拿便當）</option>
+              </select>
+              <input type="text" id="input-alarm-label" class="alarm-label-input" placeholder="鬧鐘備註（例：早安起床）">
+              <button id="btn-add-alarm" class="btn-mini-accent">＋設定鬧鐘</button>
+            </div>
+            <div id="assistant-alarm-list" class="assistant-list">
+              <!-- 由 renderer.js 動態渲染 -->
+            </div>
+          </div>
+
+          <!-- 分頁 3：💞 情侶互動狀態：心理、療癒、關心或撒嬌模式 -->
+          <div id="asst-panel-couple" class="asst-panel hidden">
+            <!-- 男友心情急救站 -->
+            <div class="mood-rescue-box">
+              <div class="mood-rescue-title">🩺 男友心情急救站（點擊立即獲得まどか的專屬語音撫慰、新插圖與擁抱）：</div>
+              <div class="mood-buttons-row" id="mood-buttons-row">
+                <button class="mood-chip-btn" data-mood="tired">😫 工作好累</button>
+                <button class="mood-chip-btn" data-mood="stressed">😔 壓力大求安慰</button>
+                <button class="mood-chip-btn" data-mood="spoiled">🥰 想聽妳撒嬌</button>
+                <button class="mood-chip-btn" data-mood="hug">🤗 想要抱抱充電</button>
+                <button class="mood-chip-btn" data-mood="celebrate">🎉 今天有好消息</button>
+              </div>
+            </div>
+
+            <!-- 6 大戀人互動狀態卡片網格 -->
+            <div class="couple-modes-grid" id="couple-modes-grid">
+              <!-- 由 renderer.js 動態渲染 -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ☀️ 晨間喚醒鬧鐘全螢幕響鈴彈窗 (Full-Screen Wake-up Alarm Overlay) -->
+    <div id="wakeup-alarm-overlay" class="modal-overlay hidden" style="z-index: 300;">
+      <div class="wakeup-card">
+        <div class="wakeup-top-badge">⏰ まどか GOOD MORNING ALARM</div>
+        <div id="wakeup-clock-time" class="wakeup-clock-time">07:30</div>
+        <div id="wakeup-alarm-label" class="wakeup-alarm-label">☀️ まどか早安晨間喚醒</div>
+        <div class="wakeup-img-frame">
+          <img id="wakeup-scene-img" src="assets/pov_photos/pov_13_morning_wakeup.jpg" alt="Morning Wakeup POV">
+        </div>
+        <div id="wakeup-dialogue-box" class="wakeup-dialogue-box">
+          ふぁあ……おはよう、リンシ。ほら、もう朝よ？早く起きないと、いたずらしちゃうわよ💖
+        </div>
+        <div class="wakeup-actions">
+          <button id="btn-wakeup-dismiss" class="btn-wakeup-primary">☀️ 我起床了！(早安親親 +10💖)</button>
+          <button id="btn-wakeup-snooze" class="btn-wakeup-secondary">💤 再賴床 5 分鐘 (貪睡模式)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(err => {
+          console.log('SW registration note:', err);
+        });
+      });
+    }
+  </script>
+  <script src="renderer.js"></script>
+</body>
+</html>

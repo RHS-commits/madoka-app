@@ -1,0 +1,377 @@
+[
+  {
+    "id": "uniform",
+    "name": "經典學生水手服",
+    "tag": "🏫 上學日常",
+    "image": "assets/costumes/uniform_idle.png",
+    "imageIdle": "assets/costumes/uniform_idle.png",
+    "imageTalkHalf": "assets/costumes/uniform_talk_half.png",
+    "imageTalkOpen": "assets/costumes/uniform_talk_open.png",
+    "variants": [
+      "assets/costumes/uniform_idle.png",
+      "assets/costumes/schoolpov_idle.png"
+    ],
+    "timeHint": "07:00 - 11:30, 14:00 - 16:30",
+    "autoHours": [7, 11],
+    "reaction": "制服に着替えたわ。これから学校よ、リンシ。一緒に行く？\n（換上學生制服了。接下來要去學校囉，リンシ。要一起走嗎？）",
+    "tts": "制服に着替えたわ。これから学校よ、リンシ。一緒に行く？"
+  },
+  {
+    "id": "schoolpov",
+    "name": "校園走廊親暱領帶",
+    "tag": "👔 放學走廊",
+    "image": "assets/costumes/schoolpov_idle.png",
+    "imageIdle": "assets/costumes/schoolpov_idle.png",
+    "imageTalkHalf": "assets/costumes/schoolpov_talk_half.png",
+    "imageTalkOpen": "assets/costumes/schoolpov_talk_open.png",
+    "variants": [
+      "assets/costumes/schoolpov_idle.png",
+      "assets/costumes/uniform_idle.png"
+    ],
+    "timeHint": "放學後心動瞬間",
+    "autoHours": null,
+    "reaction": "もう、ネクタイが曲がってるわよ……じっとしてて、リンシ。近くで見ると、ちょっとドキドキしちゃうわね。\n（真是的，領帶都歪掉囉……別亂動喔，リンシ。這麼近看著你，心跳稍微有點加速了呢。）",
+    "tts": "もう、ネクタイが曲がってるわよ。じっとしてて、リンシ。近くで見ると、ちょっとドキドキしちゃうわね。"
+  },
+  {
+    "id": "work_ol",
+    "name": "知性白襯衫秘書 OL",
+    "tag": "💼 秘書應援",
+    "image": "assets/costumes/work_ol_idle.png",
+    "imageIdle": "assets/costumes/work_ol_idle.png",
+    "imageTalkHalf": "assets/costumes/work_ol_talk_half.png",
+    "imageTalkOpen": "assets/costumes/work_ol_talk_open.png",
+    "variants": [
+      "assets/costumes/work_ol_idle.png",
+      "assets/costumes/variant_work_night.jpg"
+    ],
+    "timeHint": "09:00 - 18:00 專注工作與讀書",
+    "autoHours": null,
+    "reaction": "今日は私がリンシの専属秘書よ。スケジュールもタスクもバッチリ管理してあげるから、一緒に頑張りましょ！\n（今天我是リンシ的專屬秘書喔。行程跟待辦事項我都會幫你完美管理，一起加油吧！）",
+    "tts": "今日は私がリンシの専属秘書よ。スケジュールもタスクもバッチリ管理してあげるから、一緒に頑張りましょ！"
+  },
+  {
+    "id": "cafe",
+    "name": "Abcb 咖啡廳圍裙",
+    "tag": "☕ 咖啡館打工",
+    "image": "assets/costumes/cafe_idle.png",
+    "imageIdle": "assets/costumes/cafe_idle.png",
+    "imageTalkHalf": "assets/costumes/cafe_talk_half.png",
+    "imageTalkOpen": "assets/costumes/cafe_talk_open.png",
+    "variants": [
+      "assets/costumes/cafe_idle.png",
+      "assets/costumes/cafedate_idle.png"
+    ],
+    "timeHint": "11:30 - 14:00",
+    "autoHours": [11, 14],
+    "reaction": "いらっしゃい、リンシ！Abcbへようこそ。特製のブレンドコーヒー、淹れてあげるね。\n（歡迎光臨，リンシ！歡迎來到 Abcb。我為你泡一杯特製特調咖啡喔。）",
+    "tts": "いらっしゃい、リンシ！Abcbへようこそ。特製のブレンドコーヒー、淹れてあげるね。"
+  },
+  {
+    "id": "cafedate",
+    "name": "午後拿鐵咖啡約會",
+    "tag": "🧋 午後咖啡館",
+    "image": "assets/costumes/cafedate_idle.png",
+    "imageIdle": "assets/costumes/cafedate_idle.png",
+    "imageTalkHalf": "assets/costumes/cafedate_talk_half.png",
+    "imageTalkOpen": "assets/costumes/cafedate_talk_open.png",
+    "variants": [
+      "assets/costumes/cafedate_idle.png",
+      "assets/costumes/cafe_idle.png"
+    ],
+    "timeHint": "14:00 - 16:30 午後時光",
+    "autoHours": null,
+    "reaction": "カフェで二人きりなんて新鮮ね。このラテアート、可愛いでしょう？リンシも一口飲んでみる？\n（在咖啡廳兩人獨處真新鮮呢。這個拿鐵拉花很可愛吧？リンシ也要喝一口看看嗎？）",
+    "tts": "カフェで二人きりなんて新鮮ね。このラテアート、可愛いでしょう？リンシも一口飲んでみる？"
+  },
+  {
+    "id": "sax",
+    "name": "黃昏窗邊薩克斯風",
+    "tag": "🎷 音樂室演奏",
+    "image": "assets/costumes/sax_idle.png",
+    "imageIdle": "assets/costumes/sax_idle.png",
+    "imageTalkHalf": "assets/costumes/sax_talk_half.png",
+    "imageTalkOpen": "assets/costumes/sax_talk_open.png",
+    "variants": [
+      "assets/costumes/sax_idle.png",
+      "assets/costumes/sax_play_1.png",
+      "assets/costumes/sax_play_2.png",
+      "assets/costumes/sax_play_3.png"
+    ],
+    "timeHint": "黃昏獨奏時光",
+    "autoHours": null,
+    "reaction": "夕暮れの音楽室でサックスを吹いてたの。リンシのために、特別な一曲を聴かせてあげるね。\n（在黃昏的音樂教室吹薩克斯風呢。為了リンシ，讓我為你吹奏特別的一曲吧。）",
+    "tts": "夕暮れの音楽室でサックスを吹いてたの。リンシのために、特別な一曲を聴かせてあげるね。"
+  },
+  {
+    "id": "guitar",
+    "name": "午後陽光木吉他彈唱",
+    "tag": "🪕 吉他自彈自唱",
+    "image": "assets/costumes/guitar_idle.png",
+    "imageIdle": "assets/costumes/guitar_idle.png",
+    "imageTalkHalf": "assets/costumes/guitar_talk_half.png",
+    "imageTalkOpen": "assets/costumes/guitar_talk_open.png",
+    "variants": [
+      "assets/costumes/guitar_idle.png",
+      "assets/costumes/variant_guitar_2.png"
+    ],
+    "timeHint": "午後音樂創作時光",
+    "autoHours": null,
+    "reaction": "今日はサックスじゃなくて、アコースティックギターを弾いてみたの。リンシ、隣で聴いててくれる？\n（今天不是吹薩克斯風，而是試著彈了木吉他喔。リンシ，你願意坐在旁邊聽我彈嗎？）",
+    "tts": "今日はサックスじゃなくて、アコースティックギターを弾いてみたの。リンシ、隣で聴いててくれる？"
+  },
+  {
+    "id": "casual",
+    "name": "活力健身運動裝",
+    "tag": "🏃 休閒運動",
+    "image": "assets/costumes/casual_idle.png",
+    "imageIdle": "assets/costumes/casual_idle.png",
+    "imageTalkHalf": "assets/costumes/casual_talk_half.png",
+    "imageTalkOpen": "assets/costumes/casual_talk_open.png",
+    "variants": [
+      "assets/costumes/casual_idle.png"
+    ],
+    "timeHint": "16:30 - 18:30",
+    "autoHours": [16, 18],
+    "reaction": "ちょっと体を動かして汗を流すところよ。リンシも一緒にストレッチしない？\n（我正要活動一下筋骨流流汗呢。リンシ也要一起來拉筋伸展嗎？）",
+    "tts": "ちょっと体を動かして汗を流すところよ。リンシも一緒にストレッチしない？"
+  },
+  {
+    "id": "dress",
+    "name": "窗邊翡翠綠荷葉洋裝",
+    "tag": "🌿 假日午後窗邊",
+    "image": "assets/costumes/dress_idle.png",
+    "imageIdle": "assets/costumes/dress_idle.png",
+    "imageTalkHalf": "assets/costumes/dress_talk_half.png",
+    "imageTalkOpen": "assets/costumes/dress_talk_open.png",
+    "variants": [
+      "assets/costumes/dress_idle.png",
+      "assets/costumes/variant_wardrobe_white.png"
+    ],
+    "timeHint": "陽光午後小憩",
+    "autoHours": null,
+    "reaction": "窓辺の風が気持ちいいわね。エメラルドグリーンのワンピース、リンシのために着てみたのよ。\n（窗邊的微風真舒服呢。這件翡翠綠荷葉洋裝，是為了リンシ特別換上的喔。）",
+    "tts": "窓辺の風が気持ちいいわね。エメラルドグリーンのワンピース、リンシのために着てみたのよ。"
+  },
+  {
+    "id": "strawhat",
+    "name": "向日葵草帽純白夏裝",
+    "tag": "🌻 夏日微風郊遊",
+    "image": "assets/costumes/strawhat_idle.png",
+    "imageIdle": "assets/costumes/strawhat_idle.png",
+    "imageTalkHalf": "assets/costumes/strawhat_talk_half.png",
+    "imageTalkOpen": "assets/costumes/strawhat_talk_open.png",
+    "variants": [
+      "assets/costumes/strawhat_idle.png",
+      "assets/costumes/variant_date_sky.png",
+      "assets/costumes/variant_date_wheat.png"
+    ],
+    "timeHint": "週末戶外踏青約會",
+    "autoHours": null,
+    "reaction": "麦わら帽子、似合うかしら？風が強くて飛ばされそうだから……リンシ、しっかり私の手、握っててね。\n（這頂草帽適合我嗎？風好大感覺快被吹走了……リンシ，要緊緊牽著我的手喔。）",
+    "tts": "麦わら帽子、似合うかしら？風が強くて飛ばされそうだから、リンシ、しっかり私の手、握っててね。"
+  },
+  {
+    "id": "date",
+    "name": "月台等待露肩私服",
+    "tag": "🎡 浪漫約會",
+    "image": "assets/costumes/date_idle.png",
+    "imageIdle": "assets/costumes/date_idle.png",
+    "imageTalkHalf": "assets/costumes/date_talk_half.png",
+    "imageTalkOpen": "assets/costumes/date_talk_open.png",
+    "variants": [
+      "assets/costumes/date_idle.png",
+      "assets/costumes/variant_date_wheat.png"
+    ],
+    "timeHint": "18:30 - 21:00",
+    "autoHours": [18, 21],
+    "reaction": "待たせちゃったかしら？今日のコーデ、どう……？リンシに似合ってるって言われたくて選んだの。\n（讓你久等了嗎？今天的穿搭、覺得怎麼樣……？因為想被你誇獎才選這件的。）",
+    "tts": "待たせちゃったかしら？今日のコーデ、どう？リンシに似合ってるって言われたくて選んだの。"
+  },
+  {
+    "id": "evening_gown",
+    "name": "星空露台酒紅晚禮服",
+    "tag": "🍷 紀念日晚宴",
+    "image": "assets/costumes/evening_gown_idle.png",
+    "imageIdle": "assets/costumes/evening_gown_idle.png",
+    "imageTalkHalf": "assets/costumes/evening_gown_talk_half.png",
+    "imageTalkOpen": "assets/costumes/evening_gown_talk_open.png",
+    "variants": [
+      "assets/costumes/evening_gown_idle.png",
+      "assets/costumes/variant_wardrobe_red.png"
+    ],
+    "timeHint": "特別紀念日與浪漫夜景",
+    "autoHours": null,
+    "reaction": "今夜は特別な記念日だから、ドレスアップしてみたわ。リンシ……そんなに見つめられたら、ワインより酔っちゃいそうよ。\n（今晚是特別的紀念日，所以我精心打扮了一番。リンシ……被你這樣深情盯著看，比喝紅酒還要醉人呢。）",
+    "tts": "今夜は特別な記念日だから、ドレスアップしてみたわ。リンシ、そんなに見つめられたら、ワインより酔っちゃいそうよ。"
+  },
+  {
+    "id": "yukata",
+    "name": "夏日祭典花火浴衣",
+    "tag": "🎆 花火大會夜遊",
+    "image": "assets/costumes/yukata_idle.png",
+    "imageIdle": "assets/costumes/yukata_idle.png",
+    "imageTalkHalf": "assets/costumes/yukata_talk_half.png",
+    "imageTalkOpen": "assets/costumes/yukata_talk_open.png",
+    "variants": [
+      "assets/costumes/yukata_idle.png"
+    ],
+    "timeHint": "夏夜河畔祭典",
+    "autoHours": null,
+    "reaction": "夏祭りの浴衣、どうかしら？花火がきれいね、リンシ……はぐれないように、手、繋いでもいいわよ。\n（夏日祭典的浴衣，覺得如何呢？煙火真美呢，リンシ……為了不走散，要牽手也可以喔。）",
+    "tts": "夏祭りの浴衣、どうかしら？花火がきれいね、リンシ。手、繋いでもいいわよ。"
+  },
+  {
+    "id": "rock",
+    "name": "搖滾樂團舞台皮衣",
+    "tag": "🎸 樂團LIVE舞台",
+    "image": "assets/costumes/rock_idle.png",
+    "imageIdle": "assets/costumes/rock_idle.png",
+    "imageTalkHalf": "assets/costumes/rock_talk_half.png",
+    "imageTalkOpen": "assets/costumes/rock_talk_open.png",
+    "variants": [
+      "assets/costumes/rock_idle.png"
+    ],
+    "timeHint": "熱血LIVE演出",
+    "autoHours": null,
+    "reaction": "たまにはこういうロックな革ジャンもいいでしょう？ほら、よそ見しないで私だけを見てなさいよ！\n（偶爾穿這種搖滾風皮衣也很不錯吧？喂、別東張西望，只准看著我一個人喔！）",
+    "tts": "たまにはこういうロックな革ジャンもいいでしょう？ほら、よそ見しないで私だけを見てなさいよ！"
+  },
+  {
+    "id": "bath",
+    "name": "沐浴溫泉純白浴巾",
+    "tag": "🛁 沐浴時光",
+    "image": "assets/costumes/bath_idle.png",
+    "imageIdle": "assets/costumes/bath_idle.png",
+    "imageTalkHalf": "assets/costumes/bath_talk_half.png",
+    "imageTalkOpen": "assets/costumes/bath_talk_open.png",
+    "variants": [
+      "assets/costumes/bath_idle.png"
+    ],
+    "timeHint": "21:00 - 22:00",
+    "autoHours": [21, 22],
+    "reaction": "お風呂でさっぱりしてきたわ……髪、まだ少し濡れてるの。リンシ、見惚れてないでバスタオル取って？\n（泡完澡整個人好舒暢喔……頭髮還稍微濕濕的。リンシ、別看呆了，幫我拿條毛巾好嗎？）",
+    "tts": "お風呂でさっぱりしてきたわ。髪、まだ少し濡れてるの。リンシ、見惚れてないでバスタオル取って？"
+  },
+  {
+    "id": "night",
+    "name": "溫暖橘色毛衣小憩",
+    "tag": "🌙 夜晚放鬆",
+    "image": "assets/costumes/night_idle.png",
+    "imageIdle": "assets/costumes/night_idle.png",
+    "imageTalkHalf": "assets/costumes/night_talk_half.png",
+    "imageTalkOpen": "assets/costumes/night_talk_open.png",
+    "variants": [
+      "assets/costumes/night_idle.png",
+      "assets/costumes/variant_night_blue.png",
+      "assets/costumes/variant_night_sleep.png"
+    ],
+    "timeHint": "22:00 - 23:30",
+    "autoHours": [22, 23],
+    "reaction": "温かいセーターを着て、レコードを聴きながらのんびりしてたの。リンシ、お隣座ってもいいわよ。\n（穿上溫暖的毛衣，邊聽黑膠唱片邊放鬆。リンシ、坐到我身邊來也沒關係喔。）",
+    "tts": "温かいセーターを着て、レコードを聴きながらのんびりしてたの。リンシ、お隣座ってもいいわよ。"
+  },
+  {
+    "id": "home",
+    "name": "晨曦挽髮休閒睡衣",
+    "tag": "🌅 居家晨曦",
+    "image": "assets/costumes/home_idle.png",
+    "imageIdle": "assets/costumes/home_idle.png",
+    "imageTalkHalf": "assets/costumes/home_talk_half.png",
+    "imageTalkOpen": "assets/costumes/home_talk_open.png",
+    "variants": [
+      "assets/costumes/home_idle.png",
+      "assets/costumes/variant_home_curtain.png",
+      "assets/costumes/variant_home_rug.jpg"
+    ],
+    "timeHint": "23:30 - 07:00",
+    "autoHours": [23, 7],
+    "reaction": "ふぁあ……おはよう、リンシ。髪を結んだら、朝ごはん作ってあげるね。\n（哈啊……早安，リンシ。等我把頭髮綁好，就為你做早餐喔。）",
+    "tts": "ふぁあ、おはよう、リンシ。髪を結んだら、朝ごはん作ってあげるね。"
+  },
+  {
+    "id": "boyfriend_shirt",
+    "name": "慵懶男友白襯衫居家",
+    "tag": "👚 男友襯衫晨光",
+    "image": "assets/costumes/boyfriend_shirt_idle.png",
+    "imageIdle": "assets/costumes/boyfriend_shirt_idle.png",
+    "imageTalkHalf": "assets/costumes/boyfriend_shirt_talk_half.png",
+    "imageTalkOpen": "assets/costumes/boyfriend_shirt_talk_open.png",
+    "variants": [
+      "assets/costumes/boyfriend_shirt_idle.png",
+      "assets/costumes/variant_home_curtain.png"
+    ],
+    "timeHint": "週末早晨與親密居家",
+    "autoHours": null,
+    "reaction": "リンシのワイシャツ、ちょっと借りちゃった……サイズが大きくて、あなたの匂いがして落ち着くの。だめ……？\n（我偷偷借穿了リンシ的白襯衫喔……尺寸大大的，還有你的味道，讓人好安心。不行嗎……？）",
+    "tts": "リンシのワイシャツ、ちょっと借りちゃった。サイズが大きくて、あなたの匂いがして落ち着くの。だめ？"
+  },
+  {
+    "id": "beach",
+    "name": "棕櫚海灘黑色泳裝",
+    "tag": "🏖️ 蔚藍海灘",
+    "image": "assets/costumes/beach_idle.png",
+    "imageIdle": "assets/costumes/beach_idle.png",
+    "imageTalkHalf": "assets/costumes/beach_talk_half.png",
+    "imageTalkOpen": "assets/costumes/beach_talk_open.png",
+    "variants": [
+      "assets/costumes/beach_idle.png"
+    ],
+    "timeHint": "週末海邊休閒",
+    "autoHours": null,
+    "reaction": "潮風が気持ちいいわね！この黒の水着、ちょっと大人っぽすぎるかしら？リンシ……じっと見ないでよ。\n（海風吹起來真舒服呢！這件黑色泳裝，會不會稍微太成熟了一點？リンシ……別一直盯著看啦。）",
+    "tts": "潮風が気持ちいいわね！この黒の水着、ちょっと大人っぽすぎるかしら？リンシ、じっと見ないでよ。"
+  },
+  {
+    "id": "cosplay",
+    "name": "俏皮黑色貓娘裝",
+    "tag": "🐾 角色扮演",
+    "image": "assets/costumes/cosplay_idle.png",
+    "imageIdle": "assets/costumes/cosplay_idle.png",
+    "imageTalkHalf": "assets/costumes/cosplay_talk_half.png",
+    "imageTalkOpen": "assets/costumes/cosplay_talk_open.png",
+    "variants": [
+      "assets/costumes/cosplay_idle.png",
+      "assets/costumes/variant_cosplay_xmas.png"
+    ],
+    "timeHint": "派對與特別時光",
+    "autoHours": null,
+    "reaction": "にゃ〜ん……なんてね。ちょっとからかってみただけよ！リンシ、喜んでる顔が隠せてないわよ？\n（喵～……開玩笑的啦。只是想逗逗你而已！リンシ、你開心的表情根本藏不住喔？）",
+    "tts": "にゃーん、なんてね。ちょっとからかってみただけよ！リンシ、喜んでる顔が隠せてないわよ？"
+  },
+  {
+    "id": "maid_witch",
+    "name": "古典女僕與小魔女裝",
+    "tag": "🧹 驚喜角色扮演",
+    "image": "assets/costumes/maid_witch_idle.png",
+    "imageIdle": "assets/costumes/maid_witch_idle.png",
+    "imageTalkHalf": "assets/costumes/maid_witch_talk_half.png",
+    "imageTalkOpen": "assets/costumes/maid_witch_talk_open.png",
+    "variants": [
+      "assets/costumes/maid_witch_idle.png",
+      "assets/costumes/variant_cosplay_maid.png",
+      "assets/costumes/variant_cosplay_xmas.png"
+    ],
+    "timeHint": "驚喜派對與專屬寵愛",
+    "autoHours": null,
+    "reaction": "お帰りなさいませ、ご主人様……なんて、冗談よ！リンシに魔法をかけて、疲れをぜんぶ吹き飛ばしてあげるわ✨\n（歡迎回來，主人……開玩笑的啦！我要對リンシ施展魔法，把你的疲勞全部吹走喔✨）",
+    "tts": "お帰りなさいませ、ご主人様、なんて、冗談よ！リンシに魔法をかけて、疲れをぜんぶ吹き飛ばしてあげるわ。"
+  },
+  {
+    "id": "bunny",
+    "name": "微醺純白俏皮兔女郎",
+    "tag": "🐰 專屬祕密派對",
+    "image": "assets/costumes/bunny_idle.png",
+    "imageIdle": "assets/costumes/bunny_idle.png",
+    "imageTalkHalf": "assets/costumes/bunny_talk_half.png",
+    "imageTalkOpen": "assets/costumes/bunny_talk_open.png",
+    "variants": [
+      "assets/costumes/bunny_idle.png",
+      "assets/costumes/variant_cosplay_bunny2.png"
+    ],
+    "timeHint": "深夜微醺時刻",
+    "autoHours": null,
+    "reaction": "しーっ、これはリンシだけのヒミツよ……？純白のバニー姿、そんなに目を丸くして見ないでよ。\n（噓——這是只屬於リンシ的秘密喔……？純白兔女郎的打扮，別瞪大眼睛一直盯著看啦。）",
+    "tts": "しーっ、これはリンシだけのヒミツよ？純白のバニー姿、そんなに目を丸くして見ないでよ。"
+  }
+]

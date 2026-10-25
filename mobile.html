@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>鮎川まどか 手機端啟動與安裝助手</title>
+  <link rel="icon" type="image/png" href="assets/avatar_portrait.png">
+  <style>
+    :root {
+      --primary: #ff5e7e;
+      --primary-dark: #e04364;
+      --accent: #f8c258;
+      --bg: #14111d;
+      --card-bg: rgba(30, 26, 45, 0.88);
+      --border: rgba(255, 255, 255, 0.12);
+      --text: #f0f0f5;
+      --text-muted: #a5a2b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft JhengHei", "Noto Sans TC", sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at 50% 10%, #2f2142 0%, #151122 60%, #0c0914 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 16px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 680px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 22px;
+    }
+
+    .header {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .header .avatar-wrap {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3.5px solid var(--primary);
+      box-shadow: 0 0 24px rgba(255, 94, 126, 0.45);
+      margin-bottom: 4px;
+    }
+
+    .header .avatar-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    h1 {
+      font-size: 26px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #fff 20%, var(--accent) 70%, var(--primary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 0.5px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .card {
+      width: 100%;
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px 22px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    .qr-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 16px;
+    }
+
+    .qr-frame {
+      background: #ffffff;
+      padding: 14px;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 210px;
+      min-height: 210px;
+    }
+
+    .qr-frame img {
+      width: 200px;
+      height: 200px;
+      display: block;
+      border-radius: 8px;
+    }
+
+    .url-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      padding: 9px 16px;
+      border-radius: 30px;
+      font-family: Consolas, monospace;
+      font-size: 14px;
+      color: var(--accent);
+      word-break: break-all;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border-radius: 24px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(255, 94, 126, 0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 94, 126, 0.5);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .instructions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    @media (max-width: 580px) {
+      .instructions-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .os-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .os-card h3 {
+      font-size: 15px;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #e2e1ec;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .step-num {
+      background: var(--primary);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 800;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .notice {
+      background: rgba(248, 194, 88, 0.12);
+      border: 1px solid rgba(248, 194, 88, 0.35);
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: #ffd88a;
+      line-height: 1.5;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      background: #05c46b;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="avatar-wrap">
+        <img src="assets/avatar_portrait.png" alt="Ayukawa Madoka">
+      </div>
+      <h1>鮎川まどか 手機端啟動助手</h1>
+      <p class="subtitle">隨時隨地在手機桌面喚醒まどか・80 年代浪漫即時相伴</p>
+    </div>
+
+    <!-- QR Code 與網址卡片 -->
+    <div class="card qr-section">
+      <div class="notice">
+        <span>☁️</span>
+        <div><strong>24 小時雲端模式已啟用：</strong>預設提供 <strong>GitHub Pages (HTTPS) 永久雲端網址</strong>，電腦關機或出門用 4G/5G 皆可隨時使用，並支援 Chrome 原生「安裝應用程式」！</div>
+      </div>
+
+      <div class="button-group" style="margin-bottom: 4px;">
+        <button class="btn btn-primary" id="btn-mode-cloud" type="button">☁️ 24小時雲端網址 (免開電腦・推薦)</button>
+        <button class="btn btn-secondary" id="btn-mode-lan" type="button">🏠 家用 Wi-Fi 電腦同步網址</button>
+      </div>
+
+      <div class="qr-frame" id="qr-container">
+        <img id="qr-img" src="" alt="手機掃碼 QR Code">
+      </div>
+
+      <div class="url-badge" id="mobile-url-text">https://rhs-commits.github.io/madoka-app/</div>
+
+      <div class="button-group">
+        <button class="btn btn-primary" id="btn-copy">📋 複製手機專屬網址</button>
+        <a class="btn btn-secondary" id="btn-preview" href="https://rhs-commits.github.io/madoka-app/" target="_blank">📱 直接開啟手機雲端版</a>
+      </div>
+    </div>
+
+    <!-- 雙模手機 App 新功能亮點 -->
+    <div class="card">
+      <h2 style="font-size: 17px; margin-bottom: 12px; color: #ff85a2;">✨ 全新雙模手機 App：居家 Wi-Fi 同步 ＋ 外出 100% 離線獨立運作</h2>
+      <div class="steps" style="font-size: 13.5px;">
+        <div class="step-item">
+          <span class="step-num">🏠</span>
+          <span><strong>居家 Wi-Fi 即時同步模式：</strong>在家連上 Wi-Fi 時，手機與電腦版的<strong>好感度、永久記憶、待辦清單、早晨喚醒鬧鐘、22 套造型與 24 張情侶 POV 自拍</strong>全自動雙向同步。</span>
+        </div>
+        <div class="step-item">
+          <span class="step-num">🚀</span>
+          <span><strong>外出 100% 離線獨立模式（PWA 隨身快取）：</strong>只要在手機上打開過一次並「加到主畫面」，出門在外沒有電腦連線時，<strong>早晨喚醒鬧鐘、待辦事項勾選、6 大戀人療癒/撒嬌模式、男友心情急救站與鶴ひろみ原聲語音</strong>依然在手機上 100% 獨立運作！</span>
+        </div>
+        <div class="step-item">
+          <span class="step-num">⏰</span>
+          <span><strong>隨身生活助理 & 戀人心理療癒：</strong>點擊頂部 <strong>「⏰」</strong> 或 <strong>「💞 療癒傾聽」</strong> 徽章，即可設定早晨喚醒鬧鐘、管理待辦清單，或隨時呼喚まどか給你溫柔安慰、抱抱充電與撒嬌互動！</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 加到手機桌面教學 -->
+    <div class="card">
+      <h2 style="font-size: 17px; margin-bottom: 12px; color: #fff;">📲 2 步驟將まどか加到手機桌面（全螢幕原生體驗）</h2>
+      
+      <div class="instructions-grid">
+        <!-- iOS Safari -->
+        <div class="os-card">
+          <h3>🍎 iPhone / iPad (Safari)</h3>
+          <div class="steps">
+            <div class="step-item">
+              <span class="step-num">1</span>
+              <span>用相機掃描 QR Code，在 <strong>Safari</strong> 瀏覽器中打開。</span>
+            </div>
+            <div class="step-item">
+              <span class="step-num">2</span>
+              <span>點擊底部工具列中間的 <strong>「分享」按鈕</strong>（方框向上箭頭 􀈂）。</span>
+            </div>
+            <div class="step-item">
+              <span class="step-num">3</span>
+              <span>選單下滑點選 <strong>「加入主畫面」</strong>（Add to Home Screen）。</span>
+            </div>
+            <div class="step-item">
+              <span class="step-num">4</span>
+              <span>點右上角「新增」，手機桌面即生成專屬 App 圖示，點擊即可<strong>全螢幕無邊框啟動</strong>！</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Android Chrome -->
+        <div class="os-card">
+          <h3>🤖 Android (Chrome / Edge)</h3>
+          <div class="steps">
+            <div class="step-item">
+              <span class="step-num">1</span>
+              <span>用相機掃碼或在 <strong>Chrome</strong> 瀏覽器開啟專屬網址。</span>
+            </div>
+            <div class="step-item">
+              <span class="step-num">2</span>
+              <span>點擊右上角 <strong>「⋮」</strong> 選單按鈕。</span>
+            </div>
+            <div class="step-item">
+              <span class="step-num">3</span>
+              <span>點選 <strong>「加到主畫面」</strong> 或 <strong>「安裝應用程式」</strong>。</span>
+            </div>
+            <div class="step-item">
+              <span class="step-num">4</span>
+              <span>確認新增後，手機桌面立即出現まどか圖示，享有完整原生互動感受！</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast">已複製網址到剪貼簿！</div>
+
+  <script>
+    const CLOUD_URL = 'https://rhs-commits.github.io/madoka-app/';
+    let lanUrl = 'http://10.70.38.141:3829/';
+    let targetUrl = CLOUD_URL;
+    const API_BASE = (window.location && window.location.protocol && window.location.protocol.startsWith('http'))
+      ? window.location.origin
+      : 'http://127.0.0.1:3829';
+
+    function renderQrAndUrl(url) {
+      targetUrl = url;
+      document.getElementById('mobile-url-text').textContent = targetUrl;
+      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=8&data=${encodeURIComponent(targetUrl)}`;
+      const qrImg = document.getElementById('qr-img');
+      qrImg.onerror = function() {
+        if (!this.src.includes('quickchart.io')) {
+          this.src = `https://quickchart.io/qr?size=240&text=${encodeURIComponent(targetUrl)}`;
+        }
+      };
+      qrImg.src = qrUrl;
+      document.getElementById('btn-preview').href = targetUrl;
+    }
+
+    async function initNetworkInfo() {
+      // 預設優先顯示 24 小時 GitHub Pages 雲端網址
+      renderQrAndUrl(CLOUD_URL);
+      try {
+        const res = await fetch(`${API_BASE}/api/network-info`);
+        const data = await res.json();
+        const port = data.port || 3829;
+        let selectedIp = '10.70.38.141';
+        
+        if (data.ips && data.ips.length > 0) {
+          const wifi = data.ips.find(i => /wi-fi|wlan|wireless/i.test(i.iface));
+          selectedIp = wifi ? wifi.address : data.ips[0].address;
+        }
+        lanUrl = `http://${selectedIp}:${port}/`;
+      } catch (e) {}
+    }
+
+    document.getElementById('btn-mode-cloud').addEventListener('click', () => {
+      document.getElementById('btn-mode-cloud').className = 'btn btn-primary';
+      document.getElementById('btn-mode-lan').className = 'btn btn-secondary';
+      renderQrAndUrl(CLOUD_URL);
+    });
+
+    document.getElementById('btn-mode-lan').addEventListener('click', () => {
+      document.getElementById('btn-mode-lan').className = 'btn btn-primary';
+      document.getElementById('btn-mode-cloud').className = 'btn btn-secondary';
+      renderQrAndUrl(lanUrl);
+    });
+
+    document.getElementById('btn-copy').addEventListener('click', () => {
+      if (!targetUrl) return;
+      navigator.clipboard.writeText(targetUrl).then(() => {
+        showToast('已複製手機端專屬網址！');
+      }).catch(() => {
+        // Fallback
+        const input = document.createElement('input');
+        input.value = targetUrl;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('copy');
+        document.body.removeChild(input);
+        showToast('已複製手機端專屬網址！');
+      });
+    });
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2500);
+    }
+
+    initNetworkInfo();
+  </script>
+</body>
+</html>
