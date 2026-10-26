@@ -472,15 +472,83 @@ function buildOfflineWakeupPayload(alarm) {
   };
 }
 
-// 離線/雲端智慧情境對話庫 + 支援瀏覽器直連 Gemini API
+// 離線/雲端智慧情境對話庫 + 支援瀏覽器直連 Gemini API (多模型自動容錯佇列)
+const STANDALONE_GEMINI_MODELS = [
+  'gemini-3-flash-preview',
+  'gemini-3.5-flash-lite',
+  'gemini-3.1-flash-lite',
+  'gemini-flash-lite-latest',
+  'gemma-4-26b-a4b-it'
+];
+
+function pickContextualAuthenticVoice(text, replyText, fallbackModeInfo) {
+  const combined = `${text || ''} ${replyText || ''}`;
+  let file = (fallbackModeInfo && fallbackModeInfo.voiceFile) || '情侶互動(溫柔).mp3';
+  if (/(早安|おはよう|朝|起き)/i.test(combined)) {
+    file = '起床(甜蜜).mp3';
+  } else if (/(便當|弁当|出門|いってらっしゃい)/i.test(combined)) {
+    file = '出門前拿便當(甜蜜).mp3';
+  } else if (/(累|辛苦|壓力|加班|お疲れ|休んで|よしよし)/i.test(combined)) {
+    file = Math.random() < 0.5 ? '安慰.mp3' : '有心事嗎(溫柔).mp3';
+  } else if (/(咖啡|コーヒー|Abcb|ラテ|茶)/i.test(combined)) {
+    file = '咖啡.mp3';
+  } else if (/(撒嬌|抱|ぎゅっ|甘え|寂し)/i.test(combined)) {
+    file = '情侶互動(撒嬌).mp3';
+  } else if (/(愛|喜歡|好き|ドキドキ|キス|親)/i.test(combined)) {
+    file = '情侶互動(熱情).mp3';
+  } else {
+    const pool = [
+      '情侶互動(溫柔).mp3',
+      '情侶互動(撒嬌).mp3',
+      '情侶互動(熱情).mp3',
+      '情侶互動.mp3',
+      '有心事嗎(溫柔).mp3',
+      '咖啡.mp3'
+    ];
+    file = pool[Math.floor(Math.random() * pool.length)];
+  }
+  return {
+    category: '日常',
+    filename: file,
+    audioUrl: `assets/audio/${encodeURIComponent('日常')}/${encodeURIComponent(file)}`
+  };
+}
+
+function recordStandaloneChatMemory(mem, userMessage, assistantReply, aiMemoryNote) {
+  if (!Array.isArray(mem.conversationLog)) mem.conversationLog = [];
+  const nowIso = new Date().toISOString();
+  mem.conversationLog.push({ role: 'user', content: userMessage, timestamp: nowIso });
+  mem.conversationLog.push({ role: 'assistant', content: assistantReply, timestamp: nowIso });
+  if (mem.conversationLog.length > 60) {
+    mem.conversationLog = mem.conversationLog.slice(-60);
+  }
+  if (aiMemoryNote) {
+    if (!Array.isArray(mem.memoryFacts)) mem.memoryFacts = [];
+    const exists = mem.memoryFacts.some(f => (f.text || f.content) === aiMemoryNote);
+    if (!exists) {
+      mem.memoryFacts.unshift({
+        id: 'fact_' + Date.now(),
+        text: aiMemoryNote,
+        content: aiMemoryNote,
+        category: 'ai_note',
+        createdAt: nowIso
+      });
+    }
+  }
+  saveOfflineMemoryState(mem);
+}
+
 async function generateStandaloneReply(message, history, userName = 'リンシ') {
   const text = (message || '').trim();
+  const lowerMsg = text.toLowerCase();
   const st = getOfflineAssistantState();
+  const modeInfo = st.currentModeInfo || OFFLINE_COUPLE_MODES[0];
   const mem = getOfflineMemoryState();
   mem.affectionScore = (mem.affectionScore || 300) + 3;
   mem.totalChats = (mem.totalChats || 10) + 1;
   saveOfflineMemoryState(mem);
 
+  // 1. 自然語言設鬧鐘與待辦事項
   if (/(鬧鐘|叫我起床|喚醒|Morning call)/i.test(text)) {
     const m = text.match(/(\d{1,2})\s*[:：點時]\s*(\d{1,2})?/);
     const hh = m ? String(Math.min(23, parseInt(m[1], 10))).padStart(2, '0') : '07';
@@ -489,10 +557,13 @@ async function generateStandaloneReply(message, history, userName = 'リンシ')
     const newAlarm = { id: 'alarm_' + Date.now(), time: timeStr, label: '☀️ まどか專屬早晨喚醒', mode: 'sweet', enabled: true, sceneImage: 'assets/pov_photos/pov_13_morning_wakeup.jpg', lastTriggeredDate: '' };
     st.alarms.push(newAlarm);
     saveOfflineAssistantState(st);
+    const reply = `わかったわ、${userName}！⏰ ${timeStr} に目覚ましアラームをセットしたわよ（クラウド・オフライン独立モードでも私が起こしてあげるからね💖）\n（我知道了，${userName}！已經幫你設定好 ${timeStr} 的早晨喚醒鬧鐘囉，就算電腦關機我也會在手機裡準時叫你起床喔💖）`;
+    recordStandaloneChatMemory(mem, text, reply);
     return {
-      reply: `わかったわ、${userName}！⏰ ${timeStr} に目覚ましアラームをセットしたわよ（クラウド・オフライン独立モードでも私が起こしてあげるからね💖）\n（我知道了，${userName}！已經幫你設定好 ${timeStr} 的早晨喚醒鬧鐘囉，就算電腦關機我也會在手機裡準時叫你起床喔💖）`,
+      reply,
       assistantAction: { type: 'alarm_added', alarm: newAlarm },
       sceneImage: 'assets/pov_photos/pov_13_morning_wakeup.jpg',
+      voice: { category: '日常', filename: '起床(甜蜜).mp3', audioUrl: 'assets/audio/%E6%97%A5%E5%B8%B8/%E8%B5%B7%E5%BA%8A(%E7%94%9C%E8%9C%9C).mp3' },
       memory: mem
     };
   }
@@ -501,85 +572,270 @@ async function generateStandaloneReply(message, history, userName = 'リンシ')
     const newTodo = { id: 'todo_' + Date.now(), title, category: 'work', time: '', reminderTime: '', completed: false, sceneImage: 'assets/pov_photos/pov_21_office_ol.png' };
     st.todos.unshift(newTodo);
     saveOfflineAssistantState(st);
+    const reply = `了解よ、${userName}！📝 To-Doリストに「${title}」を追加しておいたわ。終わったら私に教えてね！\n（收到囉，${userName}！已經幫你在待辦清單加上「${title}」了。完成之後要告訴我喔！）`;
+    recordStandaloneChatMemory(mem, text, reply);
     return {
-      reply: `了解よ、${userName}！📝 To-Doリストに「${title}」を追加しておいたわ。終わったら私に教えてね！\n（收到囉，${userName}！已經幫你在待辦清單加上「${title}」了。完成之後要告訴我喔！）`,
+      reply,
       assistantAction: { type: 'todo_added', todo: newTodo },
       sceneImage: 'assets/pov_photos/pov_21_office_ol.png',
+      voice: { category: '日常', filename: '咖啡.mp3', audioUrl: 'assets/audio/%E6%97%A5%E5%B8%B8/%E5%92%96%E5%95%A1.mp3' },
       memory: mem
     };
   }
 
-  // 若使用者在設定中填入了 Gemini API Key，瀏覽器可直接連線 Google Gemini 雲端 AI（完全不需開電腦！）
+  // 檢查是否要求發送自拍/照片
+  const isPhotoReq = /(自拍|拍照|拍張照|照片|寫真|看你|看看你|穿什麼|セルフィー|写真)/i.test(text);
+  let matchedPhoto = null;
+  if (isPhotoReq) {
+    const bundle = await loadCloudBundle();
+    const photos = (bundle && bundle.pov && Array.isArray(bundle.pov.photos)) ? bundle.pov.photos : [];
+    if (photos.length > 0) {
+      const byCostume = photos.filter(p => p.costumeId === currentConfig.currentCostume);
+      const pool = byCostume.length > 0 ? byCostume : photos;
+      matchedPhoto = pool[Math.floor(Math.random() * pool.length)];
+    }
+  }
+
+  // 2. 若使用者在設定中填入了 Gemini API Key，瀏覽器直連 Google Gemini 雲端 AI（多模型自動容錯）
   const savedCfg = (() => {
     try { return JSON.parse(localStorage.getItem(OFFLINE_KEYS.CONFIG) || '{}'); } catch (e) { return {}; }
   })();
-  const apiKey = savedCfg.geminiApiKey || currentConfig.geminiApiKey || '';
+  const apiKey = (savedCfg.geminiApiKey || currentConfig.geminiApiKey || '').replace(/\s+/g, '');
+
   if (apiKey && navigator.onLine) {
-    try {
-      const modeInfo = st.currentModeInfo || OFFLINE_COUPLE_MODES[0];
-      const sysPrompt = `你是《古靈精怪 (きまぐれオレンジ☆ロード)》的女主角「鮎川圓 (鮎川まどか)」，現在是使用者「${userName}」的親密戀人與隨身伴侶秘書。目前戀人模式為：${modeInfo.titleZh}（${modeInfo.descZh}）。請使用第一段日文（溫柔成熟的女性語氣：〜わ、〜わよ、〜かしら、〜ね）、第二段繁體中文翻譯（放在全形括號內）格式回覆，2~3句話即可。`;
-      const geminiRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          systemInstruction: { parts: [{ text: sysPrompt }] },
-          contents: [{ role: 'user', parts: [{ text }] }],
-          generationConfig: { temperature: 0.85, maxOutputTokens: 350 }
-        })
-      });
-      if (geminiRes.ok) {
+    const factsSummary = Array.isArray(mem.memoryFacts) && mem.memoryFacts.length > 0
+      ? mem.memoryFacts.slice(0, 6).map(f => `- ${f.text || f.content}`).join('\n')
+      : `- 最喜歡與${userName}一起聽音樂、喝 Abcb 咖啡`;
+
+    const sysPrompt = `你是日本經典動漫《古靈精怪 (きまぐれオレンジ☆ロード)》的女主角「鮎川圓 (鮎川まどか)」，現在是「${userName}」的親密戀人與隨身伴侶秘書。
+【目前戀人相處模式】：${modeInfo.titleZh}（${modeInfo.descZh}）
+【你們的共同記憶】：好感度 ${mem.affectionScore || 320}pt，相伴第 ${mem.daysTogether || 7} 天。
+${factsSummary}
+
+【語氣與回覆格式（嚴格遵守）】：
+1. 一律使用「兩行雙語格式」回覆（2~3 句話，自然親密、有生活感）：
+   第 1 行：日文原文（成熟的女性語氣：〜わ、〜わよ、〜かしら、〜ね、〜でしょう，稱呼對方為「${userName}」）。
+   第 2 行：繁體中文翻譯，必須完整包在全角括號內，例如：（……）
+2. 若對話中適合換裝或對方要求換裝，請在第 2 行結尾加上標籤（擇一）：
+   [COSTUME:uniform] [COSTUME:schoolpov] [COSTUME:cafe] [COSTUME:cafedate] [COSTUME:casual] [COSTUME:date] [COSTUME:bath] [COSTUME:night] [COSTUME:home] [COSTUME:beach] [COSTUME:cosplay] [COSTUME:sax] [COSTUME:yukata] [COSTUME:rock] [COSTUME:dress] [COSTUME:bunny] [COSTUME:work_ol] [COSTUME:guitar] [COSTUME:strawhat] [COSTUME:boyfriend_shirt] [COSTUME:maid_witch] [COSTUME:evening_gown]
+3. 若對方提到新的個人喜好或重要事件，可在第 2 行結尾加上 [MEMORY:簡短記憶摘要]。`;
+
+    // 整理多輪歷史對話，避免重複塞入最後一筆 user 訊息並確保 user/model 角色交替
+    const historyArr = Array.isArray(history) ? history.slice(-8) : [];
+    const contents = [];
+    for (const h of historyArr) {
+      if (!h || !h.content) continue;
+      if (h.role === 'user' && h.content.trim() === text) continue;
+      const mappedRole = h.role === 'assistant' ? 'model' : 'user';
+      if (contents.length > 0 && contents[contents.length - 1].role === mappedRole) {
+        contents[contents.length - 1].parts[0].text += `\n${h.content}`;
+      } else {
+        contents.push({ role: mappedRole, parts: [{ text: h.content }] });
+      }
+    }
+    if (contents.length > 0 && contents[0].role !== 'user') {
+      contents.shift();
+    }
+    if (contents.length > 0 && contents[contents.length - 1].role === 'user') {
+      contents[contents.length - 1].parts[0].text += `\n${text}`;
+    } else {
+      contents.push({ role: 'user', parts: [{ text }] });
+    }
+
+    for (const model of STANDALONE_GEMINI_MODELS) {
+      try {
+        const isGemma = model.startsWith('gemma-');
+        const payload = isGemma
+          ? {
+              contents: [
+                { role: 'user', parts: [{ text: `${sysPrompt}\n\n使用者「${userName}」對妳說：${text}` }] }
+              ],
+              generationConfig: { temperature: 0.85, maxOutputTokens: 450 }
+            }
+          : {
+              systemInstruction: { parts: [{ text: sysPrompt }] },
+              contents,
+              generationConfig: {
+                temperature: 0.85,
+                maxOutputTokens: 450,
+                topP: 0.95,
+                ...(model.startsWith('gemini-3') ? { thinkingConfig: { thinkingBudget: 0 } } : {})
+              }
+            };
+
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 8000);
+        const geminiRes = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+            signal: controller.signal
+          }
+        );
+        clearTimeout(timer);
+
+        if (!geminiRes.ok) {
+          console.warn(`[Standalone Gemini] Model ${model} returned HTTP ${geminiRes.status}`);
+          continue;
+        }
+
         const gData = await geminiRes.json();
         const candidateText = gData?.candidates?.[0]?.content?.parts?.[0]?.text;
-        if (candidateText) {
-          return {
-            reply: candidateText.trim(),
-            sceneImage: modeInfo.sceneImage,
-            memory: mem
-          };
+        if (!candidateText) continue;
+
+        let fullReply = candidateText.trim();
+        let aiMemoryNote = null;
+        const memMatch = fullReply.match(/\[MEMORY:(.*?)\]/i);
+        if (memMatch && memMatch[1]) {
+          aiMemoryNote = memMatch[1].trim();
+          fullReply = fullReply.replace(/\[MEMORY:.*?\]/gi, '').trim();
         }
+        fullReply = fullReply.replace(/\[PHOTO:.*?\]/gi, '').trim();
+
+        const lines = fullReply.split('\n').map(l => l.trim()).filter(Boolean);
+        if (lines.length >= 2) {
+          let line1 = lines[0];
+          let line2 = lines[1];
+          if (!line2.startsWith('（') && !line2.startsWith('(')) {
+            const costMatch = line2.match(/\[COSTUME:([a-zA-Z0-9_-]+)\]/i);
+            if (costMatch) {
+              line2 = `（${line2.replace(/\[COSTUME:.*?\]/gi, '').trim()}）${costMatch[0]}`;
+            } else {
+              line2 = `（${line2}）`;
+            }
+          }
+          fullReply = `${line1}\n${line2}`;
+        }
+
+        recordStandaloneChatMemory(mem, text, fullReply, aiMemoryNote);
+        return {
+          reply: fullReply,
+          ttsText: (lines[0] || fullReply).replace(/\[COSTUME:.*?\]/gi, '').trim(),
+          photo: matchedPhoto || null,
+          voice: pickContextualAuthenticVoice(text, fullReply, modeInfo),
+          memory: mem,
+          affectionDelta: 3,
+          source: 'gemini_direct',
+          model
+        };
+      } catch (err) {
+        console.warn(`[Standalone Gemini] Model ${model} error:`, err.message);
       }
-    } catch (e) {}
+    }
   }
 
-  // 內建情境對話池（離線或未設定 API Key 時自動回應）
-  if (/(早安|おはよう|早上好|起床)/i.test(text)) {
+  // 3. 智慧本機情境與換裝對話池（當未設定 API Key 或離線時，提供豐富不重複的回應）
+  if (matchedPhoto) {
+    const reply = `${matchedPhoto.captionJa || `ほら、${userName}のために撮ったセルフィーよ📸`}\n（${matchedPhoto.captionZh || `給你看，這是特別為${userName}拍的自拍照喔📸`}）`;
+    recordStandaloneChatMemory(mem, text, reply);
     return {
-      reply: `おはよう、${userName}☀️ よく眠れたかしら？今日も私がずっとスマホの中であなたの隣にいるからね。\n（早安，${userName}☀️ 睡得好嗎？今天我也會一直在手機裡陪在你身邊喔。）`,
-      sceneImage: 'assets/pov_photos/pov_13_morning_wakeup.jpg',
+      reply,
+      photo: matchedPhoto,
+      voice: pickContextualAuthenticVoice(text, reply, modeInfo),
+      memory: mem
+    };
+  }
+
+  const costumeKeywords = [
+    { keys: ['領帶', '走廊', '放學', 'ネクタイ'], id: 'schoolpov' },
+    { keys: ['制服', '水手服', '上學', '學校'], id: 'uniform' },
+    { keys: ['拿鐵', '拉花', '咖啡約會'], id: 'cafedate' },
+    { keys: ['咖啡', '打工', '圍裙', 'abcb'], id: 'cafe' },
+    { keys: ['薩克斯', '音樂室', 'サックス', '吹奏'], id: 'sax' },
+    { keys: ['浴衣', '花火', '煙火', '祭典'], id: 'yukata' },
+    { keys: ['搖滾', '皮衣', '樂團', '舞台'], id: 'rock' },
+    { keys: ['洋裝', '綠', '窗邊'], id: 'dress' },
+    { keys: ['兔女郎', '兔耳', 'バニー', 'bunny'], id: 'bunny' },
+    { keys: ['健身', '運動', '體操'], id: 'casual' },
+    { keys: ['約會', '出門', '私服', '車站', '逛街'], id: 'date' },
+    { keys: ['洗澡', '泡澡', '浴巾', '沐浴', '浴室'], id: 'bath' },
+    { keys: ['毛衣', '唱片'], id: 'night' },
+    { keys: ['居家', '做飯', '咖哩', '家裡'], id: 'home' },
+    { keys: ['海灘', '泳裝', '比基尼', '海邊', '夏天', '游泳'], id: 'beach' },
+    { keys: ['貓娘', 'cosplay', '角色扮演', '貓耳'], id: 'cosplay' },
+    { keys: ['辦公室', '秘書', 'ol', '窄裙', '套裝', '上班'], id: 'work_ol' },
+    { keys: ['吉他', '彈唱', '民謠'], id: 'guitar' },
+    { keys: ['草帽', '白洋裝'], id: 'strawhat' },
+    { keys: ['男友襯衫', '白襯衫', '大襯衫'], id: 'boyfriend_shirt' },
+    { keys: ['魔女', '萬聖節', '女僕'], id: 'maid_witch' },
+    { keys: ['晚禮服', '金色禮服', '禮服', '盛裝'], id: 'evening_gown' }
+  ];
+  for (const item of costumeKeywords) {
+    if (item.keys.some(k => lowerMsg.includes(k))) {
+      const cObj = COSTUMES.find(c => c.id === item.id);
+      if (cObj && cObj.reaction) {
+        const reply = `${cObj.reaction} [COSTUME:${cObj.id}]`;
+        recordStandaloneChatMemory(mem, text, reply);
+        return {
+          reply,
+          voice: pickContextualAuthenticVoice(text, reply, modeInfo),
+          memory: mem
+        };
+      }
+    }
+  }
+
+  if (/(早安|おはよう|早上好|起床)/i.test(text)) {
+    const reply = `おはよう、${userName}☀️ よく眠れたかしら？今日も私がずっとスマホの中であなたの隣にいるからね。\n（早安，${userName}☀️ 睡得好嗎？今天我也會一直在手機裡陪在你身邊喔。）`;
+    recordStandaloneChatMemory(mem, text, reply);
+    return {
+      reply,
       voice: { category: '日常', filename: '起床(甜蜜).mp3', audioUrl: 'assets/audio/%E6%97%A5%E5%B8%B8/%E8%B5%B7%E5%BA%8A(%E7%94%9C%E8%9C%9C).mp3' },
       memory: mem
     };
   }
   if (/(晚安|おやすみ|想睡|睡覺|睡囉)/i.test(text)) {
+    const reply = `おやすみなさい、${userName}🌙 ほら、私の膝まくらでゆっくり目を閉じて……いい夢を見てね💖\n（晚安，${userName}🌙 來，枕在我的膝蓋上慢慢閉上眼睛吧……祝你有個甜美的好夢喔💖）`;
+    recordStandaloneChatMemory(mem, text, reply);
     return {
-      reply: `おやすみなさい、${userName}🌙 ほら、私の膝まくらでゆっくり目を閉じて……いい夢を見てね💖\n（晚安，${userName}🌙 來，枕在我的膝蓋上慢慢閉上眼睛吧……祝你有個甜美的好夢喔💖）`,
-      sceneImage: 'assets/costumes/variant_night_sleep.png',
+      reply,
       voice: { category: '日常', filename: '情侶互動(溫柔).mp3', audioUrl: 'assets/audio/%E6%97%A5%E5%B8%B8/%E6%83%85%E4%BE%B6%E4%BA%92%E5%8B%95(%E6%BA%AB%E6%9F%94).mp3' },
       memory: mem
     };
   }
   if (/(累|辛苦|壓力|加班|煩|難過|疲)/i.test(text)) {
+    const reply = `お疲れ様、${userName}……無理しすぎてない？おいで、ぎゅっと抱きしめて頭を撫でてあげるから、少し休んでね。\n（辛苦了，${userName}……有沒有太勉強自己呢？過來吧，讓我緊緊抱住你、摸摸你的頭，稍微休息一下喔。）`;
+    recordStandaloneChatMemory(mem, text, reply);
     return {
-      reply: `お疲れ様、${userName}……無理しすぎてない？おいで、ぎゅっと抱きしめて頭を撫でてあげるから、少し休んでね。\n（辛苦了，${userName}……有沒有太勉強自己呢？過來吧，讓我緊緊抱住你、摸摸你的頭，稍微休息一下喔。）`,
-      sceneImage: 'assets/costumes/variant_home_curtain.png',
+      reply,
       voice: { category: '日常', filename: '安慰.mp3', audioUrl: 'assets/audio/%E6%97%A5%E5%B8%B8/%E5%AE%89%E6%85%B0.mp3' },
       memory: mem
     };
   }
-  if (/(愛你|喜歡你|想你|抱抱|親親|撒嬌|好き|愛してる)/i.test(text)) {
+  if (/(愛你|喜歡你|想你|抱抱|親親|撒嬌|好き|愛してる|漂亮|可愛)/i.test(text)) {
+    const reply = `もう、${userName}ったら……急にそんなこと言われたら、胸がドキドキしちゃうじゃない💖 私も、誰より${userName}のことが大好きよ。\n（真是的，${userName}……突然聽你這麼說，心跳都加速了啦💖 我也比任何人都更喜歡${userName}喔。）`;
+    recordStandaloneChatMemory(mem, text, reply);
     return {
-      reply: `もう、${userName}ったら……急にそんなこと言われたら、胸がドキドキしちゃうじゃない💖 私も、誰より${userName}のことが大好きよ。\n（真是的，${userName}……突然聽你這麼說，心跳都加速了啦💖 我也比任何人都更喜歡${userName}喔。）`,
-      sceneImage: 'assets/pov_photos/pov_20_boyfriend_shirt.png',
+      reply,
       voice: { category: '日常', filename: '情侶互動(撒嬌).mp3', audioUrl: 'assets/audio/%E6%97%A5%E5%B8%B8/%E6%83%85%E4%BE%B6%E4%BA%92%E5%8B%95(%E6%92%92%E5%AC%8C).mp3' },
       memory: mem
     };
   }
+  if (/(在幹嘛|做什麼|忙嗎|現在|何してる|吃|餓|便當)/i.test(text)) {
+    const reply = `レコードの整理をしながら、${userName}のためにAbcbの特製コーヒーを淹れようと思ってたのよ☕ 一緒に一息つかない？\n（我剛才一邊整理黑膠唱片，一邊想著要為${userName}泡杯 Abcb 特調咖啡呢☕ 要不要一起休息一下？）`;
+    recordStandaloneChatMemory(mem, text, reply);
+    return {
+      reply,
+      voice: { category: '日常', filename: '咖啡.mp3', audioUrl: 'assets/audio/%E6%97%A5%E5%B8%B8/%E5%92%96%E5%95%A1.mp3' },
+      memory: mem
+    };
+  }
 
-  const modeInfo = st.currentModeInfo || OFFLINE_COUPLE_MODES[0];
+  const generalPool = [
+    `${userName}、何見てるの？一段落したら、Abcbで一緒にコーヒーでも飲まない？\n（${userName}、你在看什麼呢？告一段落的話，要不要一起去 Abcb 喝杯咖啡？）`,
+    `ねえ、${userName}。さっき素敵なジャズのレコード見つけたの。今度サックスで吹いてあげるね🎷\n（吶，${userName}。剛才找到一張很棒的爵士唱片。下次用薩克斯風吹給你聽喔🎷）`,
+    `${userName}、頑張ってるのは知ってるけど……無理は禁物よ。私がずっとそばにいるんだから💖\n（${userName}、我知道你很努力……但別太勉強喔。我會一直陪在你身邊的💖）`,
+    `窓の外、いい風が吹いてるわね。${userName}の声聴いてたら、なんだかすごく落ち着くの。\n（窗外吹著很舒服的微風呢。聽著${userName}的聲音，總覺得心情非常平靜。）`,
+    `ねえ、${userName}。私のこと、こっそり見てたでしょ？ふふっ、もっと近くに来てもいいわよ。\n（吶、${userName}。剛才偷偷看我了吧？呵呵、再靠過來一點也沒關係喔。）`,
+    modeInfo.introReply
+  ];
+  const pickedReply = generalPool[Math.floor(Math.random() * generalPool.length)];
+  recordStandaloneChatMemory(mem, text, pickedReply);
   return {
-    reply: modeInfo.introReply,
-    sceneImage: modeInfo.sceneImage,
-    voice: { category: modeInfo.voiceCategory, filename: modeInfo.voiceFile, audioUrl: `assets/audio/${encodeURIComponent(modeInfo.voiceCategory)}/${encodeURIComponent(modeInfo.voiceFile)}` },
+    reply: pickedReply,
+    voice: pickContextualAuthenticVoice(text, pickedReply, modeInfo),
     memory: mem
   };
 }
@@ -1374,8 +1630,8 @@ function setupEventListeners() {
     const updated = {
       userName: cfgUserName.value.trim() || 'リンシ',
       voiceMode: cfgVoiceMode ? cfgVoiceMode.value : 'authentic',
-      geminiApiKey: cfgGeminiKey.value.trim(),
-      minimaxApiKey: cfgMinimaxKey.value.trim(),
+      geminiApiKey: cfgGeminiKey.value.replace(/\s+/g, ''),
+      minimaxApiKey: cfgMinimaxKey.value.replace(/\s+/g, ''),
       minimaxVoiceId: cfgMinimaxVoice.value.trim(),
       languageMode: cfgLang.value,
       volume: parseFloat(cfgVol.value),
