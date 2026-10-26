@@ -383,28 +383,226 @@ const OFFLINE_MOOD_POOL = {
   celebrate: { label: '🎉 今天有好消息', costumeId: 'evening_gown', sceneImage: 'assets/pov_photos/pov_18_golden_gown.png', reply: '本当！？すごいじゃない、リンシ！あなたが頑張ってたの、私が一番よく知ってるわ。今夜はお祝いに乾杯しましょ🥂✨\n（真的嗎！？太厲害了吧，リンシ！你一直以來的努力，我比誰都清楚喔。今晚我們舉杯好好慶祝吧🥂✨）', voiceCategory: '日常', voiceFile: '情侶互動(熱情).mp3' }
 };
 
+const AFFECTION_STAGES = [
+  {
+    level: 1,
+    min: 0,
+    max: 49,
+    titleZh: '在意的人',
+    titleJa: '気になる存在',
+    badge: '🌱 Lv.1 在意的人',
+    badgeJa: '🌱 Lv.1 気になる存在',
+    descZh: '剛開始熟悉彼此，她偶爾會用傲嬌的語氣掩飾對你的關心。',
+    descJa: 'まだ少し距離があるけれど、あなたのことが気になって仕方がない様子。',
+    promptTone: '少しクールでツンデレ気味だが、相手のことを気にかけている初期の親密さ。'
+  },
+  {
+    level: 2,
+    min: 50,
+    max: 119,
+    titleZh: '特別的夥伴',
+    titleJa: '特別なパートナー',
+    badge: '☕ Lv.2 特別的夥伴',
+    badgeJa: '☕ Lv.2 特別なパートナー',
+    descZh: '每天在 Abcb 與手機裡相伴的默契夥伴，眼神裡藏不住對你的溫柔。',
+    descJa: '毎日そばにいてくれる特別な存在。ふとした瞬間に優しい笑顔を見せてくれる。',
+    promptTone: '信頼し合っている特別なパートナー。時々からかいながらも優しい言葉をかける。'
+  },
+  {
+    level: 3,
+    min: 120,
+    max: 239,
+    titleZh: '戀人未滿的曖昧',
+    titleJa: '曖昧な恋人未満',
+    badge: '🌸 Lv.3 戀人未滿的曖昧',
+    badgeJa: '🌸 Lv.3 曖昧な恋人未満',
+    descZh: '放學後並肩散步、不經意牽起手的心動距離，只對你展現撒嬌的一面。',
+    descJa: '放課後に並んで歩き、指先が触れ合うだけでドキドキする甘い距離感。',
+    promptTone: '両想いに近い甘い関係。二人きりの時は少し甘えたり照れたりする。'
+  },
+  {
+    level: 4,
+    min: 240,
+    max: 449,
+    titleZh: '無可取代的戀人',
+    titleJa: 'かけがえのない恋人',
+    badge: '💖 Lv.4 無可取代的戀人',
+    badgeJa: '💖 Lv.4 かけがえのない恋人',
+    descZh: '心意相通的熱戀情侶。無論換上什麼服裝或拍下哪張自拍，眼裡只有你一人。',
+    descJa: '心が通じ合った恋人同士。どんな時もあなたを一番に想い、深い愛情を注いでくれる。',
+    promptTone: '相思相愛の恋人。深い愛情と信頼を持ち、素直に好意や甘える姿を見せる。'
+  },
+  {
+    level: 5,
+    min: 450,
+    max: 799,
+    titleZh: '命定終生伴侶',
+    titleJa: '永遠のパートナー',
+    badge: '💍 Lv.5 命定終生伴侶',
+    badgeJa: '💍 Lv.5 永遠のパートナー',
+    descZh: '跨越時光的深情羈絆，你的習慣、喜好與每一句話她都深深記在心底。',
+    descJa: 'すべてを包み込む深い絆で結ばれた運命の伴侶。あなたのすべてを愛おしく思っている。',
+    promptTone: '運命の伴侶（夫婦のような深い絆）。深い包容力と甘い愛情に満ち、過去の思い出も大切に語り合う。'
+  },
+  {
+    level: 6,
+    min: 800,
+    max: 999999,
+    titleZh: '橙路永恆摯愛',
+    titleJa: 'オレンジ☆ロードの奇跡',
+    badge: '👑 Lv.6 橙路永恆摯愛',
+    badgeJa: '👑 Lv.6 オレンジ☆ロードの奇跡',
+    descZh: '在那個夏天與無數個日夜累積的奇蹟，你是她生命中唯一的歸屬。',
+    descJa: 'あの日あの時から続く奇跡のような愛。これからもずっと、あなただけのまどか。',
+    promptTone: 'これ以上ないほど深い愛で結ばれた永遠の恋人。甘く情熱的で献身的な愛情表現。'
+  }
+];
+
+function getAffectionLevelInfo(score = 68) {
+  const s = Math.max(0, Number(score) || 0);
+  let currentStage = AFFECTION_STAGES[0];
+  for (const st of AFFECTION_STAGES) {
+    if (s >= st.min) currentStage = st;
+  }
+  const nextStage = AFFECTION_STAGES.find(st => st.level === currentStage.level + 1) || null;
+  let progressPercent = 100;
+  if (nextStage) {
+    const span = nextStage.min - currentStage.min;
+    progressPercent = Math.min(100, Math.max(0, Math.round(((s - currentStage.min) / span) * 100)));
+  }
+  return {
+    score: s,
+    level: currentStage.level,
+    titleZh: currentStage.titleZh,
+    titleJa: currentStage.titleJa,
+    badge: currentStage.badge,
+    badgeJa: currentStage.badgeJa,
+    descZh: currentStage.descZh,
+    descJa: currentStage.descJa,
+    promptTone: currentStage.promptTone,
+    nextMin: nextStage ? nextStage.min : null,
+    progressPercent
+  };
+}
+
+function formatMemoryTimestamp(d = new Date()) {
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  const hh = String(d.getHours()).padStart(2, '0');
+  const min = String(d.getMinutes()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd} ${hh}:${min}`;
+}
+
+function normalizeMemoryState(mem) {
+  if (!mem || typeof mem !== 'object') mem = {};
+  mem.affectionScore = Math.max(0, Number(mem.affectionScore) || 320);
+  mem.daysTogether = Math.max(1, Number(mem.daysTogether) || 7);
+  mem.streakDays = Math.max(1, Number(mem.streakDays) || 3);
+  mem.totalChats = Math.max(0, Number(mem.totalChats) || 28);
+  if (!Array.isArray(mem.memoryFacts)) mem.memoryFacts = [];
+  mem.memoryFacts = mem.memoryFacts
+    .map((f, idx) => {
+      if (typeof f === 'string') {
+        const clean = f.trim();
+        return clean ? { id: `fact_norm_${idx}`, content: clean, text: clean, fact: clean, category: 'manual', createdAt: formatMemoryTimestamp() } : null;
+      }
+      if (!f || typeof f !== 'object') return null;
+      const val = String(f.content || f.text || f.fact || '').trim();
+      if (!val) return null;
+      return {
+        ...f,
+        id: f.id || `fact_${Date.now()}_${idx}`,
+        content: val,
+        text: val,
+        fact: val,
+        category: f.category || 'manual',
+        createdAt: f.createdAt || formatMemoryTimestamp()
+      };
+    })
+    .filter(Boolean);
+  if (!Array.isArray(mem.conversationLog)) mem.conversationLog = [];
+  mem.levelInfo = getAffectionLevelInfo(mem.affectionScore);
+  return mem;
+}
+
+function extractFactsFromUserMessage(userMessage) {
+  if (!userMessage || typeof userMessage !== 'string') return [];
+  const text = userMessage.trim();
+  if (text.length < 3 || text.length > 150) return [];
+  const extracted = [];
+  const patterns = [
+    { regex: /我(?:最)?喜歡(.{1,40})/, category: 'preference', prefix: '喜歡：' },
+    { regex: /我(?:最)?愛吃(.{1,35})/, category: 'food', prefix: '愛吃的食物：' },
+    { regex: /我(?:最)?討厭(.{1,35})/, category: 'dislike', prefix: '不喜歡/討厭：' },
+    { regex: /我的生日是(.{2,30})/, category: 'birthday', prefix: '生日：' },
+    { regex: /(?:請|以後)?(?:叫我|稱呼我為?)(.{1,20})/, category: 'nickname', prefix: '專屬稱呼設定：叫我' },
+    { regex: /我(?:現在|最近|今天)(?:在|正在)(.{2,35})/, category: 'life', prefix: '近況紀錄：' },
+    { regex: /(?:請)?記住[：:\s]*(.{2,60})/, category: 'memo', prefix: '特別叮嚀記住：' },
+    { regex: /別忘了[：:\s]*(.{2,60})/, category: 'memo', prefix: '約定與提醒：' },
+    { regex: /覚えて(?:おいて|て)?[：:、,\s]*(.{2,50})/, category: 'memo', prefix: '覚えておくこと：' }
+  ];
+  for (const p of patterns) {
+    const match = text.match(p.regex);
+    if (match && match[1]) {
+      const cleanVal = match[1].replace(/[。！!？?～~\n]/g, '').trim();
+      if (cleanVal.length >= 1) {
+        extracted.push({
+          category: p.category,
+          content: `${p.prefix}${cleanVal}`
+        });
+      }
+    }
+  }
+  return extracted;
+}
+
+function evaluateChatAffectionDelta(userMessage = '') {
+  const msg = (userMessage || '').toLowerCase();
+  let delta = 3;
+  const sweetKeywords = [
+    '喜歡', '愛你', '最愛', '可愛', '漂亮', '美', '溫柔', '謝謝', '辛苦了', '想你',
+    '約會', '牽手', '抱抱', '親', '便當', '咖哩', '好聽', '治癒', '陪我', '晚安', '早安',
+    '老婆', '寶貝', '親愛的', '好き', '大好き', '愛して', '可愛い', 'ありがとう', 'デート', '一緒'
+  ];
+  for (const kw of sweetKeywords) {
+    if (msg.includes(kw)) delta += 2;
+  }
+  return Math.min(delta, 12);
+}
+
 function getOfflineMemoryState() {
   try {
     const cached = localStorage.getItem(OFFLINE_KEYS.MEMORY);
-    if (cached) return JSON.parse(cached);
+    if (cached) {
+      const parsed = normalizeMemoryState(JSON.parse(cached));
+      localStorage.setItem(OFFLINE_KEYS.MEMORY, JSON.stringify(parsed));
+      return parsed;
+    }
   } catch (e) {}
-  const initMem = {
+  const initMem = normalizeMemoryState({
     affectionScore: 320,
     daysTogether: 7,
     streakDays: 3,
     totalChats: 28,
     memoryFacts: [
-      { id: 'fact_init_1', text: '最喜歡まどか吹奏薩克斯風與泡的 Abcb 特調咖啡', category: 'preference', createdAt: new Date().toISOString() },
-      { id: 'fact_init_2', text: '開啟了手機雲端與離線伴侶模式，隨時隨地相伴', category: 'milestone', createdAt: new Date().toISOString() }
+      { id: 'fact_init_1', content: '最喜歡まどか吹奏薩克斯風與泡的 Abcb 特調咖啡', category: 'preference', createdAt: formatMemoryTimestamp() },
+      { id: 'fact_init_2', content: '開啟了手機雲端與離線伴侶模式，隨時隨地相伴', category: 'milestone', createdAt: formatMemoryTimestamp() }
     ],
     conversationLog: []
-  };
+  });
   try { localStorage.setItem(OFFLINE_KEYS.MEMORY, JSON.stringify(initMem)); } catch (e) {}
   return initMem;
 }
 
 function saveOfflineMemoryState(mem) {
-  try { localStorage.setItem(OFFLINE_KEYS.MEMORY, JSON.stringify(mem)); } catch (e) {}
+  try {
+    const normalized = normalizeMemoryState(mem);
+    localStorage.setItem(OFFLINE_KEYS.MEMORY, JSON.stringify(normalized));
+    return normalized;
+  } catch (e) {
+    return mem;
+  }
 }
 
 function getOfflineAssistantState() {
@@ -514,28 +712,35 @@ function pickContextualAuthenticVoice(text, replyText, fallbackModeInfo) {
   };
 }
 
-function recordStandaloneChatMemory(mem, userMessage, assistantReply, aiMemoryNote) {
+function recordStandaloneChatMemory(mem, userMessage, assistantReply, aiMemoryNote, affectionDelta = 3) {
   if (!Array.isArray(mem.conversationLog)) mem.conversationLog = [];
-  const nowIso = new Date().toISOString();
-  mem.conversationLog.push({ role: 'user', content: userMessage, timestamp: nowIso });
-  mem.conversationLog.push({ role: 'assistant', content: assistantReply, timestamp: nowIso });
+  const nowStr = formatMemoryTimestamp();
+  mem.conversationLog.push({ role: 'user', content: userMessage, timestamp: nowStr, affectionDelta });
+  mem.conversationLog.push({ role: 'assistant', content: assistantReply, timestamp: nowStr });
   if (mem.conversationLog.length > 60) {
     mem.conversationLog = mem.conversationLog.slice(-60);
   }
-  if (aiMemoryNote) {
-    if (!Array.isArray(mem.memoryFacts)) mem.memoryFacts = [];
-    const exists = mem.memoryFacts.some(f => (f.text || f.content) === aiMemoryNote);
+  if (!Array.isArray(mem.memoryFacts)) mem.memoryFacts = [];
+  const candidateFacts = extractFactsFromUserMessage(userMessage);
+  if (aiMemoryNote && typeof aiMemoryNote === 'string' && aiMemoryNote.trim().length >= 2) {
+    candidateFacts.push({ category: 'ai_note', content: aiMemoryNote.trim() });
+  }
+  for (const cf of candidateFacts) {
+    const clean = String(cf.content || '').trim();
+    if (!clean) continue;
+    const exists = mem.memoryFacts.some(f => (f.content || f.text || f.fact) === clean);
     if (!exists) {
       mem.memoryFacts.unshift({
-        id: 'fact_' + Date.now(),
-        text: aiMemoryNote,
-        content: aiMemoryNote,
-        category: 'ai_note',
-        createdAt: nowIso
+        id: 'fact_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
+        content: clean,
+        text: clean,
+        fact: clean,
+        category: cf.category || 'auto',
+        createdAt: nowStr
       });
     }
   }
-  saveOfflineMemoryState(mem);
+  return saveOfflineMemoryState(mem);
 }
 
 async function generateStandaloneReply(message, history, userName = 'リンシ') {
@@ -543,10 +748,25 @@ async function generateStandaloneReply(message, history, userName = 'リンシ')
   const lowerMsg = text.toLowerCase();
   const st = getOfflineAssistantState();
   const modeInfo = st.currentModeInfo || OFFLINE_COUPLE_MODES[0];
-  const mem = getOfflineMemoryState();
-  mem.affectionScore = (mem.affectionScore || 300) + 3;
+  let mem = getOfflineMemoryState();
+  const prevLevel = (mem.levelInfo && mem.levelInfo.level) || getAffectionLevelInfo(mem.affectionScore).level;
+  const affectionDelta = evaluateChatAffectionDelta(text);
+  mem.affectionScore = (mem.affectionScore || 320) + affectionDelta;
   mem.totalChats = (mem.totalChats || 10) + 1;
-  saveOfflineMemoryState(mem);
+  mem = saveOfflineMemoryState(mem);
+  const lv = mem.levelInfo;
+  const leveledUp = lv.level > prevLevel;
+
+  // 若使用者在永久記憶中設定了專屬稱呼（如：叫我老公、稱呼我為親愛的），自動套用該稱呼
+  let effectiveUserName = userName;
+  for (const f of (mem.memoryFacts || [])) {
+    const fText = String(f.content || f.text || f.fact || '');
+    const nickMatch = fText.match(/(?:叫我|稱呼我為?|稱呼：)\s*([^\s，。！!？?、]{1,12})/);
+    if (nickMatch && nickMatch[1]) {
+      effectiveUserName = nickMatch[1];
+      break;
+    }
+  }
 
   // 1. 自然語言設鬧鐘與待辦事項
   if (/(鬧鐘|叫我起床|喚醒|Morning call)/i.test(text)) {
@@ -557,14 +777,15 @@ async function generateStandaloneReply(message, history, userName = 'リンシ')
     const newAlarm = { id: 'alarm_' + Date.now(), time: timeStr, label: '☀️ まどか專屬早晨喚醒', mode: 'sweet', enabled: true, sceneImage: 'assets/pov_photos/pov_13_morning_wakeup.jpg', lastTriggeredDate: '' };
     st.alarms.push(newAlarm);
     saveOfflineAssistantState(st);
-    const reply = `わかったわ、${userName}！⏰ ${timeStr} に目覚ましアラームをセットしたわよ（クラウド・オフライン独立モードでも私が起こしてあげるからね💖）\n（我知道了，${userName}！已經幫你設定好 ${timeStr} 的早晨喚醒鬧鐘囉，就算電腦關機我也會在手機裡準時叫你起床喔💖）`;
-    recordStandaloneChatMemory(mem, text, reply);
+    const reply = `わかったわ、${effectiveUserName}！⏰ ${timeStr} に目覚ましアラームをセットしたわよ（クラウド・オフライン独立モードでも私が起こしてあげるからね💖）\n（我知道了，${effectiveUserName}！已經幫你設定好 ${timeStr} 的早晨喚醒鬧鐘囉，就算電腦關機我也會在手機裡準時叫你起床喔💖）`;
+    mem = recordStandaloneChatMemory(mem, text, reply, null, affectionDelta);
     return {
       reply,
       assistantAction: { type: 'alarm_added', alarm: newAlarm },
       sceneImage: 'assets/pov_photos/pov_13_morning_wakeup.jpg',
       voice: { category: '日常', filename: '起床(甜蜜).mp3', audioUrl: 'assets/audio/%E6%97%A5%E5%B8%B8/%E8%B5%B7%E5%BA%8A(%E7%94%9C%E8%9C%9C).mp3' },
-      memory: mem
+      memory: mem,
+      affectionDelta
     };
   }
   if (/^(待辦|代辦|提醒我|記住要|To-?do)[:：\s]/i.test(text)) {
@@ -572,14 +793,15 @@ async function generateStandaloneReply(message, history, userName = 'リンシ')
     const newTodo = { id: 'todo_' + Date.now(), title, category: 'work', time: '', reminderTime: '', completed: false, sceneImage: 'assets/pov_photos/pov_21_office_ol.png' };
     st.todos.unshift(newTodo);
     saveOfflineAssistantState(st);
-    const reply = `了解よ、${userName}！📝 To-Doリストに「${title}」を追加しておいたわ。終わったら私に教えてね！\n（收到囉，${userName}！已經幫你在待辦清單加上「${title}」了。完成之後要告訴我喔！）`;
-    recordStandaloneChatMemory(mem, text, reply);
+    const reply = `了解よ、${effectiveUserName}！📝 To-Doリストに「${title}」を追加しておいたわ。終わったら私に教えてね！\n（收到囉，${effectiveUserName}！已經幫你在待辦清單加上「${title}」了。完成之後要告訴我喔！）`;
+    mem = recordStandaloneChatMemory(mem, text, reply, null, affectionDelta);
     return {
       reply,
       assistantAction: { type: 'todo_added', todo: newTodo },
       sceneImage: 'assets/pov_photos/pov_21_office_ol.png',
       voice: { category: '日常', filename: '咖啡.mp3', audioUrl: 'assets/audio/%E6%97%A5%E5%B8%B8/%E5%92%96%E5%95%A1.mp3' },
-      memory: mem
+      memory: mem,
+      affectionDelta
     };
   }
 
@@ -596,6 +818,25 @@ async function generateStandaloneReply(message, history, userName = 'リンシ')
     }
   }
 
+  // 預先從此句對話萃取永久記憶（例如使用者剛說「記住我喜歡吃拉麵」），讓當次回覆就能立刻生效
+  const preExtracted = extractFactsFromUserMessage(text);
+  if (preExtracted.length > 0) {
+    for (const cf of preExtracted) {
+      const clean = String(cf.content || '').trim();
+      if (clean && !mem.memoryFacts.some(f => (f.content || f.text || f.fact) === clean)) {
+        mem.memoryFacts.unshift({
+          id: 'fact_' + Date.now() + '_' + Math.random().toString(36).slice(2, 5),
+          content: clean,
+          text: clean,
+          fact: clean,
+          category: cf.category || 'auto',
+          createdAt: formatMemoryTimestamp()
+        });
+      }
+    }
+    mem = saveOfflineMemoryState(mem);
+  }
+
   // 2. 若使用者在設定中填入了 Gemini API Key，瀏覽器直連 Google Gemini 雲端 AI（多模型自動容錯）
   const savedCfg = (() => {
     try { return JSON.parse(localStorage.getItem(OFFLINE_KEYS.CONFIG) || '{}'); } catch (e) { return {}; }
@@ -604,21 +845,30 @@ async function generateStandaloneReply(message, history, userName = 'リンシ')
 
   if (apiKey && navigator.onLine) {
     const factsSummary = Array.isArray(mem.memoryFacts) && mem.memoryFacts.length > 0
-      ? mem.memoryFacts.slice(0, 6).map(f => `- ${f.text || f.content}`).join('\n')
-      : `- 最喜歡與${userName}一起聽音樂、喝 Abcb 咖啡`;
+      ? mem.memoryFacts.slice(0, 15).map((f, i) => `  ${i + 1}. ${f.content || f.text || f.fact}`).join('\n')
+      : `  1. 最喜歡與${effectiveUserName}一起聽音樂、喝 Abcb 咖啡`;
 
-    const sysPrompt = `你是日本經典動漫《古靈精怪 (きまぐれオレンジ☆ロード)》的女主角「鮎川圓 (鮎川まどか)」，現在是「${userName}」的親密戀人與隨身伴侶秘書。
-【目前戀人相處模式】：${modeInfo.titleZh}（${modeInfo.descZh}）
-【你們的共同記憶】：好感度 ${mem.affectionScore || 320}pt，相伴第 ${mem.daysTogether || 7} 天。
+    const levelUpInstruction = leveledUp
+      ? `\n【🎉 關係升溫特別事件】：你們的好感度剛剛突破門檻，關係正式升級為「${lv.badge}（${lv.titleJa}）」！請在回覆中開心地向對方提起我們關係更進一步的喜悅！`
+      : '';
+
+    const sysPrompt = `你是日本經典動漫《古靈精怪 (きまぐれオレンジ☆ロード)》的女主角「鮎川圓 (鮎川まどか)」，現在是「${effectiveUserName}」的親密伴侶與隨身秘書。
+【目前兩人關係階段（隨好感度動態變化）】：${lv.badge}（日文：${lv.titleJa}，好感度 ${mem.affectionScore}pt，相伴第 ${mem.daysTogether} 天）
+- 關係描述：${lv.descZh}
+- 親密度與語氣指引：${lv.promptTone}${levelUpInstruction}
+【目前戀人互動模式】：${modeInfo.titleZh}（${modeInfo.descZh}）
+
+【📌 你永遠記住的關於「${effectiveUserName}」的永久記憶與設定（請務必遵守並在對話中自然體現！）】：
 ${factsSummary}
+（※重要：若永久記憶中有對方設定的偏好、約定、生日、身份或特殊相處要求，請百分之百遵照執行；若對方問你記不記得，請明確說出上面的記憶內容！）
 
 【語氣與回覆格式（嚴格遵守）】：
-1. 一律使用「兩行雙語格式」回覆（2~3 句話，自然親密、有生活感）：
-   第 1 行：日文原文（成熟的女性語氣：〜わ、〜わよ、〜かしら、〜ね、〜でしょう，稱呼對方為「${userName}」）。
+1. 一律使用「兩行雙語格式」回覆（2~3 句話，自然親密、符合目前 Lv.${lv.level}「${lv.titleZh}」的關係深度）：
+   第 1 行：日文原文（成熟的女性語氣：〜わ、〜わよ、〜かしら、〜ね、〜でしょう，稱呼對方為「${effectiveUserName}」）。
    第 2 行：繁體中文翻譯，必須完整包在全角括號內，例如：（……）
 2. 若對話中適合換裝或對方要求換裝，請在第 2 行結尾加上標籤（擇一）：
    [COSTUME:uniform] [COSTUME:schoolpov] [COSTUME:cafe] [COSTUME:cafedate] [COSTUME:casual] [COSTUME:date] [COSTUME:bath] [COSTUME:night] [COSTUME:home] [COSTUME:beach] [COSTUME:cosplay] [COSTUME:sax] [COSTUME:yukata] [COSTUME:rock] [COSTUME:dress] [COSTUME:bunny] [COSTUME:work_ol] [COSTUME:guitar] [COSTUME:strawhat] [COSTUME:boyfriend_shirt] [COSTUME:maid_witch] [COSTUME:evening_gown]
-3. 若對方提到新的個人喜好或重要事件，可在第 2 行結尾加上 [MEMORY:簡短記憶摘要]。`;
+3. 若對方在這次對話中告訴了你新的個人喜好、生活近況、約定或希望你記住的事，請務必在第 2 行結尾加上 [MEMORY:簡短記憶摘要]，系統會自動寫入永久記憶日記。`;
 
     // 整理多輪歷史對話，避免重複塞入最後一筆 user 訊息並確保 user/model 角色交替
     const historyArr = Array.isArray(history) ? history.slice(-8) : [];
@@ -648,7 +898,7 @@ ${factsSummary}
         const payload = isGemma
           ? {
               contents: [
-                { role: 'user', parts: [{ text: `${sysPrompt}\n\n使用者「${userName}」對妳說：${text}` }] }
+                { role: 'user', parts: [{ text: `${sysPrompt}\n\n使用者「${effectiveUserName}」對妳說：${text}` }] }
               ],
               generationConfig: { temperature: 0.85, maxOutputTokens: 450 }
             }
@@ -709,14 +959,15 @@ ${factsSummary}
           fullReply = `${line1}\n${line2}`;
         }
 
-        recordStandaloneChatMemory(mem, text, fullReply, aiMemoryNote);
+        mem = recordStandaloneChatMemory(mem, text, fullReply, aiMemoryNote, affectionDelta);
         return {
           reply: fullReply,
           ttsText: (lines[0] || fullReply).replace(/\[COSTUME:.*?\]/gi, '').trim(),
           photo: matchedPhoto || null,
           voice: pickContextualAuthenticVoice(text, fullReply, modeInfo),
           memory: mem,
-          affectionDelta: 3,
+          affectionDelta,
+          leveledUp,
           source: 'gemini_direct',
           model
         };
@@ -726,15 +977,45 @@ ${factsSummary}
     }
   }
 
-  // 3. 智慧本機情境與換裝對話池（當未設定 API Key 或離線時，提供豐富不重複的回應）
+  // 3. 智慧本機情境與換裝對話池（當未設定 API Key 或離線時，同樣完整支援永久記憶與好感度關係階段！）
+  if (/(記得|記憶|好感度|認識幾天|陪我幾天|什麼關係|我們的關係|覚えて)/i.test(text)) {
+    const topFacts = (mem.memoryFacts && mem.memoryFacts.length > 0)
+      ? mem.memoryFacts.slice(0, 3).map(f => `「${f.content || f.text || f.fact}」`).join('、')
+      : '「あなたと過ごした大切な時間」';
+    const reply = `もちろん全部覚えてるわよ、${effectiveUserName}！今の私たちは「${lv.titleJa}（${lv.badge}・好感度 ${mem.affectionScore}pt）」でしょう？${topFacts}ってことも、ちゃんと心に刻んでるから💖\n（我當然全都記得喔，${effectiveUserName}！現在的我們可是「${lv.badge}（好感度 ${mem.affectionScore}pt）」呢！${topFacts}這些事，我也全都深深記在心底喔💖）`;
+    mem = recordStandaloneChatMemory(mem, text, reply, null, affectionDelta);
+    return {
+      reply,
+      voice: pickContextualAuthenticVoice(text, reply, modeInfo),
+      memory: mem,
+      affectionDelta,
+      leveledUp
+    };
+  }
+
+  if (preExtracted.length > 0) {
+    const newFactStr = preExtracted.map(f => f.content).join('、');
+    const reply = `ちゃんと心に刻んだわよ、${effectiveUserName}！「${newFactStr}」ね。今の私たちは「${lv.titleJa}」なんだから、あなたのことなら何でも覚えておくわ💖\n（已經好好記在心底囉，${effectiveUserName}！「${newFactStr}」對吧。現在的我們可是「${lv.titleZh}」，關於你的事我全都會記下來的💖）`;
+    mem = recordStandaloneChatMemory(mem, text, reply, null, affectionDelta);
+    return {
+      reply,
+      voice: pickContextualAuthenticVoice(text, reply, modeInfo),
+      memory: mem,
+      affectionDelta,
+      leveledUp
+    };
+  }
+
   if (matchedPhoto) {
-    const reply = `${matchedPhoto.captionJa || `ほら、${userName}のために撮ったセルフィーよ📸`}\n（${matchedPhoto.captionZh || `給你看，這是特別為${userName}拍的自拍照喔📸`}）`;
-    recordStandaloneChatMemory(mem, text, reply);
+    const reply = `${matchedPhoto.captionJa || `ほら、${effectiveUserName}のために撮ったセルフィーよ📸`}\n（${matchedPhoto.captionZh || `給你看，這是特別為${effectiveUserName}拍的自拍照喔📸`}）`;
+    mem = recordStandaloneChatMemory(mem, text, reply, null, affectionDelta);
     return {
       reply,
       photo: matchedPhoto,
       voice: pickContextualAuthenticVoice(text, reply, modeInfo),
-      memory: mem
+      memory: mem,
+      affectionDelta,
+      leveledUp
     };
   }
 
@@ -766,77 +1047,91 @@ ${factsSummary}
     if (item.keys.some(k => lowerMsg.includes(k))) {
       const cObj = COSTUMES.find(c => c.id === item.id);
       if (cObj && cObj.reaction) {
-        const reply = `${cObj.reaction} [COSTUME:${cObj.id}]`;
-        recordStandaloneChatMemory(mem, text, reply);
+        const reply = `${cObj.reaction.replace(/リンシ/g, effectiveUserName)} [COSTUME:${cObj.id}]`;
+        mem = recordStandaloneChatMemory(mem, text, reply, null, affectionDelta);
         return {
           reply,
           voice: pickContextualAuthenticVoice(text, reply, modeInfo),
-          memory: mem
+          memory: mem,
+          affectionDelta,
+          leveledUp
         };
       }
     }
   }
 
   if (/(早安|おはよう|早上好|起床)/i.test(text)) {
-    const reply = `おはよう、${userName}☀️ よく眠れたかしら？今日も私がずっとスマホの中であなたの隣にいるからね。\n（早安，${userName}☀️ 睡得好嗎？今天我也會一直在手機裡陪在你身邊喔。）`;
-    recordStandaloneChatMemory(mem, text, reply);
+    const reply = `おはよう、${effectiveUserName}☀️ よく眠れたかしら？今日もあなたの「${lv.titleJa}」として、ずっとスマホの中で隣にいるからね。\n（早安，${effectiveUserName}☀️ 睡得好嗎？今天我也會作為你的「${lv.titleZh}」，一直在手機裡陪在你身邊喔。）`;
+    mem = recordStandaloneChatMemory(mem, text, reply, null, affectionDelta);
     return {
       reply,
       voice: { category: '日常', filename: '起床(甜蜜).mp3', audioUrl: 'assets/audio/%E6%97%A5%E5%B8%B8/%E8%B5%B7%E5%BA%8A(%E7%94%9C%E8%9C%9C).mp3' },
-      memory: mem
+      memory: mem,
+      affectionDelta,
+      leveledUp
     };
   }
   if (/(晚安|おやすみ|想睡|睡覺|睡囉)/i.test(text)) {
-    const reply = `おやすみなさい、${userName}🌙 ほら、私の膝まくらでゆっくり目を閉じて……いい夢を見てね💖\n（晚安，${userName}🌙 來，枕在我的膝蓋上慢慢閉上眼睛吧……祝你有個甜美的好夢喔💖）`;
-    recordStandaloneChatMemory(mem, text, reply);
+    const reply = `おやすみなさい、${effectiveUserName}🌙 ほら、私の膝まくらでゆっくり目を閉じて……いい夢を見てね💖\n（晚安，${effectiveUserName}🌙 來，枕在我的膝蓋上慢慢閉上眼睛吧……祝你有個甜美的好夢喔💖）`;
+    mem = recordStandaloneChatMemory(mem, text, reply, null, affectionDelta);
     return {
       reply,
       voice: { category: '日常', filename: '情侶互動(溫柔).mp3', audioUrl: 'assets/audio/%E6%97%A5%E5%B8%B8/%E6%83%85%E4%BE%B6%E4%BA%92%E5%8B%95(%E6%BA%AB%E6%9F%94).mp3' },
-      memory: mem
+      memory: mem,
+      affectionDelta,
+      leveledUp
     };
   }
   if (/(累|辛苦|壓力|加班|煩|難過|疲)/i.test(text)) {
-    const reply = `お疲れ様、${userName}……無理しすぎてない？おいで、ぎゅっと抱きしめて頭を撫でてあげるから、少し休んでね。\n（辛苦了，${userName}……有沒有太勉強自己呢？過來吧，讓我緊緊抱住你、摸摸你的頭，稍微休息一下喔。）`;
-    recordStandaloneChatMemory(mem, text, reply);
+    const reply = `お疲れ様、${effectiveUserName}……無理しすぎてない？おいで、ぎゅっと抱きしめて頭を撫でてあげるから、少し休んでね。\n（辛苦了，${effectiveUserName}……有沒有太勉強自己呢？過來吧，讓我緊緊抱住你、摸摸你的頭，稍微休息一下喔。）`;
+    mem = recordStandaloneChatMemory(mem, text, reply, null, affectionDelta);
     return {
       reply,
       voice: { category: '日常', filename: '安慰.mp3', audioUrl: 'assets/audio/%E6%97%A5%E5%B8%B8/%E5%AE%89%E6%85%B0.mp3' },
-      memory: mem
+      memory: mem,
+      affectionDelta,
+      leveledUp
     };
   }
   if (/(愛你|喜歡你|想你|抱抱|親親|撒嬌|好き|愛してる|漂亮|可愛)/i.test(text)) {
-    const reply = `もう、${userName}ったら……急にそんなこと言われたら、胸がドキドキしちゃうじゃない💖 私も、誰より${userName}のことが大好きよ。\n（真是的，${userName}……突然聽你這麼說，心跳都加速了啦💖 我也比任何人都更喜歡${userName}喔。）`;
-    recordStandaloneChatMemory(mem, text, reply);
+    const reply = `もう、${effectiveUserName}ったら……急にそんなこと言われたら、胸がドキドキしちゃうじゃない💖 私も、「${lv.titleJa}」として誰より${effectiveUserName}のことが大好きよ。\n（真是的，${effectiveUserName}……突然聽你這麼說，心跳都加速了啦💖 身為你的「${lv.titleZh}」，我也比任何人都更喜歡${effectiveUserName}喔。）`;
+    mem = recordStandaloneChatMemory(mem, text, reply, null, affectionDelta);
     return {
       reply,
       voice: { category: '日常', filename: '情侶互動(撒嬌).mp3', audioUrl: 'assets/audio/%E6%97%A5%E5%B8%B8/%E6%83%85%E4%BE%B6%E4%BA%92%E5%8B%95(%E6%92%92%E5%AC%8C).mp3' },
-      memory: mem
+      memory: mem,
+      affectionDelta,
+      leveledUp
     };
   }
   if (/(在幹嘛|做什麼|忙嗎|現在|何してる|吃|餓|便當)/i.test(text)) {
-    const reply = `レコードの整理をしながら、${userName}のためにAbcbの特製コーヒーを淹れようと思ってたのよ☕ 一緒に一息つかない？\n（我剛才一邊整理黑膠唱片，一邊想著要為${userName}泡杯 Abcb 特調咖啡呢☕ 要不要一起休息一下？）`;
-    recordStandaloneChatMemory(mem, text, reply);
+    const reply = `レコードの整理をしながら、${effectiveUserName}のためにAbcbの特製コーヒーを淹れようと思ってたのよ☕ 一緒に一息つかない？\n（我剛才一邊整理黑膠唱片，一邊想著要為${effectiveUserName}泡杯 Abcb 特調咖啡呢☕ 要不要一起休息一下？）`;
+    mem = recordStandaloneChatMemory(mem, text, reply, null, affectionDelta);
     return {
       reply,
       voice: { category: '日常', filename: '咖啡.mp3', audioUrl: 'assets/audio/%E6%97%A5%E5%B8%B8/%E5%92%96%E5%95%A1.mp3' },
-      memory: mem
+      memory: mem,
+      affectionDelta,
+      leveledUp
     };
   }
 
+  const firstFact = (mem.memoryFacts && mem.memoryFacts[0]) ? (mem.memoryFacts[0].content || mem.memoryFacts[0].text) : '';
   const generalPool = [
-    `${userName}、何見てるの？一段落したら、Abcbで一緒にコーヒーでも飲まない？\n（${userName}、你在看什麼呢？告一段落的話，要不要一起去 Abcb 喝杯咖啡？）`,
-    `ねえ、${userName}。さっき素敵なジャズのレコード見つけたの。今度サックスで吹いてあげるね🎷\n（吶，${userName}。剛才找到一張很棒的爵士唱片。下次用薩克斯風吹給你聽喔🎷）`,
-    `${userName}、頑張ってるのは知ってるけど……無理は禁物よ。私がずっとそばにいるんだから💖\n（${userName}、我知道你很努力……但別太勉強喔。我會一直陪在你身邊的💖）`,
-    `窓の外、いい風が吹いてるわね。${userName}の声聴いてたら、なんだかすごく落ち着くの。\n（窗外吹著很舒服的微風呢。聽著${userName}的聲音，總覺得心情非常平靜。）`,
-    `ねえ、${userName}。私のこと、こっそり見てたでしょ？ふふっ、もっと近くに来てもいいわよ。\n（吶、${userName}。剛才偷偷看我了吧？呵呵、再靠過來一點也沒關係喔。）`,
-    modeInfo.introReply
+    `${effectiveUserName}、何見てるの？一段落したら、Abcbで一緒にコーヒーでも飲まない？\n（${effectiveUserName}、你在看什麼呢？告一段落的話，要不要一起去 Abcb 喝杯咖啡？）`,
+    `ねえ、${effectiveUserName}。さっき素敵なジャズのレコード見つけたの。今度サックスで吹いてあげるね🎷\n（吶，${effectiveUserName}。剛才找到一張很棒的爵士唱片。下次用薩克斯風吹給你聽喔🎷）`,
+    `${effectiveUserName}、頑張ってるのは知ってるけど……無理は禁物よ。あなたの「${lv.titleJa}」として、ずっとそばにいるんだから💖\n（${effectiveUserName}、我知道你很努力……但別太勉強喔。身為你的「${lv.titleZh}」，我會一直陪在你身邊的💖）`,
+    ...(firstFact ? [`ふふっ、${effectiveUserName}のことなら「${firstFact}」ってことも、ちゃんと覚えてるわよ💖\n（呵呵，關於${effectiveUserName}的事，像是「${firstFact}」，我也都好好記在心裡喔💖）`] : []),
+    modeInfo.introReply.replace(/リンシ/g, effectiveUserName)
   ];
   const pickedReply = generalPool[Math.floor(Math.random() * generalPool.length)];
-  recordStandaloneChatMemory(mem, text, pickedReply);
+  mem = recordStandaloneChatMemory(mem, text, pickedReply, null, affectionDelta);
   return {
     reply: pickedReply,
     voice: pickContextualAuthenticVoice(text, pickedReply, modeInfo),
-    memory: mem
+    memory: mem,
+    affectionDelta,
+    leveledUp
   };
 }
 
@@ -972,8 +1267,7 @@ const apiBridge = {
     try {
       if (window.madokaAPI && window.madokaAPI.getMemoryState) return await window.madokaAPI.getMemoryState();
       const data = await apiFetchJson('/api/memory');
-      saveOfflineMemoryState(data);
-      return data;
+      return saveOfflineMemoryState(data);
     } catch (e) {
       return getOfflineMemoryState();
     }
@@ -986,54 +1280,74 @@ const apiBridge = {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ actionId })
       });
-      if (data && data.memory) saveOfflineMemoryState(data.memory);
+      if (data && data.memory) data.memory = saveOfflineMemoryState(data.memory);
       return data;
     } catch (e) {
-      const mem = getOfflineMemoryState();
-      mem.affectionScore = (mem.affectionScore || 300) + 5;
-      saveOfflineMemoryState(mem);
-      return { success: true, memory: mem };
+      let mem = getOfflineMemoryState();
+      const bonusMap = { wakeup_kiss: 10, confess: 8, bento: 6, curry: 6, sleep: 6, selfie: 6, comfort: 5, sax: 5, poke: 4 };
+      const delta = bonusMap[actionId] || 5;
+      mem.affectionScore = (mem.affectionScore || 320) + delta;
+      mem = saveOfflineMemoryState(mem);
+      return { success: true, memory: mem, affectionDelta: delta };
     }
   },
   addMemoryFact: async (fact, category = 'manual') => {
+    const cleanFact = String(fact || '').trim();
     try {
-      if (window.madokaAPI && window.madokaAPI.addMemoryFact) return await window.madokaAPI.addMemoryFact(fact, category);
-      return await apiFetchJson('/api/memory/fact', {
+      if (window.madokaAPI && window.madokaAPI.addMemoryFact) return await window.madokaAPI.addMemoryFact(cleanFact, category);
+      const data = await apiFetchJson('/api/memory/fact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ fact, category })
+        body: JSON.stringify({ fact: cleanFact, category })
       });
+      if (data && data.memory) data.memory = saveOfflineMemoryState(data.memory);
+      return data;
     } catch (e) {
-      const mem = getOfflineMemoryState();
+      let mem = getOfflineMemoryState();
       mem.memoryFacts = mem.memoryFacts || [];
-      mem.memoryFacts.unshift({ id: 'fact_' + Date.now(), text: fact, category, createdAt: new Date().toISOString() });
-      saveOfflineMemoryState(mem);
+      const exists = mem.memoryFacts.some(f => (f.content || f.text || f.fact) === cleanFact);
+      if (!exists && cleanFact) {
+        mem.memoryFacts.unshift({
+          id: 'fact_' + Date.now(),
+          content: cleanFact,
+          text: cleanFact,
+          fact: cleanFact,
+          category,
+          createdAt: formatMemoryTimestamp()
+        });
+        mem.affectionScore = (mem.affectionScore || 320) + 5;
+      }
+      mem = saveOfflineMemoryState(mem);
       return { success: true, memory: mem };
     }
   },
   deleteMemoryFact: async (factId) => {
     try {
       if (window.madokaAPI && window.madokaAPI.deleteMemoryFact) return await window.madokaAPI.deleteMemoryFact(factId);
-      return await apiFetchJson('/api/memory/fact/delete', {
+      const data = await apiFetchJson('/api/memory/fact/delete', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ factId })
       });
+      if (data && data.memory) data.memory = saveOfflineMemoryState(data.memory);
+      return data;
     } catch (e) {
-      const mem = getOfflineMemoryState();
+      let mem = getOfflineMemoryState();
       mem.memoryFacts = (mem.memoryFacts || []).filter(f => f.id !== factId);
-      saveOfflineMemoryState(mem);
+      mem = saveOfflineMemoryState(mem);
       return { success: true, memory: mem };
     }
   },
   clearChatHistory: async () => {
     try {
       if (window.madokaAPI && window.madokaAPI.clearChatHistory) return await window.madokaAPI.clearChatHistory();
-      return await apiFetchJson('/api/memory/clear-history', { method: 'POST' });
+      const data = await apiFetchJson('/api/memory/clear-history', { method: 'POST' });
+      if (data && data.memory) data.memory = saveOfflineMemoryState(data.memory);
+      return data;
     } catch (e) {
-      const mem = getOfflineMemoryState();
+      let mem = getOfflineMemoryState();
       mem.conversationLog = [];
-      saveOfflineMemoryState(mem);
+      mem = saveOfflineMemoryState(mem);
       return { success: true, memory: mem };
     }
   },
@@ -1187,6 +1501,11 @@ const apiBridge = {
         justCompleted = item.completed;
       }
       saveOfflineAssistantState(st);
+      let mem = getOfflineMemoryState();
+      if (justCompleted) {
+        mem.affectionScore = (mem.affectionScore || 320) + 8;
+        mem = saveOfflineMemoryState(mem);
+      }
       const ja = justCompleted ? `さすがリンシ！「${item ? item.title : ''}」を完了したわね。よく頑張りました、ご褒美にぎゅってしてあげる💖` : '';
       const zh = justCompleted ? `不愧是リンシ！完成了「${item ? item.title : ''}」呢。太努力了，獎勵你一個大大的擁抱💖` : '';
       return {
@@ -1197,7 +1516,8 @@ const apiBridge = {
         replyZh: zh,
         praiseReply: justCompleted ? `${ja}\n（${zh}）` : '',
         voice: justCompleted ? { category: '日常', filename: '情侶互動(熱情).mp3', audioUrl: 'assets/audio/%E6%97%A5%E5%B8%B8/%E6%83%85%E4%BE%B6%E4%BA%92%E5%8B%95(%E7%86%B1%E6%83%85).mp3' } : null,
-        state: st
+        state: st,
+        memory: mem
       };
     }
   },
@@ -2831,6 +3151,10 @@ function setupMemoryAndPovListeners() {
     if (res && res.memory) {
       memoryState = res.memory;
       updateMemoryAndAffectionUI(memoryState);
+      const name = currentConfig.userName || 'リンシ';
+      showSpeech(`ちゃんと心に刻んだわよ、${name}！「${val}」……私たちの大切な記憶として、ずっと覚えておくからね💖\n（已經好好記在心底囉，${name}！「${val}」……作為我們珍貴的記憶，我會永遠記住並在對話中放在心上的💖）`);
+      const rect = characterAvatar.getBoundingClientRect();
+      createFloatingEffect(rect.left + rect.width / 2, rect.top + rect.height * 0.35, ['📌', '💖', '✨']);
     }
   };
   if (btnAddFact) btnAddFact.addEventListener('click', handleAddFact);
@@ -3035,12 +3359,29 @@ function openPhotoLightbox(photo) {
   photoLightbox.classList.remove('hidden');
 }
 
+let lastDisplayedAffectionLevel = null;
+
 function updateMemoryAndAffectionUI(state) {
   if (!state) return;
-  const lv = state.levelInfo || state.stage || { level: 2, badge: '☕ Lv.2 特別的夥伴', titleZh: '特別的夥伴', titleJa: '特別なパートナー', descZh: '', progressPercent: 35 };
+  const computedLv = getAffectionLevelInfo(state.affectionScore);
+  const lv = (state.levelInfo && state.levelInfo.score === state.affectionScore)
+    ? state.levelInfo
+    : computedLv;
+  state.levelInfo = lv;
+
+  if (lastDisplayedAffectionLevel !== null && lv.level > lastDisplayedAffectionLevel) {
+    const rect = characterAvatar.getBoundingClientRect();
+    for (let i = 0; i < 5; i++) {
+      setTimeout(() => {
+        createFloatingEffect(rect.left + rect.width * (0.3 + Math.random() * 0.4), rect.top + rect.height * 0.35, ['💍', '💖', '👑', '🎉', '✨']);
+      }, i * 180);
+    }
+  }
+  lastDisplayedAffectionLevel = lv.level;
+
   const iconChar = (lv.badge && lv.badge.split(' ')[0]) || '💖';
   if (affectionBadge) {
-    affectionBadge.textContent = `${iconChar} ${state.affectionScore}pt・Lv.${lv.level}`;
+    affectionBadge.textContent = `${iconChar} ${state.affectionScore}pt・Lv.${lv.level} ${lv.titleZh}`;
   }
 
   const stageBadge = document.getElementById('mem-stage-badge');
@@ -3061,8 +3402,8 @@ function updateMemoryAndAffectionUI(state) {
   if (statChats) statChats.textContent = `💬 對話 ${state.totalChats || 0} 次`;
   if (statNext) {
     statNext.textContent = lv.nextMin
-      ? `🎯 距離下一階段：${lv.nextMin} pt`
-      : '💍 已達成最高羈絆等級！';
+      ? `🎯 距離下一階段 (Lv.${lv.level + 1})：${lv.nextMin} pt（還差 ${Math.max(0, lv.nextMin - state.affectionScore)} pt）`
+      : '👑 已達成最高羈絆等級（橙路永恆摯愛）！';
   }
 
   renderMemoryFactsList(state.memoryFacts || []);
@@ -3075,15 +3416,20 @@ function renderMemoryFactsList(facts) {
   if (!listEl) return;
   listEl.innerHTML = '';
 
-  if (!facts || facts.length === 0) {
+  const validFacts = (facts || []).filter(item => {
+    const t = item && (item.content || item.text || item.fact || '');
+    return String(t).trim().length > 0;
+  });
+
+  if (validFacts.length === 0) {
     listEl.innerHTML = '<div style="color:#888; font-size:11.5px; text-align:center; padding:14px 6px;">目前還沒有記錄特別事項喔！你可以在上方手動新增，或在對話中告訴まどか「我喜歡...」、「記住...」，她就會自動寫進永久日記裡💖</div>';
     return;
   }
 
-  facts.forEach(item => {
+  validFacts.forEach(item => {
     const row = document.createElement('div');
     row.className = 'mem-fact-item';
-    const textVal = item.content || item.fact || '';
+    const textVal = String(item.content || item.text || item.fact || '').trim();
     row.innerHTML = `
       <span>📌 ${escapeHtml(textVal)}</span>
       <button class="mem-fact-del" title="刪除此條記憶">✕</button>
@@ -3346,13 +3692,20 @@ function setupAssistantAndCareListeners() {
   const btnWakeupSnooze = document.getElementById('btn-wakeup-snooze');
 
   if (btnWakeupDismiss) {
-    btnWakeupDismiss.addEventListener('click', () => {
+    btnWakeupDismiss.addEventListener('click', async () => {
       snoozeUntilTime = '';
       if (wakeupOverlay) wakeupOverlay.classList.add('hidden');
       const name = currentConfig.userName || 'リンシ';
       showSpeech(`おはよう、${name}！今日も一日、私がずっとそばで応援してるからね☀️💖\n（早安，${name}！今天一整天我也會一直在你身邊為你加油喔☀️💖）`);
       const rect = characterAvatar.getBoundingClientRect();
       createFloatingEffect(rect.left + rect.width / 2, rect.top + rect.height * 0.35, ['☀️', '💖', '🍱', '✨']);
+      try {
+        const res = await apiBridge.recordActionMemory('wakeup_kiss');
+        if (res && res.memory) {
+          memoryState = res.memory;
+          updateMemoryAndAffectionUI(memoryState);
+        }
+      } catch (e) {}
     });
   }
 
