@@ -321,59 +321,22 @@
       </div>
     </div>
 
-    <!-- 📸 情侶 POV 自拍相簿 & PixAI 繪圖指令集 (Couple POV & PixAI Studio Modal) -->
+    <!-- 📸 情侶 POV 寫真相簿 (Couple POV Photo Album Modal) -->
     <div id="pov-modal" class="modal-overlay hidden">
       <div class="modal-content pov-content">
         <div class="modal-header">
-          <h3>📸 情侶 POV 自拍相簿 & PixAI 指令集</h3>
+          <h3>📸 まどか情侶視角寫真相簿 (24)</h3>
           <button id="btn-close-pov" class="modal-close-btn">✕</button>
         </div>
         <div class="modal-body">
-          <!-- 頂部快速自拍與匯入工具列 -->
+          <!-- 頂部快速自拍工具列 -->
           <div class="pov-hero-bar">
             <button id="btn-pov-snap-random" class="btn-pov-primary">📸 讓まどか現在自拍一張發給我！</button>
-            <label for="input-import-pov-file" class="btn-pov-secondary" title="將你在 PixAI 生成的新圖片加入相簿">➕ 匯入新照片</label>
-            <input type="file" id="input-import-pov-file" accept="image/*" class="hidden">
           </div>
 
-          <!-- 子分頁切換 -->
-          <div class="music-tabs">
-            <button class="pov-tab-btn active" data-povtab="gallery">📸 情侶 POV 寫真相簿 (24)</button>
-            <button class="pov-tab-btn" data-povtab="prompts">🎨 PixAI 繪圖指令集 & 產生器 (18)</button>
-          </div>
-
-          <!-- 分頁 1：情侶 POV 拍立得相簿 -->
+          <!-- 情侶 POV 拍立得相簿 -->
           <div id="pov-panel-gallery" class="pov-panel">
             <div id="pov-gallery-grid" class="pov-gallery-grid">
-              <!-- 由 renderer.js 動態渲染 -->
-            </div>
-          </div>
-
-          <!-- 分頁 2：PixAI 繪圖指令集與智慧產生器 -->
-          <div id="pov-panel-prompts" class="pov-panel hidden">
-            <!-- 智慧自訂場景轉 PixAI 指令產生器 -->
-            <div class="pixai-generator-box">
-              <div class="pixai-gen-title">✨ 智慧自訂情侶場景 → PixAI 英文指令產生器</div>
-              <div class="pixai-gen-controls">
-                <input type="text" id="input-pixai-scene" placeholder="輸入想拍的情境（例：海邊夕陽牽手散步、在咖啡館餵我吃蛋糕）">
-                <select id="select-pixai-lens">
-                  <option value="50mm">50mm 近距離戀人特寫</option>
-                  <option value="35mm">35mm 動態街拍環境感</option>
-                </select>
-                <button id="btn-gen-pixai" class="btn-mini-accent">⚡ 生成</button>
-              </div>
-              <div id="pixai-gen-result" class="pixai-gen-result hidden">
-                <textarea id="textarea-pixai-output" rows="3" readonly></textarea>
-                <div class="pixai-gen-actions">
-                  <button id="btn-copy-gen-prompt" class="polaroid-mini-btn">📋 複製正面 Prompt</button>
-                  <button id="btn-copy-gen-neg" class="polaroid-mini-btn">📋 複製 Negative Prompt</button>
-                  <button id="btn-copy-char-lock" class="polaroid-mini-btn">🔒 複製角色鎖定詞</button>
-                </div>
-              </div>
-            </div>
-
-            <!-- 官方 18 組 PixAI 指令卡列表 -->
-            <div id="pixai-prompts-list" class="pixai-prompts-list">
               <!-- 由 renderer.js 動態渲染 -->
             </div>
           </div>
@@ -390,8 +353,7 @@
           <div id="lightbox-title" class="lightbox-title"></div>
           <div id="lightbox-caption" class="lightbox-caption"></div>
           <div class="lightbox-actions">
-            <button id="btn-lightbox-send-chat" class="btn-mini-accent">💬 在對話中發送並朗讀</button>
-            <button id="btn-lightbox-copy-prompt" class="polaroid-mini-btn">📋 複製此圖 PixAI 指令</button>
+            <button id="btn-lightbox-send-chat" class="btn-mini-accent" style="width: 100%;">💬 傳送到對話框並聽まどか專屬情話</button>
           </div>
         </div>
       </div>

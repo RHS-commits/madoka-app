@@ -1436,7 +1436,7 @@ html, body {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 8px;
-  max-height: 270px;
+  max-height: min(58dvh, 380px);
   overflow-y: auto;
   padding-right: 4px;
 }
@@ -1609,8 +1609,10 @@ html, body {
 /* 🔍 拍立得大圖檢視器 Lightbox */
 .lightbox-card {
   position: relative;
-  width: 94%;
-  max-width: 370px;
+  width: 92%;
+  max-width: 350px;
+  max-height: 88dvh;
+  overflow-y: auto;
   background: #fff9fb;
   color: #1a1924;
   border: 3px solid #201e2b;
@@ -1638,7 +1640,7 @@ html, body {
 
 .lightbox-card img {
   width: 100%;
-  max-height: 310px;
+  max-height: clamp(160px, 44dvh, 280px);
   object-fit: contain;
   background: #14121d;
   border-radius: 10px;
@@ -1800,13 +1802,15 @@ html, body {
   display: flex;
   flex-direction: column;
   gap: 7px;
-  max-height: 270px;
+  max-height: min(44dvh, 270px);
   overflow-y: auto;
   padding-right: 3px;
 }
 
 .todo-item-card,
-.alarm-item-card {
+.todo-item,
+.alarm-item-card,
+.alarm-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1818,13 +1822,20 @@ html, body {
   transition: all 0.2s ease;
 }
 
-.todo-item-card.completed {
+.todo-item-card.completed,
+.todo-item.completed,
+.alarm-item.disabled {
   opacity: 0.62;
+}
+
+.todo-item-card.completed,
+.todo-item.completed {
   background: rgba(46, 213, 115, 0.08);
   border-color: rgba(46, 213, 115, 0.3);
 }
 
-.todo-left {
+.todo-left,
+.alarm-left {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -1832,17 +1843,12 @@ html, body {
   min-width: 0;
 }
 
-.todo-check-btn {
-  width: 22px;
-  height: 22px;
+.todo-check-btn,
+.todo-checkbox {
+  width: 20px;
+  height: 20px;
   border-radius: 6px;
-  border: 2px solid var(--primary-color);
-  background: rgba(255, 94, 126, 0.12);
-  color: #fff;
-  font-size: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  accent-color: var(--primary-color);
   cursor: pointer;
   flex-shrink: 0;
 }
@@ -1852,40 +1858,90 @@ html, body {
   border-color: #2ed573;
 }
 
-.todo-thumb {
-  width: 38px;
-  height: 38px;
+.todo-thumb,
+.todo-scene-thumb {
+  width: 40px;
+  height: 40px;
+  max-width: 40px;
+  max-height: 40px;
   border-radius: 8px;
   object-fit: cover;
+  object-position: top center;
   border: 1px solid rgba(255, 255, 255, 0.25);
   flex-shrink: 0;
+  cursor: pointer;
 }
 
-.todo-info {
+.todo-info,
+.alarm-meta {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  flex: 1;
   min-width: 0;
 }
 
-.todo-title-text {
+.todo-title-text,
+.todo-title,
+.alarm-label-text {
   font-size: 12px;
   font-weight: 600;
   color: #fff;
   word-break: break-word;
 }
 
-.todo-item-card.completed .todo-title-text {
+.todo-item-card.completed .todo-title-text,
+.todo-item.completed .todo-title {
   text-decoration: line-through;
   color: #aaa;
 }
 
-.todo-badges {
+.todo-badges,
+.todo-meta,
+.alarm-mode-tag {
   display: flex;
   gap: 5px;
   align-items: center;
   font-size: 10px;
   color: var(--accent-gold);
+}
+
+.todo-del-btn {
+  background: transparent;
+  border: none;
+  color: #999;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 2px 5px;
+  flex-shrink: 0;
+}
+
+.todo-del-btn:hover {
+  color: #ff4757;
+}
+
+.alarm-actions {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.alarm-toggle-btn {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ccc;
+  border-radius: 8px;
+  padding: 4px 8px;
+  font-size: 10.5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.alarm-toggle-btn.on {
+  background: rgba(46, 213, 115, 0.22);
+  border-color: #2ed573;
+  color: #7bed9f;
 }
 
 .alarm-hero-bar {
@@ -1897,11 +1953,13 @@ html, body {
   width: 100%;
 }
 
-.alarm-time-big {
-  font-size: 19px;
+.alarm-time-big,
+.alarm-time-display {
+  font-size: 18px;
   font-weight: 800;
   color: var(--accent-gold);
   font-family: Consolas, monospace;
+  flex-shrink: 0;
 }
 
 .alarm-meta-text {
@@ -1954,7 +2012,7 @@ html, body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 7px;
-  max-height: 230px;
+  max-height: min(38dvh, 230px);
   overflow-y: auto;
   padding-right: 3px;
 }
@@ -1978,40 +2036,46 @@ html, body {
   box-shadow: 0 3px 10px rgba(255, 94, 126, 0.25);
 }
 
-.couple-mode-card img {
+.couple-mode-card img,
+.couple-mode-thumb {
   width: 100%;
-  height: 82px;
+  height: 76px;
+  max-height: 76px;
   object-fit: cover;
   object-position: top center;
   border-radius: 7px;
 }
 
-.couple-mode-card-title {
+.couple-mode-card-title,
+.couple-mode-title {
   font-size: 11.5px;
   font-weight: 800;
   color: #fff;
 }
 
-.couple-mode-card-desc {
+.couple-mode-card-desc,
+.couple-mode-desc {
   font-size: 10px;
   color: #ccc;
   line-height: 1.3;
 }
 
-/* ☀️ 晨間喚醒鬧鐘全螢幕彈窗 */
+/* ☀️ 晨間喚醒鬧鐘全螢幕彈窗 (自動依手機可視畫面縮小圖片，絕不撐破視窗) */
 .wakeup-card {
-  width: 94%;
-  max-width: 370px;
+  width: 92%;
+  max-width: 350px;
+  max-height: 88dvh;
+  overflow-y: auto;
   background: linear-gradient(165deg, #241734 0%, #140f1d 100%);
   border: 2.5px solid var(--accent-gold);
-  border-radius: 20px;
-  padding: 14px;
+  border-radius: 18px;
+  padding: 12px;
   box-shadow: 0 12px 35px rgba(0, 0, 0, 0.75), 0 0 25px rgba(248, 194, 88, 0.35);
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 8px;
+  gap: 6px;
   animation: wakeupPulse 1.8s infinite alternate ease-in-out;
 }
 
@@ -2023,15 +2087,15 @@ html, body {
 .wakeup-top-badge {
   background: rgba(248, 194, 88, 0.2);
   color: var(--accent-gold);
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 800;
-  padding: 3px 10px;
+  padding: 2px 9px;
   border-radius: 12px;
-  letter-spacing: 0.8px;
+  letter-spacing: 0.6px;
 }
 
 .wakeup-clock-time {
-  font-size: 34px;
+  font-size: clamp(24px, 5.5dvh, 32px);
   font-weight: 900;
   color: #fff;
   text-shadow: 0 2px 10px rgba(255, 94, 126, 0.6);
@@ -2040,36 +2104,44 @@ html, body {
 }
 
 .wakeup-alarm-label {
-  font-size: 12.5px;
+  font-size: 12px;
   font-weight: 700;
   color: #ff9eb5;
 }
 
 .wakeup-img-frame {
   width: 100%;
-  height: 220px;
-  border-radius: 14px;
+  max-height: clamp(105px, 23dvh, 165px);
+  border-radius: 12px;
   overflow: hidden;
-  border: 2px solid rgba(255, 255, 255, 0.25);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
   background: #0d0a14;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px;
 }
 
 .wakeup-img-frame img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center;
+  width: auto;
+  max-width: 100%;
+  max-height: clamp(98px, 21.5dvh, 158px);
+  height: auto;
+  object-fit: contain;
+  border-radius: 9px;
 }
 
 .wakeup-dialogue-box {
   background: rgba(255, 255, 255, 0.95);
   color: #1e1b29;
-  border-radius: 12px;
-  padding: 9px 11px;
-  font-size: 12px;
+  border-radius: 10px;
+  padding: 7px 10px;
+  font-size: 11.5px;
   font-weight: 700;
-  line-height: 1.45;
+  line-height: 1.4;
   width: 100%;
+  max-height: 18dvh;
+  overflow-y: auto;
 }
 
 .wakeup-actions {

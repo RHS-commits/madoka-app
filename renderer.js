@@ -2878,9 +2878,7 @@ function renderMemoryLogsList(logs, keyword = '') {
 
 function renderPovGalleryAndPrompts() {
   const galleryGrid = document.getElementById('pov-gallery-grid');
-  const promptsList = document.getElementById('pixai-prompts-list');
   const photos = (povData && povData.photos) ? povData.photos : [];
-  const promptCards = (povData && (povData.promptCards || povData.prompts)) ? (povData.promptCards || povData.prompts) : [];
 
   if (galleryGrid) {
     galleryGrid.innerHTML = '';
@@ -2894,49 +2892,18 @@ function renderPovGalleryAndPrompts() {
         <div class="pov-card-body">
           <div class="pov-card-title">${escapeHtml(titleStr)}</div>
           <div class="pov-card-btns">
-            <button class="btn-pov-send">💬 發送對話</button>
-            <button class="btn-pov-copy">📋 指令</button>
+            <button class="btn-pov-zoom">🔍 放大欣賞</button>
+            <button class="btn-pov-send">💬 發送互動</button>
           </div>
         </div>
       `;
       card.querySelector('img').addEventListener('click', () => openPhotoLightbox(photo));
+      card.querySelector('.btn-pov-zoom').addEventListener('click', () => openPhotoLightbox(photo));
       card.querySelector('.btn-pov-send').addEventListener('click', () => {
         if (povModal) povModal.classList.add('hidden');
         deliverPovPhotoToChat(photo);
       });
-      card.querySelector('.btn-pov-copy').addEventListener('click', () => {
-        copyTextToClipboard(photo.pixaiPrompt || '', `已複製「${titleStr}」的 PixAI 繪圖指令！`);
-      });
       galleryGrid.appendChild(card);
-    });
-  }
-
-  if (promptsList) {
-    promptsList.innerHTML = '';
-    promptCards.forEach(item => {
-      const card = document.createElement('div');
-      card.className = 'pixai-card';
-      const itemTitle = item.title || item.titleZh || item.titleJa || 'PixAI Prompt';
-      const itemBadge = item.badge || item.category || 'PixAI';
-      card.innerHTML = `
-        <div class="pixai-card-header">
-          <span class="pixai-card-title">${escapeHtml(itemTitle)}</span>
-          <span class="pixai-card-cat">${escapeHtml(itemBadge)}</span>
-        </div>
-        <div style="font-size:10.5px; color:#ccc;">👗 ${escapeHtml(item.outfit || item.sceneDesc || '')}</div>
-        <div class="pixai-card-prompt">${escapeHtml(item.prompt)}</div>
-        <div class="pixai-gen-actions">
-          <button class="polaroid-mini-btn btn-copy-card-prompt">📋 複製完整 Prompt</button>
-          <button class="polaroid-mini-btn btn-copy-card-neg">📋 複製 Negative</button>
-        </div>
-      `;
-      card.querySelector('.btn-copy-card-prompt').addEventListener('click', () => {
-        copyTextToClipboard(item.prompt, `已複製「${itemTitle}」的 PixAI Prompt！`);
-      });
-      card.querySelector('.btn-copy-card-neg').addEventListener('click', () => {
-        copyTextToClipboard(item.negativePrompt || povData.commonNegativePrompt || '', '已複製 Negative Prompt！');
-      });
-      promptsList.appendChild(card);
     });
   }
 }
@@ -3200,7 +3167,7 @@ function renderAssistantTodoList(todos) {
   todos.forEach(item => {
     const row = document.createElement('div');
     row.className = `todo-item ${item.completed ? 'completed' : ''}`;
-    const thumbSrc = item.sceneImage || 'assets/pov_photos/pov_15_work_cheer_ol.png';
+    const thumbSrc = item.sceneImage || 'assets/pov_photos/pov_21_office_ol.png';
     row.innerHTML = `
       <input type="checkbox" class="todo-checkbox" ${item.completed ? 'checked' : ''} title="勾選完成任務 (+8💖)">
       <img src="${thumbSrc}" class="todo-scene-thumb" alt="scene" title="點擊放大まどか應援插圖">
@@ -3333,7 +3300,7 @@ function renderCoupleModesGrid(modes, activeModeId) {
     const card = document.createElement('div');
     card.className = `couple-mode-card ${m.id === activeModeId ? 'active' : ''}`;
     card.innerHTML = `
-      <img src="${m.sceneImage || 'assets/pov_photos/pov_18_boyfriend_shirt.png'}" class="couple-mode-thumb" alt="${escapeHtml(titleStr)}">
+      <img src="${m.sceneImage || 'assets/pov_photos/pov_20_boyfriend_shirt.png'}" class="couple-mode-thumb" alt="${escapeHtml(titleStr)}">
       <div class="couple-mode-info">
         <div class="couple-mode-title">${escapeHtml(m.badge)}・${escapeHtml(titleStr)}</div>
         <div class="couple-mode-desc">${escapeHtml(m.descZh || m.description || '')}</div>

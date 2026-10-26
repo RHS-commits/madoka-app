@@ -1,5 +1,5 @@
-// sw.js - 鮎川まどか 手機APP / PWA 雲端與離線獨立運作快取引擎 (v5)
-const CACHE_NAME = 'madoka-pwa-v5';
+// sw.js - 鮎川まどか 手機APP / PWA 雲端與離線獨立運作快取引擎 (v6)
+const CACHE_NAME = 'madoka-pwa-v6';
 
 const PRECACHE_ASSETS = [
   './',
@@ -94,12 +94,32 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 圖片與音訊採用 Cache-First，確保電腦關機或離線時瞬間載入
-  if (/\.(png|jpg|jpeg|webp|gif|mp3|wav)$/i.test(reqUrl.pathname)) {
+  // 音訊檔 (.mp3/.wav)：支援手機瀏覽器 HTTP Range 串流播放（避免大型 OST 歌曲被 3.5 秒逾時中斷）
+  if (/\.(mp3|wav)$/i.test(reqUrl.pathname)) {
+    if (event.request.headers.get('range')) {
+      return;
+    }
     event.respondWith(
       caches.match(event.request, { ignoreSearch: true }).then((cached) => {
         if (cached) return cached;
-        return fetchWithFastTimeout(event.request, 3500).then((networkRes) => {
+        return fetch(event.request).then((networkRes) => {
+          if (networkRes && networkRes.status === 200) {
+            const clone = networkRes.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone)).catch(() => {});
+          }
+          return networkRes;
+        });
+      })
+    );
+    return;
+  }
+
+  // 圖片採用 Cache-First，確保電腦關機或離線時瞬間載入
+  if (/\.(png|jpg|jpeg|webp|gif)$/i.test(reqUrl.pathname)) {
+    event.respondWith(
+      caches.match(event.request, { ignoreSearch: true }).then((cached) => {
+        if (cached) return cached;
+        return fetchWithFastTimeout(event.request, 5000).then((networkRes) => {
           if (networkRes && networkRes.status === 200) {
             const clone = networkRes.clone();
             caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone)).catch(() => {});
