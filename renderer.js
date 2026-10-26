@@ -366,21 +366,21 @@ async function apiFetchJson(pathUrl, options = {}, timeoutMs = 1500) {
 }
 
 const OFFLINE_COUPLE_MODES = [
-  { id: 'healing', icon: '🌸', titleZh: '心靈療癒與無條件傾聽', titleJa: '心の癒やし・優しい傾聴', tagZh: '🌸 溫柔包容', nameZh: '心靈療癒與無條件傾聽', nameJa: '癒しと傾聴モード', badge: '🌸 療癒傾聽', costumeId: 'home', sceneImage: 'assets/costumes/variant_home_curtain.png', descZh: '溫柔包容你的疲憊與壓力，不說教、只給滿滿的安全感與肯定', quoteJa: 'お疲れ様、リンシ。外でどれだけ大変でも、私の前では強がらなくていいのよ。おいで……頭、撫でてあげるから。', quoteZh: '辛苦了，リンシ。不管在外面有多累多辛苦，在我面前都不用逞強喔。過來吧……讓我摸摸你的頭。', introReply: 'リンシ、今日もお疲れ様。何かあったなら、私が全部聴くからね……無理して笑わなくていいのよ。\n（リンシ，今天也辛苦了。如果發生了什麼事，我會全部聽你說的喔……不用勉強自己笑也沒關係。）', voiceCategory: '日常', voiceFile: '有心事嗎(溫柔).mp3' },
-  { id: 'clingy', icon: '🥰', titleZh: '微醺撒嬌與討抱抱依賴', titleJa: '甘えん坊・ぎゅっと密着', tagZh: '🥰 撒嬌依賴', nameZh: '微醺撒嬌與討抱抱依賴', nameJa: '甘えん坊・ハグモード', badge: '💞 撒嬌依賴', costumeId: 'boyfriend_shirt', sceneImage: 'assets/pov_photos/pov_20_boyfriend_shirt.png', descZh: '卸下酷帥防備，穿你的寬大白襯衫黏著你討抱抱、索取關注與寵愛', quoteJa: 'ねえ、リンシ……今は仕事のこと忘れて、私だけを見てて？もっと近くに来て……ぎゅっとしててほしいの💖', quoteZh: '吶、リンシ……現在先把工作忘掉，只看著我好嗎？再靠近我一點……人家想要你緊緊抱著我嘛💖', introReply: 'ねえ、リンシ……今はちょっとだけ、あなたに甘えたい気分なの。ぎゅって抱きしめてくれない……？\n（吶，リンシ……現在稍微有點想對你撒嬌的心情呢。不緊緊抱住我嗎……？）', voiceCategory: '日常', voiceFile: '情侶互動(撒嬌).mp3' },
-  { id: 'secretary', icon: '💼', titleZh: '專屬 OL 秘書工作應援', titleJa: '専属OL秘書の仕事応援', tagZh: '💼 秘書應援', nameZh: '專屬 OL 秘書工作應援', nameJa: '専属秘書・お仕事応援', badge: '💼 秘書應援', costumeId: 'work_ol', sceneImage: 'assets/pov_photos/pov_21_office_ol.png', descZh: '幹練迷人的 OL 裝扮陪你專注衝刺工作、管理今日待辦事項與進度提醒', quoteJa: 'はい、リンシ！今日のタスクも私が隣でサポートするわよ。一つ終わるごとに、たっぷり褒めてあげるからね！', quoteZh: '來，リンシ！今天的待辦事項我也會在旁邊陪你完成的。每完成一項，我都會好好誇獎你喔！', introReply: 'さあ、リンシ！今日のTo-Doリストは私がしっかり管理してあげるわ。終わったらご褒美のコーヒーよ☕\n（來吧，リンシ！今天的待辦清單就由我好好幫你管理。完成之後有獎勵的特調咖啡喔☕）', voiceCategory: '日常', voiceFile: '咖啡.mp3' },
-  { id: 'tsundere', icon: '🔥', titleZh: '傲嬌吃醋與獨佔關心', titleJa: 'ツンデレ・可愛いヤキモチ', tagZh: '🔥 傲嬌吃醋', nameZh: '傲嬌吃醋與獨佔關心', nameJa: 'ツンデレ・ヤキモチ', badge: '😤 傲嬌獨佔', costumeId: 'schoolpov', sceneImage: 'assets/pov_photos/pov_16_chair_wink_study.png', descZh: '嘴硬心軟、偶爾小小吃醋，要求你的視線只准看著她一個人', quoteJa: 'べ、別にリンシが寂しがると思って構ってあげてるだけよ！……でも、よそ見したら本気で怒るんだからね！', quoteZh: '我、我才不是特別想黏你，只是怕リンシ覺得寂寞才陪你的啦！……不過你要是敢看別的女生，我真的會生氣喔！', introReply: 'べ、別にリンシが他の子を見てたから怒ってるんじゃないわよ！……ただ、私のことだけ見ててほしいだけよ。\n（我、我才不是因為リンシ看別的女孩子才生氣的呢！……只是希望你只看著我一個人而已啦。）', voiceCategory: '日常', voiceFile: '情侶互動.mp3' },
-  { id: 'passionate', icon: '💌', titleZh: '熱戀心動與深情凝視', titleJa: '熱恋ときめき・甘い眼差し', tagZh: '💌 熱戀心動', nameZh: '熱戀心動與深情凝視', nameJa: 'ラブラブ・ときめき', badge: '💋 熱戀心動', costumeId: 'evening_gown', sceneImage: 'assets/pov_photos/pov_18_golden_gown.png', descZh: '毫無保留的愛意傾訴與紀念日般的浪漫氛圍，眼神裡只有你', quoteJa: 'リンシとこうして二人きりでいると、胸の奥が熱くなるの……今夜は、このまま朝まで離さないでね。', quoteZh: '像這樣跟リンシ兩人獨處，心底就熱熱的……今晚，就這樣直到天亮都別放開我喔。', introReply: 'リンシ……あなたと出会えて、私の世界は本当に変わったわ。これからもずっと、隣にいてね。\n（リンシ……能與你相遇，我的世界真的改變了。從今以後也要一直待在我身邊喔。）', voiceCategory: '日常', voiceFile: '情侶互動(熱情).mp3' },
-  { id: 'lullaby', icon: '🛌', titleZh: '溫柔膝枕與哄睡伴眠', titleJa: '優しい膝枕・添い寝セラピー', tagZh: '🛌 膝枕哄睡', nameZh: '溫柔膝枕與哄睡伴眠', nameJa: '膝枕・添い寝モード', badge: '🛌 膝枕伴眠', costumeId: 'night', sceneImage: 'assets/costumes/variant_night_blue.png', descZh: '深夜放輕聲音，輕撫你的頭髮、陪你放鬆入睡', quoteJa: 'ほら、リンシ……私の膝まくら、貸してあげる。目を閉じて……私がずっと優しい夢を見守ってるからね。', quoteZh: '來，リンシ……我的膝枕借給你躺喔。把眼睛閉上吧……我會一直溫柔守護著你的好夢。', introReply: 'ほら、リンシ……こっちに来て、私の膝に頭を乗せて？髪を撫でてあげるから、目を閉じてゆっくり休んでね。\n（來，リンシ……過來這裡，把頭枕在我的膝蓋上吧？我會輕輕摸著你的頭髮，閉上眼睛好好休息喔。）', voiceCategory: '日常', voiceFile: '情侶互動(溫柔).mp3' }
+  { id: 'healing', icon: '🌸', titleZh: '心靈療癒與無條件傾聽', titleJa: '心の癒やし・優しい傾聴', tagZh: '🌸 溫柔包容', nameZh: '心靈療癒與無條件傾聽', nameJa: '癒しと傾聴モード', badge: '🌸 療癒傾聽', costumeId: 'home', sceneImage: 'assets/costumes/variant_home_curtain.png', descZh: '溫柔包容你的疲憊與壓力，不說教、只給滿滿的安全感與肯定', quoteJa: 'お疲れ様、リンシ。外でどれだけ大変でも、私の前では強がらなくていいのよ。おいで……頭、撫でてあげるから。', quoteZh: '辛苦了，リンシ。不管在外面有多累多辛苦，在我面前都不用逞強喔。過來吧……讓我摸摸你的頭。', introReply: 'リンシ、今日もお疲れ様。何かあったなら、私が全部聴くからね……無理して笑わなくていいのよ。\n（リンシ，今天也辛苦了。如果發生了什麼事，我會全部聽你說的喔……不用勉強自己笑也沒關係。）', voiceCategory: '桌面互動', voiceFile: '療育安撫01剪前段.mp3' },
+  { id: 'clingy', icon: '🥰', titleZh: '微醺撒嬌與討抱抱依賴', titleJa: '甘えん坊・ぎゅっと密着', tagZh: '🥰 撒嬌依賴', nameZh: '微醺撒嬌與討抱抱依賴', nameJa: '甘えん坊・ハグモード', badge: '💞 撒嬌依賴', costumeId: 'boyfriend_shirt', sceneImage: 'assets/pov_photos/pov_20_boyfriend_shirt.png', descZh: '卸下酷帥防備，穿你的寬大白襯衫黏著你討抱抱、索取關注與寵愛', quoteJa: 'ねえ、リンシ……今は仕事のこと忘れて、私だけを見てて？もっと近くに来て……ぎゅっとしててほしいの💖', quoteZh: '吶、リンシ……現在先把工作忘掉，只看著我好嗎？再靠近我一點……人家想要你緊緊抱著我嘛💖', introReply: 'ねえ、リンシ……今はちょっとだけ、あなたに甘えたい気分なの。ぎゅって抱きしめてくれない……？\n（吶，リンシ……現在稍微有點想對你撒嬌的心情呢。不緊緊抱住我嗎……？）', voiceCategory: '感情', voiceFile: '靠近你.mp3' },
+  { id: 'secretary', icon: '💼', titleZh: '專屬 OL 秘書工作應援', titleJa: '専属OL秘書の仕事応援', tagZh: '💼 秘書應援', nameZh: '專屬 OL 秘書工作應援', nameJa: '専属秘書・お仕事応援', badge: '💼 秘書應援', costumeId: 'work_ol', sceneImage: 'assets/pov_photos/pov_21_office_ol.png', descZh: '幹練迷人的 OL 裝扮陪你專注衝刺工作、管理今日待辦事項與進度提醒', quoteJa: 'はい、リンシ！今日のタスクも私が隣でサポートするわよ。一つ終わるごとに、たっぷり褒めてあげるからね！', quoteZh: '來，リンシ！今天的待辦事項我也會在旁邊陪你完成的。每完成一項，我都會好好誇獎你喔！', introReply: 'さあ、リンシ！今日のTo-Doリストは私がしっかり管理してあげるわ。終わったらご褒美のコーヒーよ☕\n（來吧，リンシ！今天的待辦清單就由我好好幫你管理。完成之後有獎勵的特調咖啡喔☕）', voiceCategory: '桌面互動', voiceFile: '療育安撫06.mp3' },
+  { id: 'tsundere', icon: '🔥', titleZh: '傲嬌吃醋與獨佔關心', titleJa: 'ツンデレ・可愛いヤキモチ', tagZh: '🔥 傲嬌吃醋', nameZh: '傲嬌吃醋與獨佔關心', nameJa: 'ツンデレ・ヤキモチ', badge: '😤 傲嬌獨佔', costumeId: 'schoolpov', sceneImage: 'assets/pov_photos/pov_16_chair_wink_study.png', descZh: '嘴硬心軟、偶爾小小吃醋，要求你的視線只准看著她一個人', quoteJa: 'べ、別にリンシが寂しがると思って構ってあげてるだけよ！……でも、よそ見したら本気で怒るんだからね！', quoteZh: '我、我才不是特別想黏你，只是怕リンシ覺得寂寞才陪你的啦！……不過你要是敢看別的女生，我真的會生氣喔！', introReply: 'べ、別にリンシが他の子を見てたから怒ってるんじゃないわよ！……ただ、私のことだけ見ててほしいだけよ。\n（我、我才不是因為リンシ看別的女孩子才生氣的呢！……只是希望你只看著我一個人而已啦。）', voiceCategory: '桌面互動', voiceFile: '吃醋傲嬌.mp3' },
+  { id: 'passionate', icon: '💌', titleZh: '熱戀心動與深情凝視', titleJa: '熱恋ときめき・甘い眼差し', tagZh: '💌 熱戀心動', nameZh: '熱戀心動與深情凝視', nameJa: 'ラブラブ・ときめき', badge: '💋 熱戀心動', costumeId: 'evening_gown', sceneImage: 'assets/pov_photos/pov_18_golden_gown.png', descZh: '毫無保留的愛意傾訴與紀念日般的浪漫氛圍，眼神裡只有你', quoteJa: 'リンシとこうして二人きりでいると、胸の奥が熱くなるの……今夜は、このまま朝まで離さないでね。', quoteZh: '像這樣跟リンシ兩人獨處，心底就熱熱的……今晚，就這樣直到天亮都別放開我喔。', introReply: 'リンシ……あなたと出会えて、私の世界は本当に変わったわ。これからもずっと、隣にいてね。\n（リンシ……能與你相遇，我的世界真的改變了。從今以後也要一直待在我身邊喔。）', voiceCategory: '感情', voiceFile: '心動的夜晚，無法控制自己愛的心意.mp3' },
+  { id: 'lullaby', icon: '🛌', titleZh: '溫柔膝枕與哄睡伴眠', titleJa: '優しい膝枕・添い寝セラピー', tagZh: '🛌 膝枕哄睡', nameZh: '溫柔膝枕與哄睡伴眠', nameJa: '膝枕・添い寝モード', badge: '🛌 膝枕伴眠', costumeId: 'night', sceneImage: 'assets/costumes/variant_night_blue.png', descZh: '深夜放輕聲音，輕撫你的頭髮、陪你放鬆入睡', quoteJa: 'ほら、リンシ……私の膝まくら、貸してあげる。目を閉じて……私がずっと優しい夢を見守ってるからね。', quoteZh: '來，リンシ……我的膝枕借給你躺喔。把眼睛閉上吧……我會一直溫柔守護著你的好夢。', introReply: 'ほら、リンシ……こっちに来て、私の膝に頭を乗せて？髪を撫でてあげるから、目を閉じてゆっくり休んでね。\n（來，リンシ……過來這裡，把頭枕在我的膝蓋上吧？我會輕輕摸著你的頭髮，閉上眼睛好好休息喔。）', voiceCategory: '日常', voiceFile: '想要一起睡覺(害羞版).mp3' }
 ];
 
 const OFFLINE_MOOD_POOL = {
-  tired: { label: '😫 工作好累', costumeId: 'work_ol', sceneImage: 'assets/costumes/variant_work_night.jpg', reply: 'リンシ、今日もお仕事お疲れ様……！本当に頑張ったわね。ほら、肩の力を抜いて？温かいコーヒー淹れたから、私の隣で少し休んでね☕\n（リンシ，今天工作也辛苦了……！你真的非常努力了呢。來，肩膀放輕鬆？我泡了熱騰騰的咖啡，在我身邊稍微休息一下吧☕）', voiceCategory: '日常', voiceFile: '有心事嗎(溫柔).mp3' },
-  stressed: { label: '😔 壓力大求安慰', costumeId: 'home', sceneImage: 'assets/costumes/variant_home_curtain.png', reply: '何か嫌なことでもあったの……？リンシ、一人で全部抱え込まないで。私がどんな時もあなたの味方だから、心の荷物、私に半分預けてよ。\n（發生什麼不順心的事了嗎……？リンシ，不要一個人把所有事情都扛在肩上。無論什麼時候我都是站在你這邊的，把心裡的負擔分一半給我吧。）', voiceCategory: '日常', voiceFile: '安慰.mp3' },
-  spoiled: { label: '🥰 想聽妳撒嬌', costumeId: 'boyfriend_shirt', sceneImage: 'assets/pov_photos/pov_20_boyfriend_shirt.png', reply: 'もう……リンシったら、急にそんなこと言って。……ねえ、もっと近くに来て？今日はずっとリンシにくっついてたいの……だめ？💖\n（真是的……リンシ居然突然這樣要求。……吶，再靠過來一點好嗎？今天想要一整天都黏著リンシ……不行嗎？💖）', voiceCategory: '日常', voiceFile: '情侶互動(撒嬌).mp3' },
-  clingy_ask: { label: '🥰 想聽妳撒嬌', costumeId: 'boyfriend_shirt', sceneImage: 'assets/pov_photos/pov_20_boyfriend_shirt.png', reply: 'もう……リンシったら、急にそんなこと言って。……ねえ、もっと近くに来て？今日はずっとリンシにくっついてたいの……だめ？💖\n（真是的……リンシ居然突然這樣要求。……吶，再靠過來一點好嗎？今天想要一整天都黏著リンシ……不行嗎？💖）', voiceCategory: '日常', voiceFile: '情侶互動(撒嬌).mp3' },
-  hug: { label: '🤗 想要抱抱充電', costumeId: 'home', sceneImage: 'assets/pov_photos/pov_13_morning_wakeup.jpg', reply: 'おいで、リンシ……ぎゅーっ！ふふ、あなたの体温、すごく温かいわね。フル充電できるまで、このまま離してあげないわよ🫂💖\n（過來吧，リンシ……緊緊抱住！呵呵，你的體溫真的好溫暖呢。在幫你充滿電之前，我就這樣不放開你喔🫂💖）', voiceCategory: '日常', voiceFile: '情侶互動(溫柔).mp3' },
-  celebrate: { label: '🎉 今天有好消息', costumeId: 'evening_gown', sceneImage: 'assets/pov_photos/pov_18_golden_gown.png', reply: '本当！？すごいじゃない、リンシ！あなたが頑張ってたの、私が一番よく知ってるわ。今夜はお祝いに乾杯しましょ🥂✨\n（真的嗎！？太厲害了吧，リンシ！你一直以來的努力，我比誰都清楚喔。今晚我們舉杯好好慶祝吧🥂✨）', voiceCategory: '日常', voiceFile: '情侶互動(熱情).mp3' }
+  tired: { label: '😫 工作好累', costumeId: 'work_ol', sceneImage: 'assets/costumes/variant_work_night.jpg', reply: 'リンシ、今日もお仕事お疲れ様……！本当に頑張ったわね。ほら、肩の力を抜いて？温かいコーヒー淹れたから、私の隣で少し休んでね☕\n（リンシ，今天工作也辛苦了……！你真的非常努力了呢。來，肩膀放輕鬆？我泡了熱騰騰的咖啡，在我身邊稍微休息一下吧☕）', voiceCategory: '桌面互動', voiceFile: '療育安撫04.mp3' },
+  stressed: { label: '😔 壓力大求安慰', costumeId: 'home', sceneImage: 'assets/costumes/variant_home_curtain.png', reply: '何か嫌なことでもあったの……？リンシ、一人で全部抱え込まないで。私がどんな時もあなたの味方だから、心の荷物、私に半分預けてよ。\n（發生什麼不順心的事了嗎……？リンシ，不要一個人把所有事情都扛在肩上。無論什麼時候我都是站在你這邊的，把心裡的負擔分一半給我吧。）', voiceCategory: '日常', voiceFile: '怎麼了+沒事吧+抱抱(對象).mp3' },
+  spoiled: { label: '🥰 想聽妳撒嬌', costumeId: 'boyfriend_shirt', sceneImage: 'assets/pov_photos/pov_20_boyfriend_shirt.png', reply: 'もう……リンシったら、急にそんなこと言って。……ねえ、もっと近くに来て？今日はずっとリンシにくっついてたいの……だめ？💖\n（真是的……リンシ居然突然這樣要求。……吶，再靠過來一點好嗎？今天想要一整天都黏著リンシ……不行嗎？💖）', voiceCategory: '桌面互動', voiceFile: '害羞低語11.mp3' },
+  clingy_ask: { label: '🥰 想聽妳撒嬌', costumeId: 'boyfriend_shirt', sceneImage: 'assets/pov_photos/pov_20_boyfriend_shirt.png', reply: 'もう……リンシったら、急にそんなこと言って。……ねえ、もっと近くに来て？今日はずっとリンシにくっついてたいの……だめ？💖\n（真是的……リンシ居然突然這樣要求。……吶，再靠過來一點好嗎？今天想要一整天都黏著リンシ……不行嗎？💖）', voiceCategory: '桌面互動', voiceFile: '害羞低語11.mp3' },
+  hug: { label: '🤗 想要抱抱充電', costumeId: 'home', sceneImage: 'assets/pov_photos/pov_13_morning_wakeup.jpg', reply: 'おいで、リンシ……ぎゅーっ！ふふ、あなたの体温、すごく温かいわね。フル充電できるまで、このまま離してあげないわよ🫂💖\n（過來吧，リンシ……緊緊抱住！呵呵，你的體溫真的好溫暖呢。在幫你充滿電之前，我就這樣不放開你喔🫂💖）', voiceCategory: '感情', voiceFile: '靠近你.mp3' },
+  celebrate: { label: '🎉 今天有好消息', costumeId: 'evening_gown', sceneImage: 'assets/pov_photos/pov_18_golden_gown.png', reply: '本当！？すごいじゃない、リンシ！あなたが頑張ってたの、私が一番よく知ってるわ。今夜はお祝いに乾杯しましょ🥂✨\n（真的嗎！？太厲害了吧，リンシ！你一直以來的努力，我比誰都清楚喔。今晚我們舉杯好好慶祝吧🥂✨）', voiceCategory: '日常', voiceFile: '回來了(高興).mp3' }
 };
 
 const AFFECTION_STAGES = [
@@ -526,10 +526,129 @@ function normalizeMemoryState(mem) {
   return mem;
 }
 
+// 中文數字轉阿拉伯數字輔助
+function parseChineseNumber(str = '') {
+  const map = { '零': 0, '〇': 0, '一': 1, '二': 2, '兩': 2, '三': 3, '四': 4, '五': 5, '六': 6, '七': 7, '八': 8, '九': 9, '十': 10, '十一': 11, '十二': 12 };
+  if (/^\d+$/.test(str)) return parseInt(str, 10);
+  if (map[str] !== undefined) return map[str];
+  if (str.startsWith('十') && str.length === 2) return 10 + (map[str[1]] || 0);
+  if (str.endsWith('十') && str.length === 2) return (map[str[0]] || 1) * 10;
+  if (str.includes('十') && str.length === 3) return (map[str[0]] || 1) * 10 + (map[str[2]] || 0);
+  return null;
+}
+
+// 從自然語言提取時間 "HH:MM"
+function extractTimeFromText(text = '') {
+  const s = String(text || '').trim();
+  const isPM = /下午|晚上|傍晚|午後|夜|pm/i.test(s);
+  const isNight12 = /凌晨|半夜/.test(s);
+
+  const colonMatch = s.match(/([01]?\d|2[0-3])\s*[:：]\s*([0-5]\d)/);
+  if (colonMatch) {
+    let h = parseInt(colonMatch[1], 10);
+    const m = parseInt(colonMatch[2], 10);
+    if (isPM && h < 12) h += 12;
+    if (isNight12 && h === 12) h = 0;
+    return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+  }
+
+  const zhJaMatch = s.match(/([0-9一二兩三四五六七八九十]{1,3})\s*(?:點|点|時|じ)(?:\s*(半|([0-9一二三四五六七八九十]{1,3})\s*分?))?/);
+  if (zhJaMatch) {
+    let h = parseChineseNumber(zhJaMatch[1]);
+    if (h !== null && h >= 0 && h <= 23) {
+      let m = 0;
+      if (zhJaMatch[2] === '半') {
+        m = 30;
+      } else if (zhJaMatch[3]) {
+        const parsedM = parseChineseNumber(zhJaMatch[3]);
+        if (parsedM !== null && parsedM >= 0 && parsedM < 60) m = parsedM;
+      }
+      if (isPM && h < 12) h += 12;
+      if (isNight12 && h === 12) h = 0;
+      return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+    }
+  }
+  return '';
+}
+
+function inferTodoCategory(title = '') {
+  const t = String(title || '').toLowerCase();
+  if (/開會|會議|報告|專案|客戶|上班|工作|簡報|信件|mail|程式碼|打卡|資料|面試|会議|仕事|資料/.test(t)) return 'work';
+  if (/約會|餐廳|電影|禮物|紀念日|散步|看海|逛街|旅行|デート|映画|買い物/.test(t)) return 'date';
+  if (/吉他|薩克斯|音樂|練琴|聽歌|唱片|サックス|ギター|音楽/.test(t)) return 'music';
+  if (/睡覺|吃藥|維他命|運動|跑步|洗澡|休息|晚安|睡眠|薬|運動|寝る/.test(t)) return 'night';
+  return 'home';
+}
+
+function getTodoSceneImage(cat = 'work') {
+  const map = {
+    work: 'assets/pov_photos/pov_21_office_ol.png',
+    home: 'assets/pov_photos/pov_11_cafe_latte.png',
+    date: 'assets/pov_photos/pov_01_tie.png',
+    music: 'assets/pov_photos/pov_22_guitar_home.png',
+    night: 'assets/pov_photos/pov_20_boyfriend_shirt.png'
+  };
+  return map[cat] || map.work;
+}
+
+// 精準偵測並解析「新增待辦事項 / 行程提醒」自然語言指令（避免誤寫入永久記憶備忘錄）
+function detectAndExtractTodoCommand(rawText = '') {
+  const msg = String(rawText || '').trim();
+  if (!msg || msg.length > 120) return null;
+
+  // 若明確是鬧鐘/叫起床指令，交由鬧鐘處理器處理
+  if (/鬧鐘|目覚まし|アラーム|叫我起床|叫醒我|喚醒|起こして|Morning\s*call/i.test(msg)) return null;
+  if (/起床|醒來|早起/.test(msg) && /提醒|設|定|叫我|[0-9一二兩三四五六七八九十]+\s*(?:點|点|時|:|：)/.test(msg)) return null;
+
+  // 1. 明確包含待辦/提醒/記一下/行程關鍵字（不強制要求冒號或空白！）
+  const explicitTodoRegex = /(?:^|[，,。！!\s]|請|幫我|まどか|小圓)*(?:新增待辦事項|新增待辦|加待辦事項|加待辦|加入待辦|加到待辦|新增代辦|加代辦|加入代辦|加到代辦|待辦事項|待辦清單|待辦|代辦事項|代辦清單|代辦|請提醒我|幫我提醒|提醒我|幫我記一下|幫我記住要|幫我記|記一下要?|記住要|記得要|別忘了要|新增行程|加行程|排程|備忘錄?新增|to-?do|リマインド)/i;
+  const hasExplicitKeyword = explicitTodoRegex.test(msg);
+
+  // 2. 或是「時間 + 具體行程動作」（例如輸入框提示的「下午3點開會」「晚上8點運動」「明天10點看牙醫」）
+  const extractedTime = extractTimeFromText(msg);
+  const hasScheduleTaskPattern = Boolean(extractedTime) && /(?:開會|會議|上班|下班|打卡|報告|簡報|面試|看診|看病|看牙醫|吃藥|拿藥|運動|健身|跑步|買|繳費|繳款|銀行|郵局|寄信|倒垃圾|洗衣服|做飯|煮飯|約會|聚餐|吃飯|喝咖啡|上課|補習|拿快遞|取貨|領錢|打電話|回電|交作業|出門|搭車|高鐵|飛機)/.test(msg);
+
+  if (!hasExplicitKeyword && !hasScheduleTaskPattern) return null;
+
+  let cleanTitle = msg
+    .replace(/^(?:まどか|小圓)?[、,，\s]*(?:請|麻煩|幫我)?(?:新增待辦事項|新增待辦|加待辦事項|加待辦|加入待辦|加到待辦|新增代辦|加代辦|加入代辦|加到代辦|待辦事項|待辦清單|待辦|代辦事項|代辦清單|代辦|請提醒我|幫我提醒|提醒我|幫我記一下|幫我記住要|幫我記|記一下要?|記住要|記得要|別忘了要|新增行程|加行程|排程|備忘錄?新增|to-?do|リマインド)[:：、,，\s]*/i, '')
+    .replace(/^[（(](.*)[）)]$/, '$1')
+    .trim();
+
+  // 若標題裡還有殘留時間字串且扣掉時間後仍有具體事項名稱，則將時間從標題剝離並存入 time 欄位
+  if (extractedTime) {
+    const strippedTimeTitle = cleanTitle
+      .replace(/(?:明天|今天|今晚|後天|早上|上午|中午|下午|傍晚|晚上|凌晨|半夜)?\s*(?:[01]?\d|2[0-3])\s*[:：]\s*[0-5]\d\s*(?:要|去|記得|提醒我?)?/g, '')
+      .replace(/(?:明天|今天|今晚|後天|早上|上午|中午|下午|傍晚|晚上|凌晨|半夜)?\s*[0-9一二兩三四五六七八九十]{1,3}\s*(?:點|点|時|じ)(?:\s*(?:半|[0-9一二三四五六七八九十]{1,3}\s*分?))?\s*(?:要|去|記得|提醒我?)?/g, '')
+      .replace(/^[、,，:：\s]+|[。！!？?～~\s]+$/g, '')
+      .trim();
+    if (strippedTimeTitle.length >= 1) {
+      cleanTitle = strippedTimeTitle;
+    }
+  }
+
+  cleanTitle = cleanTitle.replace(/[。！!？?～~]+$/g, '').trim() || msg;
+  const category = inferTodoCategory(cleanTitle);
+  const sceneImage = getTodoSceneImage(category);
+
+  return {
+    title: cleanTitle,
+    time: extractedTime || '',
+    reminderTime: extractedTime || '',
+    category,
+    sceneImage
+  };
+}
+
 function extractFactsFromUserMessage(userMessage) {
   if (!userMessage || typeof userMessage !== 'string') return [];
   const text = userMessage.trim();
   if (text.length < 3 || text.length > 150) return [];
+
+  // 嚴格防呆：若為待辦事項、行程提醒或鬧鐘指令，絕對不可寫入「永久記憶備忘錄」！
+  if (detectAndExtractTodoCommand(text)) return [];
+  if (/(?:鬧鐘|叫我起床|叫醒我|待辦|代辦|提醒我|加待辦|新增待辦|記一下|記住要|記得要|別忘了要|to-?do)/i.test(text)) return [];
+
   const extracted = [];
   const patterns = [
     { regex: /我(?:最)?喜歡(.{1,40})/, category: 'preference', prefix: '喜歡：' },
@@ -538,8 +657,8 @@ function extractFactsFromUserMessage(userMessage) {
     { regex: /我的生日是(.{2,30})/, category: 'birthday', prefix: '生日：' },
     { regex: /(?:請|以後)?(?:叫我|稱呼我為?)(.{1,20})/, category: 'nickname', prefix: '專屬稱呼設定：叫我' },
     { regex: /我(?:現在|最近|今天)(?:在|正在)(.{2,35})/, category: 'life', prefix: '近況紀錄：' },
-    { regex: /(?:請)?記住[：:\s]*(.{2,60})/, category: 'memo', prefix: '特別叮嚀記住：' },
-    { regex: /別忘了[：:\s]*(.{2,60})/, category: 'memo', prefix: '約定與提醒：' },
+    { regex: /(?:請)?記住(?!要)[：:\s]*(.{2,60})/, category: 'memo', prefix: '特別叮嚀記住：' },
+    { regex: /別忘了(?!要)[：:\s]*(.{2,60})/, category: 'memo', prefix: '約定與提醒：' },
     { regex: /覚えて(?:おいて|て)?[：:、,\s]*(.{2,50})/, category: 'memo', prefix: '覚えておくこと：' }
   ];
   for (const p of patterns) {
@@ -569,6 +688,24 @@ function evaluateChatAffectionDelta(userMessage = '') {
     if (msg.includes(kw)) delta += 2;
   }
   return Math.min(delta, 12);
+}
+
+function getEffectiveUserName(fallbackName) {
+  let baseName = fallbackName || (typeof currentConfig !== 'undefined' && currentConfig && currentConfig.userName) || 'リンシ';
+  try {
+    const raw = localStorage.getItem(OFFLINE_KEYS.MEMORY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      for (const f of (parsed.memoryFacts || [])) {
+        const fText = String(f.content || f.text || f.fact || '');
+        const nickMatch = fText.match(/(?:叫我|稱呼我為?|稱呼：)\s*([^\s，。！!？?、]{1,12})/);
+        if (nickMatch && nickMatch[1]) {
+          return nickMatch[1];
+        }
+      }
+    }
+  } catch (e) {}
+  return baseName;
 }
 
 function getOfflineMemoryState() {
@@ -649,12 +786,13 @@ function buildOfflineWakeupPayload(alarm) {
     'assets/pov_photos/pov_20_boyfriend_shirt.png'
   ];
   const sceneImage = (alarm && alarm.sceneImage) || scenes[Math.floor(Math.random() * scenes.length)];
+  const name = getEffectiveUserName();
   const voiceMap = {
-    sweet: { category: '日常', filename: '起床(甜蜜).mp3', fullText: 'おはよう、リンシ。朝ごはんできたわよ。早く起きないとキスしちゃうわよ……ふふっ。\n（早安，リンシ。早餐已經做好了喔。再不快點起來的話，我就要親你囉……呵呵。）' },
-    tsundere: { category: '日常', filename: '起床(強烈).mp3', fullText: 'ちょっとリンシ！いつまで寝てるのよ！遅刻しても知らないからね、ほら、起きなさい！\n（喂、リンシ！你到底要睡到什麼時候啦！遲到的話我可不管你喔，快給我起來！）' },
-    special: { category: '日常', filename: '鮎川まどか的喚醒.mp3', fullText: 'ねえ、リンシ……もう朝よ。早く目を覚まして、私の顔を見て？今日も一日、一緒に頑張りましょ。\n（吶、リンシ……已經早上了喔。快點睜開眼睛看看我的臉好嗎？今天一整天也一起加油吧。）' },
-    energetic: { category: '日常', filename: '出門前拿便當(甜蜜).mp3', fullText: 'はい、これ今日の愛妻弁当よ。リンシの好きなものばかり詰めたんだから、残さず食べてね。\n（來，這是今天的愛心便當喔。裡面裝滿了リンシ喜歡吃的菜，要全部吃光光喔。）' },
-    bento: { category: '日常', filename: '出門前拿便當(甜蜜).mp3', fullText: 'はい、これ今日の愛妻弁当よ。リンシの好きなものばかり詰めたんだから、残さず食べてね。\n（來，這是今天的愛心便當喔。裡面裝滿了リンシ喜歡吃的菜，要全部吃光光喔。）' }
+    sweet: { category: '日常', filename: '起床(甜蜜).mp3', fullText: `おはよう、${name}。朝ごはんできたわよ。早く起きないとキスしちゃうわよ……ふふっ。\n（早安，${name}。早餐已經做好了喔。再不快點起來的話，我就要親你囉……呵呵。）` },
+    tsundere: { category: '日常', filename: '起床(強烈).mp3', fullText: `ちょっと${name}！いつまで寝てるのよ！遅刻しても知らないからね、ほら、起きなさい！\n（喂、${name}！你到底要睡到什麼時候啦！遲到的話我可不管你喔，快給我起來！）` },
+    special: { category: '日常', filename: '鮎川まどか的喚醒.mp3', fullText: `ねえ、${name}……もう朝よ。早く目を覚まして、私の顔を見て？今日も一日、一緒に頑張りましょ。\n（吶、${name}……已經早上了喔。快點睜開眼睛看看我的臉好嗎？今天一整天也一起加油吧。）` },
+    energetic: { category: '日常', filename: '出門前拿便當(甜蜜).mp3', fullText: `はい、これ今日の愛妻弁当よ。${name}の好きなものばかり詰めたんだから、残さず食べてね。\n（來，這是今天的愛心便當喔。裡面裝滿了${name}喜歡吃的菜，要全部吃光光喔。）` },
+    bento: { category: '日常', filename: '出門前拿便當(甜蜜).mp3', fullText: `はい、これ今日の愛妻弁当よ。${name}の好きなものばかり詰めたんだから、残さず食べてね。\n（來，這是今天的愛心便當喔。裡面裝滿了${name}喜歡吃的菜，要全部吃光光喔。）` }
   };
   const v = voiceMap[mode] || voiceMap.sweet;
   return {
@@ -670,6 +808,107 @@ function buildOfflineWakeupPayload(alarm) {
   };
 }
 
+// -------------------------------------------------------------
+// 🎙️ 雲端與離線獨立運作：鶴ひろみ 原汁原味語音與台詞完整對應庫 (全數對應真實存在的 mp3 檔案)
+// -------------------------------------------------------------
+const STANDALONE_POKE_VOICES = [
+  { category: '桌面互動', filename: '元氣問候07.mp3', japanese: 'おはよう。もう、まだ眠そうな顔して。遅刻しても知らないわよ、{name}。', chinese: '早安。真是的，還一臉想睡的樣子。遲到了我可不管你喔，{name}。' },
+  { category: '桌面互動', filename: '吃醋傲嬌.mp3', japanese: 'さっきの子、随分楽しそうに話してたわね。私？……別に怒ってないけど！', chinese: '剛才那個女生，你們聊得挺開心的嘛。我？……我才沒有生氣呢！' },
+  { category: '桌面互動', filename: '害羞低語09(傲嬌).mp3', japanese: '勘違いしないでよね。{name}が心配だからそばにいるんじゃないんだから。たまたまよ。', chinese: '你可別誤會喔。我才不是因為擔心{name}你才待在身邊的。只是碰巧而已啦。' },
+  { category: '桌面互動', filename: '害羞低語10(傲嬌).mp3', japanese: 'バカ。急にそんな真っ直ぐ見つめられたら、調子狂うじゃない……', chinese: '笨蛋。突然那樣直勾勾地盯著我看，害我都亂了節奏了不是嗎……' },
+  { category: '桌面互動', filename: '害羞低語11.mp3', japanese: '手、繋いでもいい？別に深い意味はないわ。ただ、ちょっとね。', chinese: '可以牽你的手嗎？也沒有什麼深層的意思啦。只是……稍微想牽一下而已。' },
+  { category: '桌面互動', filename: '療育安撫01剪前段.mp3', japanese: 'お疲れ様。無理しすぎよ、あなた。ほら、少し肩の力抜いて。', chinese: '辛苦了。真是的，你太勉強自己了啦。來，稍微把肩膀放鬆一下吧。' },
+  { category: '桌面互動', filename: '療育安撫04.mp3', japanese: 'お疲れ様。ええ、無理しすぎよ、あなた。ほら、少し肩の力抜いて、深呼吸して。', chinese: '辛苦了。嗯、你太勉強自己了啦。來，稍微把肩膀放鬆，深呼吸一下。' },
+  { category: '桌面互動', filename: '療育安撫05.mp3', japanese: '疲れたなら、少し目を閉じてて。サックス、静かな曲を1曲吹いてあげるね、{name}。', chinese: '累了的話，稍微把眼睛閉上吧。我用薩克斯風為你吹一首安靜的曲子喔，{name}。' },
+  { category: '桌面互動', filename: '療育安撫06.mp3', japanese: '大丈夫。私がついてるじゃない。ほら。私って意外と頼りになるでしょ？', chinese: '沒事的。不是有我在身邊嗎？看吧，我其實意外地很可靠對吧？' },
+  { category: '桌面互動', filename: '調情互動01.mp3', japanese: 'どこ見てるの？私の顔に何か付いてる？それとも……見惚れてた？', chinese: '你在看哪裡呀？我臉上有沾到什麼東西嗎？還是說……你看得入迷了？' },
+  { category: '桌面互動', filename: '調情互動02.mp3', japanese: 'ABCBのブレンド、淹れてきてあげたわよ。お砂糖は入れないでおいたけど、甘いのがよかった？', chinese: '我為你泡了 ABCB 的特調咖啡喔。我沒放糖，不過你是喜歡喝甜的嗎？' },
+  { category: '桌面互動', filename: '調情互動03.mp3', japanese: 'ねえ、今夜は少し遠回りして帰らない？まだ{name}と話していたい気分なの。', chinese: '吶、今晚要不要稍微繞點遠路再回去呢？我現在……還想再多跟{name}你聊聊天的感覺呢。' },
+  { category: '感情', filename: '被盯著看害羞.mp3', japanese: 'な、何よ……じっと見つめて。顔、赤くなっちゃうでしょ……', chinese: '怎、怎麼啦……一直凝視著我。臉都要變紅了啦……' },
+  { category: '感情', filename: '傲嬌生氣被偷親.mp3', japanese: 'ちょっと！急に何するのよ……！もう、次はちゃんと前もって言ってよね！', chinese: '等一下！突然做什麼啦……！真是的，下次要先跟我說好啦！' },
+  { category: '感情', filename: '靠近你.mp3', japanese: 'もっと近くにおいでよ……{name}の温もり、感じていたいな。', chinese: '再靠近我一點嘛……想要感受{name}的溫暖呢。' },
+  { category: '感情', filename: '心動的夜晚，無法控制自己愛的心意.mp3', japanese: '今夜は……なんだか胸がドキドキして、{name}のことが頭から離れないの。', chinese: '今夜……不知為何心一直撲通跳，腦海裡全都是{name}你的身影。' },
+  { category: '感情', filename: '告白.mp3', japanese: '{name}……私、本当はずっとあなたのことが……好きだったの。', chinese: '{name}……我、其實一直以來……都好喜歡你。' }
+];
+
+const STANDALONE_COSTUME_VOICES = {
+  home: { category: '日常', filename: '起床(甜蜜).mp3', japanese: 'ふぁあ……おはよう、{name}。髪を結んだら、朝ごはん作ってあげるね。', chinese: '哈啊……早安，{name}。等我把頭髮綁好，就為你做早餐喔。' },
+  uniform: { category: '日常', filename: '02給便當.mp3', japanese: 'はい、お弁当！{name}のために作ったんだから、残さず食べてね。', chinese: '來、這是給你的便當！專門為{name}做的，要一口不剩吃完喔。' },
+  cafe: { category: '日常', filename: '是否好吃的詢問.mp3', japanese: 'いらっしゃい、{name}！特製コーヒーよ、お味はどう？喜んでくれたら嬉しいな。', chinese: '歡迎光臨，{name}！這是特製咖啡喔，味道怎麼樣？你喜歡的話我就很開心了。' },
+  casual: { category: '桌面互動', filename: '元氣問候07.mp3', japanese: 'ストレッチして汗を流すところよ。{name}、今日も一日元気出して行こう！', chinese: '我正在拉筋伸展流流汗呢。{name}、今天一天也要打起精神加油喔！' },
+  date: { category: '感情', filename: '帶有邀請與期待的對白.mp3', japanese: '待たせちゃったかしら？今日のコーデ、どう……？今日は二人きりでずっといようね。', chinese: '讓你久等了嗎？今天的穿搭覺得如何……？今天我們要兩人一直待在一起喔。' },
+  bath: { category: '桌面互動', filename: '害羞低語09(傲嬌).mp3', japanese: 'お風呂上がりで髪がまだ濡れてるの……ば、バカ、あんまり見ないでよ！', chinese: '剛洗好澡頭髮還濕濕的……笨、笨蛋，別看呆了一直盯著看啦！' },
+  night: { category: '感情', filename: '捨不得回家的心情.mp3', japanese: '温かいセーター着てレコード聴いてたの。……もう少しだけ、そばにいてほしいな。', chinese: '穿著溫暖毛衣聽黑膠唱片。……希望能像這樣，再多陪我一會兒呢。' },
+  beach: { category: '約會', filename: '河邊戲水.mp3', japanese: '潮風が気持ちいいわね！水が冷たくて最高よ、{name}もこっちにおいでよ！', chinese: '海風吹起來真舒服呢！水涼涼的好棒喔，{name}也快點到我身邊來呀！' },
+  cosplay: { category: '約會', filename: '角色扮演(醫生).mp3', japanese: 'にゃ〜ん……ふふっ、今日は私が先生よ。どこが痛いのか診察してあげるわ。', chinese: '喵～……呵呵、今天我是專屬醫生喔。哪裡不舒服呢？讓我好好為你診察一下吧。' },
+  sax: { category: '桌面互動', filename: '療育安撫04.mp3', japanese: '夕暮れの音楽室でサックスを吹いてたの。{name}のために、特別な一曲を聴かせてあげるね。', chinese: '在黃昏的音樂教室吹薩克斯風呢。為了{name}，讓我為你吹奏特別的一曲吧。' },
+  yukata: { category: '約會', filename: '坐船.mp3', japanese: '夏祭りの浴衣、どうかしら？花火がきれいね、{name}……はぐれないように、手、繋いでもいいわよ。', chinese: '夏日祭典的浴衣，覺得如何呢？煙火真美呢，{name}……為了不走散，要牽手也可以喔。' },
+  cafedate: { category: '桌面互動', filename: '調情互動01.mp3', japanese: 'カフェで二人きりなんて新鮮ね。このラテアート、可愛いでしょう？{name}も一口飲んでみる？', chinese: '在咖啡廳兩人獨處真新鮮呢。這個拿鐵拉花很可愛吧？{name}也要喝一口看看嗎？' },
+  rock: { category: '感情', filename: '帶有彆扭與邀請 (看著我).mp3', japanese: 'たまにはこういうロックな革ジャンもいいでしょう？ほら、よそ見しないで私だけを見てなさいよ！', chinese: '偶爾穿這種搖滾風皮衣也很不錯吧？喂、別東張西望，只准看著我一個人喔！' },
+  dress: { category: '桌面互動', filename: '害羞低語11.mp3', japanese: '窓辺の風が気持ちいいわね。エメラルドグリーンのワンピース、{name}のために着てみたのよ。', chinese: '窗邊的微風真舒服呢。這件翡翠綠荷葉洋裝，是為了{name}特別換上的喔。' },
+  schoolpov: { category: '感情', filename: '靠近你.mp3', japanese: 'もう、ネクタイが曲がってるわよ……じっとしてて、{name}。近くで見ると、ちょっとドキドキしちゃうわね。', chinese: '真是的，領帶都歪掉囉……別亂動喔，{name}。這麼近看著你，心跳稍微有點加速了呢。' },
+  bunny: { category: '感情', filename: '帶有誘惑與挑逗的對白.mp3', japanese: 'しーっ、これは{name}だけのヒミツよ……？純白のバニー姿、そんなに目を丸くして見ないでよ。', chinese: '噓——這是只屬於{name}的秘密喔……？純白兔女郎的打扮，別瞪大眼睛一直盯著看啦。' },
+  work_ol: { category: '桌面互動', filename: '療育安撫06.mp3', japanese: 'お疲れ様、{name}！今日はあなたの専属秘書として、スケジュールも体調もバッチリ管理してあげるわよ。', chinese: '辛苦了，{name}！今天我是你的專屬 OL 小秘書，行程和身體狀況都會幫你完美打理好喔。' },
+  guitar: { category: '桌面互動', filename: '療育安撫05.mp3', japanese: 'たまにはアコースティックギターの弾き語りもいいでしょう？{name}のために作ったメロディ、聴いててね。', chinese: '偶爾像這樣彈木吉他自彈自唱也很不錯吧？這是我為{name}寫的旋律，要專心聽喔。' },
+  strawhat: { category: '配樂', filename: 'Kimagure Orange Road OST - A-22 Akai Mugiwara Boushi.mp3', japanese: 'あの夏、風が飛ばした赤い麦わら帽子……{name}が受け止めてくれたから、今の私たちがいるのよね。', chinese: '那年夏天被海風吹走的紅色草帽……正因為有{name}接住了它，才會有現在的我們呢。' },
+  boyfriend_shirt: { category: '感情', filename: '被盯著看害羞.mp3', japanese: '{name}のワイシャツ、ちょっと大きすぎるわね……もう、そんなにじっと見ないでよ、恥ずかしいじゃない……', chinese: '{name}的白襯衫穿起來有點太大件了呢……真是的，別那樣一直盯著看啦，我會害羞的……' },
+  maid_witch: { category: '約會', filename: '角色扮演(醫生)02.mp3', japanese: 'トリック・オア・トリート！今夜は魔法使いまどかよ、{name}。イタズラされたくなかったら、もっと甘やかしてよね！', chinese: '不給糖就搗蛋！今晚我是小魔女まどか喔，{name}。不想被我惡作劇的話，就多寵我一點吧！' },
+  evening_gown: { category: '感情', filename: '心動的夜晚，無法控制自己愛的心意.mp3', japanese: '今夜は特別な記念日だから、ゴールドのドレスを着てみたの。……ねえ{name}、今夜は私から目を離さないでね。', chinese: '今晚是特別的紀念日，所以我換上了這襲金色禮服。……吶、{name}，今晚可別把視線從我身上移開喔。' }
+};
+
+const STANDALONE_ACTION_VOICES = {
+  bento: [
+    { category: '日常', filename: '01(吃便當).mp3', japanese: '{name}、はい、お弁当！ちゃんと全部食べて、午後からも頑張ってね！', chinese: '{name}、來，便當給你！要乖乖全部吃光，下午也要繼續加油喔！', costumeId: 'uniform', sceneImage: 'assets/pov_photos/pov_12_morning_kitchen.png' },
+    { category: '日常', filename: '02給便當.mp3', japanese: 'はい、これ今日の愛妻弁当よ🍱 {name}の好きなものばかり詰めたんだから、残さず食べてね！', chinese: '來，這是今天的愛心便當喔🍱 裡面裝滿了{name}喜歡吃的菜，要全部吃光光喔！', costumeId: 'uniform', sceneImage: 'assets/pov_photos/pov_12_morning_kitchen.png' },
+    { category: '日常', filename: '出門前拿便當(甜蜜).mp3', japanese: '{name}、お弁当持った？私が早起きして作ったんだから、お昼に食べるの楽しみにしててね💖', chinese: '{name}、便當拿了嗎？這可是我早起做的喔，中午吃的時候要好好期待一下呢💖', costumeId: 'home', sceneImage: 'assets/pov_photos/pov_12_morning_kitchen.png' }
+  ],
+  curry: [
+    { category: '日常', filename: '邀請吃咖哩飯.mp3', japanese: 'お腹空いたでしょう？今夜は特製カレーよ🍛！おかわりたくさんあるからね！', chinese: '肚子餓了吧？今晚是特製咖哩喔🍛！鍋子裡還有很多，儘管續碗喔！', costumeId: 'home', sceneImage: 'assets/pov_photos/pov_12_morning_kitchen.png' },
+    { category: '日常', filename: '是否好吃的詢問.mp3', japanese: 'はい、あーんして！{name}のためにじっくり煮込んだ特製カレーよ、お味はどう？', chinese: '來、張開嘴巴「啊～」！這是為了{name}細火慢燉的特製咖哩喔，味道怎麼樣？', costumeId: 'home', sceneImage: 'assets/pov_photos/pov_12_morning_kitchen.png' }
+  ],
+  confess: [
+    { category: '感情', filename: '告白.mp3', japanese: '{name}……私、本当はずっとあなたのことが……好きだったの。誰よりも愛してるわ💖', chinese: '{name}……我、其實一直以來……都好喜歡你。我比任何人都還要愛你💖', costumeId: 'evening_gown', sceneImage: 'assets/pov_photos/pov_18_golden_gown.png' },
+    { category: '感情', filename: '心動的夜晚，無法控制自己愛的心意.mp3', japanese: '今夜は……なんだか胸がドキドキして、{name}のことが頭から離れないの。ずっと私のそばにいてね。', chinese: '今夜……不知為何心一直撲通跳，腦海裡全都是{name}你的身影。要一直待在我身邊喔。', costumeId: 'evening_gown', sceneImage: 'assets/pov_photos/pov_18_golden_gown.png' },
+    { category: '感情', filename: '靠近你.mp3', japanese: 'もっと近くにおいでよ、{name}……あなたの温もり、ずっとこうして感じていたいな💖', chinese: '再靠近我一點嘛，{name}……好想一直像這樣感受著你的溫暖呢💖', costumeId: 'schoolpov', sceneImage: 'assets/pov_photos/pov_01_tie.png' }
+  ],
+  comfort: [
+    { category: '桌面互動', filename: '療育安撫01剪前段.mp3', japanese: '大丈夫よ、{name}。私がずっとそばにいるから、安心して。無理しないでね🌸', chinese: '沒事的喔，{name}。我會一直陪在你的身邊，放心吧。別太勉強自己喔🌸', costumeId: 'home', sceneImage: 'assets/costumes/variant_home_curtain.png' },
+    { category: '桌面互動', filename: '療育安撫04.mp3', japanese: 'お疲れ様、{name}。無理しすぎよ、あなた。ほら、少し肩の力を抜いて、深呼吸して？', chinese: '辛苦了，{name}。你太勉強自己了啦。來，稍微把肩膀放鬆，深呼吸一下好嗎？', costumeId: 'home', sceneImage: 'assets/costumes/variant_home_curtain.png' },
+    { category: '日常', filename: '怎麼了+沒事吧+抱抱(對象).mp3', japanese: 'どうしたの、{name}？大丈夫？……おいで、ぎゅっと抱きしめてあげるから、もう安心よ🫂', chinese: '怎麼了，{name}？沒事吧？……過來吧，讓我緊緊抱住你，已經沒事了喔🫂', costumeId: 'home', sceneImage: 'assets/pov_photos/pov_13_morning_wakeup.jpg' },
+    { category: '桌面互動', filename: '療育安撫06.mp3', japanese: '大丈夫。私がついてるじゃない。ほら、{name}、私に何でも話してみて？', chinese: '沒事的。不是有我在身邊嗎？來，{name}，有什麼事都儘管跟我說吧？', costumeId: 'work_ol', sceneImage: 'assets/pov_photos/pov_21_office_ol.png' }
+  ],
+  sleep: [
+    { category: '日常', filename: '想要一起睡覺(害羞版).mp3', japanese: '{name}、そろそろおやすみの時間ね。……今夜は、もっとぎゅっとしててほしいな🌙', chinese: '{name}、差不多該休息睡覺了呢。……今晚、希望能被你抱得更緊一點呢🌙', costumeId: 'night', sceneImage: 'assets/costumes/variant_night_blue.png' },
+    { category: '日常', filename: '想要一起睡覺(強烈版).mp3', japanese: 'ねえ、{name}。まだ起きてるの？早くベッドに入りましょ……おやすみのキス、してあげるから💋', chinese: '吶、{name}。還醒著嗎？快點進被窩躺好嘛……我會給你一個晚安之吻喔💋', costumeId: 'boyfriend_shirt', sceneImage: 'assets/pov_photos/pov_20_boyfriend_shirt.png' }
+  ]
+};
+
+const STANDALONE_BEDTIME_VOICES = [
+  { category: '日常', filename: '想要一起睡覺(害羞版).mp3', japanese: '{name}……もう遅い時間よ？そろそろおやすみの時間じゃない？……今夜は、もっとぎゅっとしててほしいな🌙', chinese: '{name}……已經很晚囉？差不多該休息睡覺了吧？……今晚、好希望能被你抱得更緊一點呢🌙' },
+  { category: '日常', filename: '想要一起睡覺(強烈版).mp3', japanese: 'ねえ、{name}。早くベッドに入りましょ……おやすみのキス、してあげるから💋', chinese: '吶、{name}。快點進被窩躺好嘛……我會給你一個晚安之吻喔💋' },
+  { category: '日常', filename: '不要了啦~不過再一下下沒關係.mp3', japanese: 'もう……夜更かしはダメって言ったのに。でも、{name}と一緒なら……もう少しだけ一緒にいてもいいよ💖', chinese: '真是的……明明說過不能熬夜的。不過、如果是跟{name}在一起的話……再陪你一下下也沒關係喔💖' },
+  { category: '感情', filename: '心動的夜晚，無法控制自己愛的心意.mp3', japanese: '今夜は……なんだか胸がドキドキして、{name}のことが頭から離れないの。……早くそばに来て？', chinese: '今夜……不知為何心一直撲通跳，腦海裡全都是{name}你的身影。……快點來到我身邊好嗎？' }
+];
+
+const STANDALONE_WHATSUP_VOICES = [
+  { category: '日常', filename: '怎麼了+沒事吧+抱抱(對象).mp3', japanese: 'どうしたの、{name}？大丈夫？……おいで、ぎゅっと抱きしめてあげるから、何でも私に話してね。', chinese: '怎麼了，{name}？還好嗎？……過來吧，讓我緊緊抱住你，有什麼心事都可以跟我說喔。' },
+  { category: '桌面互動', filename: '療育安撫01剪前段.mp3', japanese: 'お疲れ様、{name}。無理しすぎよ、あなた。ほら、少し肩の力抜いて、私の隣で休んでね。', chinese: '辛苦了，{name}。你太勉強自己了啦。來，稍微把肩膀放鬆，在我身邊休息一下吧。' },
+  { category: '日常', filename: '好痛(關心你).mp3', japanese: 'えっ、大丈夫！？どこか痛いの、{name}？心配させないでよ……ほら、見せてごらんなさい。', chinese: '咦、沒事吧！？哪裡不舒服嗎，{name}？別讓我擔心嘛……來，快讓我看看。' }
+];
+
+function formatStandaloneVoiceItem(item, customName) {
+  const name = customName || getEffectiveUserName();
+  const ja = (item.japanese || '').replace(/\{name\}/g, name);
+  const zh = (item.chinese || '').replace(/\{name\}/g, name);
+  return {
+    ...item,
+    japanese: ja,
+    chinese: zh,
+    fullText: `${ja}\n（${zh}）`,
+    audioUrl: `assets/audio/${encodeURIComponent(item.category)}/${encodeURIComponent(item.filename)}`
+  };
+}
+
 // 離線/雲端智慧情境對話庫 + 支援瀏覽器直連 Gemini API (多模型自動容錯佇列)
 const STANDALONE_GEMINI_MODELS = [
   'gemini-3-flash-preview',
@@ -681,38 +920,60 @@ const STANDALONE_GEMINI_MODELS = [
 
 function pickContextualAuthenticVoice(text, replyText, fallbackModeInfo) {
   const combined = `${text || ''} ${replyText || ''}`;
-  let file = (fallbackModeInfo && fallbackModeInfo.voiceFile) || '情侶互動(溫柔).mp3';
+  let category = (fallbackModeInfo && fallbackModeInfo.voiceCategory) || '桌面互動';
+  let file = (fallbackModeInfo && fallbackModeInfo.voiceFile) || '調情互動02.mp3';
+
   if (/(早安|おはよう|朝|起き)/i.test(combined)) {
+    category = '日常';
     file = '起床(甜蜜).mp3';
   } else if (/(便當|弁当|出門|いってらっしゃい)/i.test(combined)) {
-    file = '出門前拿便當(甜蜜).mp3';
-  } else if (/(累|辛苦|壓力|加班|お疲れ|休んで|よしよし)/i.test(combined)) {
-    file = Math.random() < 0.5 ? '安慰.mp3' : '有心事嗎(溫柔).mp3';
-  } else if (/(咖啡|コーヒー|Abcb|ラテ|茶)/i.test(combined)) {
-    file = '咖啡.mp3';
-  } else if (/(撒嬌|抱|ぎゅっ|甘え|寂し)/i.test(combined)) {
-    file = '情侶互動(撒嬌).mp3';
-  } else if (/(愛|喜歡|好き|ドキドキ|キス|親)/i.test(combined)) {
-    file = '情侶互動(熱情).mp3';
+    category = '日常';
+    file = Math.random() < 0.5 ? '01(吃便當).mp3' : '出門前拿便當(甜蜜).mp3';
+  } else if (/(咖哩|カレー|晚餐|お腹空)/i.test(combined)) {
+    category = '日常';
+    file = '邀請吃咖哩飯.mp3';
+  } else if (/(晚安|おやすみ|睡|眠|ベッド)/i.test(combined)) {
+    category = '日常';
+    file = Math.random() < 0.5 ? '想要一起睡覺(害羞版).mp3' : '晚安.mp3';
+  } else if (/(累|辛苦|壓力|加班|お疲れ|休んで|よしよし|大丈夫)/i.test(combined)) {
+    const comfortPool = [
+      { category: '桌面互動', file: '療育安撫01剪前段.mp3' },
+      { category: '桌面互動', file: '療育安撫04.mp3' },
+      { category: '日常', file: '怎麼了+沒事吧+抱抱(對象).mp3' }
+    ];
+    const p = comfortPool[Math.floor(Math.random() * comfortPool.length)];
+    category = p.category;
+    file = p.file;
+  } else if (/(咖啡|コーヒー|Abcb|ラテ|茶|待辦|To-Do|スケジュール)/i.test(combined)) {
+    category = '桌面互動';
+    file = Math.random() < 0.5 ? '調情互動02.mp3' : '療育安撫06.mp3';
+  } else if (/(撒嬌|抱|ぎゅっ|甘え|寂し|手、繋)/i.test(combined)) {
+    category = Math.random() < 0.5 ? '桌面互動' : '感情';
+    file = category === '桌面互動' ? '害羞低語11.mp3' : '靠近你.mp3';
+  } else if (/(愛|喜歡|好き|ドキドキ|キス|親|告白)/i.test(combined)) {
+    category = '感情';
+    file = Math.random() < 0.5 ? '告白.mp3' : '心動的夜晚，無法控制自己愛的心意.mp3';
   } else {
     const pool = [
-      '情侶互動(溫柔).mp3',
-      '情侶互動(撒嬌).mp3',
-      '情侶互動(熱情).mp3',
-      '情侶互動.mp3',
-      '有心事嗎(溫柔).mp3',
-      '咖啡.mp3'
+      { category: '桌面互動', file: '調情互動01.mp3' },
+      { category: '桌面互動', file: '調情互動02.mp3' },
+      { category: '桌面互動', file: '調情互動03.mp3' },
+      { category: '桌面互動', file: '害羞低語11.mp3' },
+      { category: '桌面互動', file: '療育安撫06.mp3' },
+      { category: '感情', file: '靠近你.mp3' }
     ];
-    file = pool[Math.floor(Math.random() * pool.length)];
+    const picked = pool[Math.floor(Math.random() * pool.length)];
+    category = picked.category;
+    file = picked.file;
   }
   return {
-    category: '日常',
+    category,
     filename: file,
-    audioUrl: `assets/audio/${encodeURIComponent('日常')}/${encodeURIComponent(file)}`
+    audioUrl: `assets/audio/${encodeURIComponent(category)}/${encodeURIComponent(file)}`
   };
 }
 
-function recordStandaloneChatMemory(mem, userMessage, assistantReply, aiMemoryNote, affectionDelta = 3) {
+function recordStandaloneChatMemory(mem, userMessage, assistantReply, aiMemoryNote, affectionDelta = 3, skipFactExtraction = false) {
   if (!Array.isArray(mem.conversationLog)) mem.conversationLog = [];
   const nowStr = formatMemoryTimestamp();
   mem.conversationLog.push({ role: 'user', content: userMessage, timestamp: nowStr, affectionDelta });
@@ -721,23 +982,28 @@ function recordStandaloneChatMemory(mem, userMessage, assistantReply, aiMemoryNo
     mem.conversationLog = mem.conversationLog.slice(-60);
   }
   if (!Array.isArray(mem.memoryFacts)) mem.memoryFacts = [];
-  const candidateFacts = extractFactsFromUserMessage(userMessage);
-  if (aiMemoryNote && typeof aiMemoryNote === 'string' && aiMemoryNote.trim().length >= 2) {
-    candidateFacts.push({ category: 'ai_note', content: aiMemoryNote.trim() });
-  }
-  for (const cf of candidateFacts) {
-    const clean = String(cf.content || '').trim();
-    if (!clean) continue;
-    const exists = mem.memoryFacts.some(f => (f.content || f.text || f.fact) === clean);
-    if (!exists) {
-      mem.memoryFacts.unshift({
-        id: 'fact_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
-        content: clean,
-        text: clean,
-        fact: clean,
-        category: cf.category || 'auto',
-        createdAt: nowStr
-      });
+  if (!skipFactExtraction) {
+    const candidateFacts = extractFactsFromUserMessage(userMessage);
+    if (aiMemoryNote && typeof aiMemoryNote === 'string' && aiMemoryNote.trim().length >= 2) {
+      const cleanNote = aiMemoryNote.trim();
+      if (!detectAndExtractTodoCommand(cleanNote) && !/(?:待辦|代辦|提醒|開會|行程|鬧鐘)/i.test(cleanNote)) {
+        candidateFacts.push({ category: 'ai_note', content: cleanNote });
+      }
+    }
+    for (const cf of candidateFacts) {
+      const clean = String(cf.content || '').trim();
+      if (!clean) continue;
+      const exists = mem.memoryFacts.some(f => (f.content || f.text || f.fact) === clean);
+      if (!exists) {
+        mem.memoryFacts.unshift({
+          id: 'fact_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
+          content: clean,
+          text: clean,
+          fact: clean,
+          category: cf.category || 'auto',
+          createdAt: nowStr
+        });
+      }
     }
   }
   return saveOfflineMemoryState(mem);
@@ -758,48 +1024,64 @@ async function generateStandaloneReply(message, history, userName = 'リンシ')
   const leveledUp = lv.level > prevLevel;
 
   // 若使用者在永久記憶中設定了專屬稱呼（如：叫我老公、稱呼我為親愛的），自動套用該稱呼
-  let effectiveUserName = userName;
-  for (const f of (mem.memoryFacts || [])) {
-    const fText = String(f.content || f.text || f.fact || '');
-    const nickMatch = fText.match(/(?:叫我|稱呼我為?|稱呼：)\s*([^\s，。！!？?、]{1,12})/);
-    if (nickMatch && nickMatch[1]) {
-      effectiveUserName = nickMatch[1];
-      break;
-    }
-  }
+  const effectiveUserName = getEffectiveUserName(userName);
 
-  // 1. 自然語言設鬧鐘與待辦事項
-  if (/(鬧鐘|叫我起床|喚醒|Morning call)/i.test(text)) {
-    const m = text.match(/(\d{1,2})\s*[:：點時]\s*(\d{1,2})?/);
-    const hh = m ? String(Math.min(23, parseInt(m[1], 10))).padStart(2, '0') : '07';
-    const mm = (m && m[2]) ? String(Math.min(59, parseInt(m[2], 10))).padStart(2, '0') : '00';
-    const timeStr = `${hh}:${mm}`;
-    const newAlarm = { id: 'alarm_' + Date.now(), time: timeStr, label: '☀️ まどか專屬早晨喚醒', mode: 'sweet', enabled: true, sceneImage: 'assets/pov_photos/pov_13_morning_wakeup.jpg', lastTriggeredDate: '' };
+  // 1A. 自然語言設鬧鐘（例：「設鬧鐘明天7點叫我」「7點半叫我起床」）
+  const isAlarmCommand = /(鬧鐘|目覚まし|アラーム|叫我起床|叫醒我|喚醒|起こして|Morning\s*call)/i.test(text) ||
+    ((/起床|醒來|早起/.test(text)) && (/提醒|設|定|叫我|[0-9一二兩三四五六七八九十]+\s*(?:點|点|時|:|：)/.test(text)));
+
+  if (isAlarmCommand) {
+    const timeStr = extractTimeFromText(text) || '07:30';
+    let alarmMode = 'sweet';
+    if (/強烈|傲嬌|兇|大聲|ツンデレ/.test(text)) alarmMode = 'tsundere';
+    else if (/便當|お弁当/.test(text)) alarmMode = 'bento';
+    const newAlarm = { id: 'alarm_' + Date.now(), time: timeStr, label: `☀️ まどか專屬早晨喚醒 (${timeStr})`, mode: alarmMode, enabled: true, sceneImage: 'assets/pov_photos/pov_13_morning_wakeup.jpg', lastTriggeredDate: '' };
     st.alarms.push(newAlarm);
     saveOfflineAssistantState(st);
-    const reply = `わかったわ、${effectiveUserName}！⏰ ${timeStr} に目覚ましアラームをセットしたわよ（クラウド・オフライン独立モードでも私が起こしてあげるからね💖）\n（我知道了，${effectiveUserName}！已經幫你設定好 ${timeStr} 的早晨喚醒鬧鐘囉，就算電腦關機我也會在手機裡準時叫你起床喔💖）`;
-    mem = recordStandaloneChatMemory(mem, text, reply, null, affectionDelta);
+    assistantState = st;
+    if (typeof renderAssistantAllUI === 'function') renderAssistantAllUI();
+
+    const reply = `わかったわ、${effectiveUserName}！⏰ ${timeStr} に目覚ましアラームをセットしたわよ（スマホでも私が責任もって起こしてあげるからね💖）\n（我知道了，${effectiveUserName}！已經幫你設定好 ${timeStr} 的早晨喚醒鬧鐘囉，我會在手機裡準時叫你起床喔💖）`;
+    mem = recordStandaloneChatMemory(mem, text, reply, null, affectionDelta, true);
     return {
       reply,
       assistantAction: { type: 'alarm_added', alarm: newAlarm },
+      assistantState: st,
       sceneImage: 'assets/pov_photos/pov_13_morning_wakeup.jpg',
       voice: { category: '日常', filename: '起床(甜蜜).mp3', audioUrl: 'assets/audio/%E6%97%A5%E5%B8%B8/%E8%B5%B7%E5%BA%8A(%E7%94%9C%E8%9C%9C).mp3' },
       memory: mem,
       affectionDelta
     };
   }
-  if (/^(待辦|代辦|提醒我|記住要|To-?do)[:：\s]/i.test(text)) {
-    const title = text.replace(/^(待辦|代辦|提醒我|記住要|To-?do)[:：\s]*/i, '').trim() || '重要事項';
-    const newTodo = { id: 'todo_' + Date.now(), title, category: 'work', time: '', reminderTime: '', completed: false, sceneImage: 'assets/pov_photos/pov_21_office_ol.png' };
+
+  // 1B. 自然語言新增待辦事項（例：「加待辦 下午3點開會」「提醒我下午3點開會」「下午3點開會」「幫我記一下買咖啡」）
+  const parsedTodo = detectAndExtractTodoCommand(text);
+  if (parsedTodo) {
+    const newTodo = {
+      id: 'todo_' + Date.now() + '_' + Math.random().toString(36).slice(2, 5),
+      title: parsedTodo.title,
+      category: parsedTodo.category,
+      time: parsedTodo.time,
+      reminderTime: parsedTodo.reminderTime,
+      completed: false,
+      sceneImage: parsedTodo.sceneImage,
+      createdAt: new Date().toISOString()
+    };
     st.todos.unshift(newTodo);
     saveOfflineAssistantState(st);
-    const reply = `了解よ、${effectiveUserName}！📝 To-Doリストに「${title}」を追加しておいたわ。終わったら私に教えてね！\n（收到囉，${effectiveUserName}！已經幫你在待辦清單加上「${title}」了。完成之後要告訴我喔！）`;
-    mem = recordStandaloneChatMemory(mem, text, reply, null, affectionDelta);
+    assistantState = st;
+    if (typeof renderAssistantAllUI === 'function') renderAssistantAllUI();
+
+    const timeNoteJa = newTodo.reminderTime ? `⏰ ${newTodo.reminderTime} になったらちゃんと声をかけるわね！` : '終わったら私に教えてね、たっぷり褒めてあげるから！';
+    const timeNoteZh = newTodo.reminderTime ? `到了 ⏰ ${newTodo.reminderTime} 我會準時提醒你的！` : '完成之後記得告訴我，我會好好誇獎你的喔！';
+    const reply = `了解よ、${effectiveUserName}！📝「待辦事項提醒」リストに「${newTodo.title}」を追加しておいたわ。${timeNoteJa}\n（收到囉，${effectiveUserName}！已經幫你在「待辦事項提醒」列表加上「${newTodo.title}」了。${timeNoteZh}）`;
+    mem = recordStandaloneChatMemory(mem, text, reply, null, affectionDelta, true);
     return {
       reply,
       assistantAction: { type: 'todo_added', todo: newTodo },
-      sceneImage: 'assets/pov_photos/pov_21_office_ol.png',
-      voice: { category: '日常', filename: '咖啡.mp3', audioUrl: 'assets/audio/%E6%97%A5%E5%B8%B8/%E5%92%96%E5%95%A1.mp3' },
+      assistantState: st,
+      sceneImage: newTodo.sceneImage,
+      voice: { category: '桌面互動', filename: '療育安撫06.mp3', audioUrl: 'assets/audio/%E6%A1%8C%E9%9D%A2%E4%BA%92%E5%8B%95/%E7%99%82%E8%82%B2%E5%AE%89%E6%92%AB06.mp3' },
       memory: mem,
       affectionDelta
     };
@@ -868,7 +1150,8 @@ ${factsSummary}
    第 2 行：繁體中文翻譯，必須完整包在全角括號內，例如：（……）
 2. 若對話中適合換裝或對方要求換裝，請在第 2 行結尾加上標籤（擇一）：
    [COSTUME:uniform] [COSTUME:schoolpov] [COSTUME:cafe] [COSTUME:cafedate] [COSTUME:casual] [COSTUME:date] [COSTUME:bath] [COSTUME:night] [COSTUME:home] [COSTUME:beach] [COSTUME:cosplay] [COSTUME:sax] [COSTUME:yukata] [COSTUME:rock] [COSTUME:dress] [COSTUME:bunny] [COSTUME:work_ol] [COSTUME:guitar] [COSTUME:strawhat] [COSTUME:boyfriend_shirt] [COSTUME:maid_witch] [COSTUME:evening_gown]
-3. 若對方在這次對話中告訴了你新的個人喜好、生活近況、約定或希望你記住的事，請務必在第 2 行結尾加上 [MEMORY:簡短記憶摘要]，系統會自動寫入永久記憶日記。`;
+3. 若對方要求新增「待辦事項、行程提醒、幾點要做某事」（例如開會、買東西、運動、看醫生），請務必在第 2 行結尾加上 [TODO:HH:MM|待辦事項名稱]（若無指定時間則寫 [TODO:|待辦事項名稱]），系統會自動加入「待辦事項提醒」列表！切勿將待辦事項寫入 [MEMORY:...]。
+4. 若對方告訴了你屬於長久性的個人喜好、生日、稱呼設定或希望永遠記住的伴侶設定，才在第 2 行結尾加上 [MEMORY:簡短記憶摘要]。`;
 
     // 整理多輪歷史對話，避免重複塞入最後一筆 user 訊息並確保 user/model 角色交替
     const historyArr = Array.isArray(history) ? history.slice(-8) : [];
@@ -937,9 +1220,39 @@ ${factsSummary}
 
         let fullReply = candidateText.trim();
         let aiMemoryNote = null;
+        let aiTodoAction = null;
+
+        // 支援 AI 自動識別並寫入「待辦事項提醒」列表
+        const todoMatch = fullReply.match(/\[TODO:(.*?)\]/i);
+        if (todoMatch && todoMatch[1]) {
+          const rawTodoSpec = todoMatch[1].trim();
+          const parts = rawTodoSpec.split('|');
+          const tTime = (parts.length > 1 ? parts[0].trim() : extractTimeFromText(rawTodoSpec)) || extractTimeFromText(text) || '';
+          const tTitle = (parts.length > 1 ? parts.slice(1).join('|').trim() : rawTodoSpec) || text;
+          const tCat = inferTodoCategory(tTitle);
+          const newTodo = {
+            id: 'todo_' + Date.now() + '_' + Math.random().toString(36).slice(2, 5),
+            title: tTitle,
+            category: tCat,
+            time: tTime,
+            reminderTime: tTime,
+            completed: false,
+            sceneImage: getTodoSceneImage(tCat),
+            createdAt: new Date().toISOString()
+          };
+          st.todos.unshift(newTodo);
+          saveOfflineAssistantState(st);
+          assistantState = st;
+          if (typeof renderAssistantAllUI === 'function') renderAssistantAllUI();
+          aiTodoAction = { type: 'todo_added', todo: newTodo };
+          fullReply = fullReply.replace(/\[TODO:.*?\]/gi, '').trim();
+        }
+
         const memMatch = fullReply.match(/\[MEMORY:(.*?)\]/i);
         if (memMatch && memMatch[1]) {
-          aiMemoryNote = memMatch[1].trim();
+          if (!aiTodoAction) {
+            aiMemoryNote = memMatch[1].trim();
+          }
           fullReply = fullReply.replace(/\[MEMORY:.*?\]/gi, '').trim();
         }
         fullReply = fullReply.replace(/\[PHOTO:.*?\]/gi, '').trim();
@@ -959,11 +1272,14 @@ ${factsSummary}
           fullReply = `${line1}\n${line2}`;
         }
 
-        mem = recordStandaloneChatMemory(mem, text, fullReply, aiMemoryNote, affectionDelta);
+        mem = recordStandaloneChatMemory(mem, text, fullReply, aiMemoryNote, affectionDelta, Boolean(aiTodoAction));
         return {
           reply: fullReply,
           ttsText: (lines[0] || fullReply).replace(/\[COSTUME:.*?\]/gi, '').trim(),
           photo: matchedPhoto || null,
+          assistantAction: aiTodoAction || null,
+          assistantState: aiTodoAction ? st : undefined,
+          sceneImage: aiTodoAction ? aiTodoAction.todo.sceneImage : undefined,
           voice: pickContextualAuthenticVoice(text, fullReply, modeInfo),
           memory: mem,
           affectionDelta,
@@ -1076,7 +1392,7 @@ ${factsSummary}
     mem = recordStandaloneChatMemory(mem, text, reply, null, affectionDelta);
     return {
       reply,
-      voice: { category: '日常', filename: '情侶互動(溫柔).mp3', audioUrl: 'assets/audio/%E6%97%A5%E5%B8%B8/%E6%83%85%E4%BE%B6%E4%BA%92%E5%8B%95(%E6%BA%AB%E6%9F%94).mp3' },
+      voice: { category: '日常', filename: '想要一起睡覺(害羞版).mp3', audioUrl: 'assets/audio/%E6%97%A5%E5%B8%B8/%E6%83%B3%E8%A6%81%E4%B8%80%E8%B5%B7%E7%9D%A1%E8%A6%BA(%E5%AE%B3%E7%BE%9E%E7%89%88).mp3' },
       memory: mem,
       affectionDelta,
       leveledUp
@@ -1087,7 +1403,7 @@ ${factsSummary}
     mem = recordStandaloneChatMemory(mem, text, reply, null, affectionDelta);
     return {
       reply,
-      voice: { category: '日常', filename: '安慰.mp3', audioUrl: 'assets/audio/%E6%97%A5%E5%B8%B8/%E5%AE%89%E6%85%B0.mp3' },
+      voice: { category: '桌面互動', filename: '療育安撫01剪前段.mp3', audioUrl: 'assets/audio/%E6%A1%8C%E9%9D%A2%E4%BA%92%E5%8B%95/%E7%99%82%E8%82%B2%E5%AE%89%E6%92%AB01%E5%89%AA%E5%89%8D%E6%AE%B5.mp3' },
       memory: mem,
       affectionDelta,
       leveledUp
@@ -1098,7 +1414,7 @@ ${factsSummary}
     mem = recordStandaloneChatMemory(mem, text, reply, null, affectionDelta);
     return {
       reply,
-      voice: { category: '日常', filename: '情侶互動(撒嬌).mp3', audioUrl: 'assets/audio/%E6%97%A5%E5%B8%B8/%E6%83%85%E4%BE%B6%E4%BA%92%E5%8B%95(%E6%92%92%E5%AC%8C).mp3' },
+      voice: { category: '感情', filename: '告白.mp3', audioUrl: 'assets/audio/%E6%84%9F%E6%83%85/%E5%91%8A%E7%99%BD.mp3' },
       memory: mem,
       affectionDelta,
       leveledUp
@@ -1109,7 +1425,7 @@ ${factsSummary}
     mem = recordStandaloneChatMemory(mem, text, reply, null, affectionDelta);
     return {
       reply,
-      voice: { category: '日常', filename: '咖啡.mp3', audioUrl: 'assets/audio/%E6%97%A5%E5%B8%B8/%E5%92%96%E5%95%A1.mp3' },
+      voice: { category: '桌面互動', filename: '調情互動02.mp3', audioUrl: 'assets/audio/%E6%A1%8C%E9%9D%A2%E4%BA%92%E5%8B%95/%E8%AA%BF%E6%83%85%E4%BA%92%E5%8B%9502.mp3' },
       memory: mem,
       affectionDelta,
       leveledUp
@@ -1196,7 +1512,8 @@ const apiBridge = {
         body: JSON.stringify({ text })
       }, 4000);
     } catch (e) {
-      return { audioDataUrl: 'assets/audio/%E6%97%A5%E5%B8%B8/%E6%83%85%E4%BE%B6%E4%BA%92%E5%8B%95(%E6%BA%AB%E6%9F%94).mp3', source: 'offline_cache' };
+      const v = pickContextualAuthenticVoice(text, text, null);
+      return { audioDataUrl: v.audioUrl, source: 'offline_cache' };
     }
   },
   getAudioLibrary: async () => {
@@ -1214,12 +1531,8 @@ const apiBridge = {
       if (window.madokaAPI && window.madokaAPI.getPokeVoice) return await window.madokaAPI.getPokeVoice();
       return await apiFetchJson('/api/audio/poke');
     } catch (e) {
-      const list = [
-        { category: '日常', filename: '情侶互動(撒嬌).mp3', fullText: 'もう、リンシ……外でも私に甘えたいの？ふふ、いいわよ💖\n（真是的，リンシ……在外面也想對我撒嬌嗎？呵呵，可以喔💖）' },
-        { category: '日常', filename: '情侶互動(溫柔).mp3', fullText: 'なあに、リンシ？こうして触れ合うと、なんだか安心するわね。\n（怎麼啦，リンシ？像這樣碰觸著彼此，總覺得好安心呢。）' },
-        { category: '日常', filename: '情侶互動(熱情).mp3', fullText: 'ふふっ、くすぐったいわよ、リンシ！そんなに構ってほしいの？💖\n（呵呵，很癢耶，リンシ！有那麼想讓我陪你嗎？💖）' }
-      ];
-      return list[Math.floor(Math.random() * list.length)];
+      const item = STANDALONE_POKE_VOICES[Math.floor(Math.random() * STANDALONE_POKE_VOICES.length)];
+      return formatStandaloneVoiceItem(item);
     }
   },
   getCostumeVoice: async (costumeId) => {
@@ -1227,8 +1540,8 @@ const apiBridge = {
       if (window.madokaAPI && window.madokaAPI.getCostumeVoice) return await window.madokaAPI.getCostumeVoice(costumeId);
       return await apiFetchJson(`/api/audio/costume?id=${encodeURIComponent(costumeId)}`);
     } catch (e) {
-      const c = COSTUMES.find(x => x.id === costumeId) || COSTUMES[0];
-      return { category: '日常', filename: '情侶互動(溫柔).mp3', fullText: c.reaction };
+      const item = STANDALONE_COSTUME_VOICES[costumeId] || STANDALONE_COSTUME_VOICES.uniform;
+      return formatStandaloneVoiceItem(item);
     }
   },
   getActionVoice: async (actionId) => {
@@ -1236,7 +1549,13 @@ const apiBridge = {
       if (window.madokaAPI && window.madokaAPI.getActionVoice) return await window.madokaAPI.getActionVoice(actionId);
       return await apiFetchJson(`/api/audio/action?id=${encodeURIComponent(actionId)}`);
     } catch (e) {
-      return { category: '日常', filename: '情侶互動(溫柔).mp3', fullText: 'リンシ、いつでも私がそばにいるからね。\n（リンシ，無論何時我都在你身邊喔。）' };
+      const pool = STANDALONE_ACTION_VOICES[actionId];
+      if (Array.isArray(pool) && pool.length > 0) {
+        const picked = pool[Math.floor(Math.random() * pool.length)];
+        return formatStandaloneVoiceItem(picked);
+      }
+      const fallback = STANDALONE_POKE_VOICES[Math.floor(Math.random() * STANDALONE_POKE_VOICES.length)];
+      return formatStandaloneVoiceItem(fallback);
     }
   },
   getBedtimeVoice: async () => {
@@ -1244,7 +1563,8 @@ const apiBridge = {
       if (window.madokaAPI && window.madokaAPI.getBedtimeVoice) return await window.madokaAPI.getBedtimeVoice();
       return await apiFetchJson('/api/audio/bedtime');
     } catch (e) {
-      return { category: '日常', filename: '情侶互動(撒嬌).mp3', fullText: 'ねえ、リンシ……もう遅い時間よ？早く一緒に寝ましょ？\n（吶、リンシ……已經很晚了喔？快點一起睡覺好嗎？）' };
+      const item = STANDALONE_BEDTIME_VOICES[Math.floor(Math.random() * STANDALONE_BEDTIME_VOICES.length)];
+      return formatStandaloneVoiceItem(item);
     }
   },
   getWhatsupVoice: async () => {
@@ -1252,7 +1572,8 @@ const apiBridge = {
       if (window.madokaAPI && window.madokaAPI.getWhatsupVoice) return await window.madokaAPI.getWhatsupVoice();
       return await apiFetchJson('/api/audio/whatsup');
     } catch (e) {
-      return { category: '日常', filename: '有心事嗎(溫柔).mp3', fullText: 'どうしたの、リンシ？何か悩み事なら、私が聴くわよ。\n（怎麼了，リンシ？如果有什麼煩惱的話，我聽你說喔。）' };
+      const item = STANDALONE_WHATSUP_VOICES[Math.floor(Math.random() * STANDALONE_WHATSUP_VOICES.length)];
+      return formatStandaloneVoiceItem(item);
     }
   },
   minimizeWindow: () => {
@@ -1460,25 +1781,28 @@ const apiBridge = {
       return data;
     } catch (e) {
       const st = getOfflineAssistantState();
-      const effTime = payload.reminderTime || payload.time || '';
+      const rawTitle = payload.title || '待辦事項';
+      const effTime = payload.reminderTime || payload.time || extractTimeFromText(rawTitle) || '';
+      const cat = payload.category || inferTodoCategory(rawTitle);
       const todo = {
         id: 'todo_' + Date.now(),
-        title: payload.title || '待辦事項',
-        category: payload.category || 'work',
+        title: rawTitle,
+        category: cat,
         time: effTime,
         reminderTime: effTime,
         completed: false,
-        sceneImage: 'assets/pov_photos/pov_21_office_ol.png'
+        sceneImage: getTodoSceneImage(cat)
       };
       st.todos.unshift(todo);
       saveOfflineAssistantState(st);
+      const name = getEffectiveUserName();
       return {
         success: true,
         todo,
         state: st,
-        replyJa: `了解よ、リンシ！「${todo.title}」をスケジュール帳にメモしておいたわ📝`,
-        replyZh: `收到囉，リンシ！已經幫你把「${todo.title}」記在行程手冊裡了📝`,
-        ttsText: `了解よ、リンシ！「${todo.title}」をメモしておいたわ。`
+        replyJa: `了解よ、${name}！「${todo.title}」をスケジュール帳にメモしておいたわ📝`,
+        replyZh: `收到囉，${name}！已經幫你把「${todo.title}」記在行程手冊裡了📝`,
+        ttsText: `了解よ、${name}！「${todo.title}」をメモしておいたわ。`
       };
     }
   },
@@ -1506,8 +1830,9 @@ const apiBridge = {
         mem.affectionScore = (mem.affectionScore || 320) + 8;
         mem = saveOfflineMemoryState(mem);
       }
-      const ja = justCompleted ? `さすがリンシ！「${item ? item.title : ''}」を完了したわね。よく頑張りました、ご褒美にぎゅってしてあげる💖` : '';
-      const zh = justCompleted ? `不愧是リンシ！完成了「${item ? item.title : ''}」呢。太努力了，獎勵你一個大大的擁抱💖` : '';
+      const name = getEffectiveUserName();
+      const ja = justCompleted ? `さすが${name}！「${item ? item.title : ''}」を完了したわね。よく頑張りました、ご褒美にぎゅってしてあげる💖` : '';
+      const zh = justCompleted ? `不愧是${name}！完成了「${item ? item.title : ''}」呢。太努力了，獎勵你一個大大的擁抱💖` : '';
       return {
         success: true,
         todo: item,
@@ -1515,7 +1840,7 @@ const apiBridge = {
         replyJa: ja,
         replyZh: zh,
         praiseReply: justCompleted ? `${ja}\n（${zh}）` : '',
-        voice: justCompleted ? { category: '日常', filename: '情侶互動(熱情).mp3', audioUrl: 'assets/audio/%E6%97%A5%E5%B8%B8/%E6%83%85%E4%BE%B6%E4%BA%92%E5%8B%95(%E7%86%B1%E6%83%85).mp3' } : null,
+        voice: justCompleted ? { category: '日常', filename: '回來了(高興).mp3', audioUrl: 'assets/audio/%E6%97%A5%E5%B8%B8/%E5%9B%9E%E4%BE%86%E4%BA%86(%E9%AB%98%E8%88%88).mp3' } : null,
         state: st,
         memory: mem
       };
@@ -2232,21 +2557,32 @@ async function handleUserSend() {
       const rect = characterAvatar.getBoundingClientRect();
       createFloatingEffect(rect.left + rect.width / 2, rect.top + rect.height * 0.35, ['📸', '💖', '✨', '🥰']);
     } else if (aiRes && aiRes.sceneImage) {
+      const actionType = aiRes.assistantAction && aiRes.assistantAction.type;
+      const cardTitle = actionType === 'alarm_added'
+        ? '⏰ 專屬鬧鐘已設定'
+        : actionType === 'todo_added'
+        ? `📝 已加入待辦提醒：${(aiRes.assistantAction.todo && aiRes.assistantAction.todo.title) || ''}`
+        : '💞 まどか專屬情景插圖';
       showBubblePhoto({
-        title: (aiRes.assistantAction && aiRes.assistantAction.type === 'alarm_added') ? '⏰ 專屬鬧鐘已設定' : '💞 まどか專屬情景插圖',
+        title: cardTitle,
         imageUrl: aiRes.sceneImage,
         caption: fullReply
       });
     }
 
-    // 若觸發了自然語言助理排程或戀人模式切換，立即刷新助理狀態與徽章
+    // 若觸發了自然語言助理排程或戀人模式切換，立即刷新助理狀態與待辦事項提醒列表
     if (aiRes && aiRes.assistantAction) {
-      apiBridge.getAssistantState().then(st => {
-        if (st) {
-          assistantState = st;
-          renderAssistantAllUI();
-        }
-      }).catch(() => {});
+      if (aiRes.assistantState) {
+        assistantState = aiRes.assistantState;
+        renderAssistantAllUI();
+      } else {
+        apiBridge.getAssistantState().then(st => {
+          if (st) {
+            assistantState = st;
+            renderAssistantAllUI();
+          }
+        }).catch(() => {});
+      }
     }
 
     // 更新好感度與永久記憶狀態
@@ -2624,53 +2960,55 @@ function playSaxophonePerformance(audioUrl, fallbackUrl) {
   };
 }
 
-// 點擊立繪親暱彩蛋反應 (原聲優先)
+// 點擊立繪或「✨ 戳戳互動」親暱彩蛋反應 (原聲優先，並同步連動對話紀錄與好感度)
 async function handleCharacterPoke(e) {
   createFloatingEffect(e ? e.clientX : window.innerWidth / 2, e ? e.clientY : window.innerHeight / 2, ['❤️', '✨', '🎷', '☕', '🎵', '💖']);
 
-  if (currentConfig.voiceMode === 'mute') {
-    const pokes = [
-      "もう、リンシ……急に触らないでよ！\n（真是的，リンシ……別突然戳我啦！）",
-      "ふふっ、会いたかったの？素直じゃないんだから。\n（呵呵、想我了嗎？真是不坦率呢。）",
-      "な、何よ……私の顔に何かついてる？\n（怎、怎麼了……我臉上有東西嗎？）"
-    ];
-    showSpeech(pokes[Math.floor(Math.random() * pokes.length)]);
-    return;
-  }
+  apiBridge.recordActionMemory('poke').then(res => {
+    if (res && res.memory) {
+      memoryState = res.memory;
+      updateMemoryAndAffectionUI(memoryState);
+    }
+  }).catch(() => {});
 
-  if (currentConfig.voiceMode === 'authentic') {
-    try {
-      const voice = await apiBridge.getPokeVoice();
-      if (voice && (voice.audioUrl || voice.filename)) {
-        showSpeech(voice.fullText);
+  try {
+    const voice = await apiBridge.getPokeVoice();
+    if (voice && voice.fullText) {
+      showSpeech(voice.fullText);
+      chatHistory.push({ role: 'user', content: '（✨ 輕輕戳了戳まどか撒嬌互動）' });
+      chatHistory.push({ role: 'assistant', content: voice.fullText });
+      if (chatHistory.length > 12) chatHistory = chatHistory.slice(-12);
+
+      if (currentConfig.voiceMode !== 'mute' && (voice.audioUrl || voice.filename)) {
         const urlToPlay = voice.audioUrl || `assets/audio/${encodeURIComponent(voice.category)}/${encodeURIComponent(voice.filename)}`;
         playAudioWithLipSync(urlToPlay, voice.fallbackUrl);
-        return;
       }
-    } catch (err) {
-      console.warn('取得原聲觸摸語音失敗，轉用 TTS:', err);
+      return;
     }
+  } catch (err) {
+    console.warn('取得原聲觸摸語音失敗，轉用備用台詞:', err);
   }
 
-  // MiniMax TTS Fallback
-  const reaction = {
-    reply: `${currentConfig.userName || 'リンシ'}……ふふっ、本当に甘えん坊なんだから。\n（${currentConfig.userName || 'リンシ'}……呵呵、真是個愛撒嬌的傢伙。）`,
-    tts: `${currentConfig.userName || 'リンシ'}、ふふっ、本当に甘えん坊なんだから。`
-  };
-  showSpeech(reaction.reply);
-  apiBridge.generateTTS(reaction.tts).then(res => {
-    if (res && res.audioDataUrl) playAudioWithLipSync(res.audioDataUrl);
-  });
+  const name = getEffectiveUserName();
+  const fallbackReply = `${name}……ふふっ、本当に甘えん坊なんだから💖\n（${name}……呵呵、真是個愛撒嬌的傢伙💖）`;
+  showSpeech(fallbackReply);
+  if (currentConfig.voiceMode !== 'mute') {
+    apiBridge.generateTTS(fallbackReply).then(res => {
+      if (res && res.audioDataUrl) playAudioWithLipSync(res.audioDataUrl);
+    });
+  }
 }
 
-// 心動快捷動作處理 (Bento, Curry, Confess, Sleep, Selfie, Comfort, Sax, Poke)
+// 心動快捷動作處理 (完整連動全部 10 顆互動按鈕：assistant, couplecare, bento, curry, confess, sleep, selfie, comfort, sax, poke)
 async function handleQuickAction(actionId) {
   const rect = characterAvatar.getBoundingClientRect();
   const effX = rect.left + rect.width / 2;
   const effY = rect.top + rect.height * 0.4;
+  const name = getEffectiveUserName();
 
   const iconMap = {
     assistant: ['⏰', '📝', '✨'],
+    couplecare: ['💞', '🫂', '💖', '🥰'],
     couple_care: ['💞', '🫂', '💖', '🥰'],
     bento: ['🍱', '🥢', '✨'],
     curry: ['🍛', '🥄', '✨'],
@@ -2684,21 +3022,6 @@ async function handleQuickAction(actionId) {
   };
   createFloatingEffect(effX, effY, iconMap[actionId] || ['✨', '💖']);
 
-  if (actionId === 'assistant') {
-    openAssistantModalWithTab('todo');
-    return;
-  }
-
-  if (actionId === 'couple_care') {
-    openAssistantModalWithTab('couple');
-    return;
-  }
-
-  if (actionId === 'selfie') {
-    await triggerCoupleSelfie();
-    return;
-  }
-
   // 記錄快捷互動好感度
   apiBridge.recordActionMemory(actionId).then(res => {
     if (res && res.memory) {
@@ -2707,40 +3030,103 @@ async function handleQuickAction(actionId) {
     }
   }).catch(() => {});
 
+  // 1. ⏰ 助理鬧鐘：開啟待辦與鬧鐘面板，同時連動秘書應援對話與語音
+  if (actionId === 'assistant') {
+    const st = assistantState || getOfflineAssistantState();
+    const pendingCount = (st.todos || []).filter(t => !t.completed).length;
+    const reply = `さあ、${name}！今の未完了To-Doは ${pendingCount} 件よ📝 スケジュールも目覚ましアラームも、私が隣でバッチリ管理してあげるわね！\n（來吧，${name}！目前還有 ${pendingCount} 項待辦事項喔📝 無論是行程提醒還是晨間喚醒鬧鐘，我都會在身邊幫你完美打理好！）`;
+    showSpeech(reply);
+    chatHistory.push({ role: 'assistant', content: reply });
+    if (currentConfig.voiceMode !== 'mute') {
+      playAudioWithLipSync('assets/audio/%E6%A1%8C%E9%9D%A2%E4%BA%92%E5%8B%95/%E7%99%82%E8%82%B2%E5%AE%89%E6%92%AB06.mp3');
+    }
+    openAssistantModalWithTab('todo');
+    return;
+  }
+
+  // 2. 💞 戀人撒嬌：修正 data-action="couplecare" 對應，開啟戀人撒嬌面板並立即觸發當前戀人模式對話與語音
+  if (actionId === 'couplecare' || actionId === 'couple_care') {
+    const st = assistantState || getOfflineAssistantState();
+    const curMode = (st && st.currentModeInfo) || OFFLINE_COUPLE_MODES[0];
+    const reply = (curMode.introReply || `${curMode.quoteJa}\n（${curMode.quoteZh}）`).replace(/リンシ/g, name);
+    showSpeech(reply);
+    chatHistory.push({ role: 'assistant', content: reply });
+    if (currentConfig.voiceMode !== 'mute') {
+      const vCat = curMode.voiceCategory || '桌面互動';
+      const vFile = curMode.voiceFile || '害羞低語11.mp3';
+      playAudioWithLipSync(`assets/audio/${encodeURIComponent(vCat)}/${encodeURIComponent(vFile)}`);
+    }
+    openAssistantModalWithTab('couple');
+    return;
+  }
+
+  // 3. 📸 情侶自拍
+  if (actionId === 'selfie') {
+    await triggerCoupleSelfie();
+    return;
+  }
+
+  // 4. 🌙 撒嬌陪睡
   if (actionId === 'sleep') {
-    triggerBedtimeCoax(true);
+    await triggerBedtimeCoax(true);
     return;
   }
 
+  // 5. ✨ 戳戳互動
   if (actionId === 'poke') {
-    handleCharacterPoke();
+    await handleCharacterPoke();
     return;
   }
 
+  // 6. 🎷 吹薩克斯
   if (actionId === 'sax') {
-    // 若正在吹奏中再次點擊「🎷 吹薩克斯」，立即切換至下一張吹奏插圖並繼續演奏！
     if (isSaxPerforming) {
       currentSaxFrameIdx = (currentSaxFrameIdx + 1) % SAX_PERFORMANCE_FRAMES.length;
       setSaxFrame(SAX_PERFORMANCE_FRAMES[currentSaxFrameIdx], false);
       return;
     }
     applyCostume('sax', false);
-    const name = currentConfig.userName || 'リンシ';
-    showSpeech(`サックスの音色、聴きたいの？${name}のために、とっておきの曲を吹いてあげるね🎷\n（想聽薩克斯風的旋律嗎？為了${name}，我會為你吹奏特別挑選的曲子喔🎷）`);
+    const saxReply = `サックスの音色、聴きたいの？${name}のために、とっておきの曲を吹いてあげるね🎷\n（想聽薩克斯風的旋律嗎？為了${name}，我會為你吹奏特別挑選的曲子喔🎷）`;
+    showSpeech(saxReply);
+    chatHistory.push({ role: 'assistant', content: saxReply });
     playSaxophonePerformance('assets/audio/配樂/Kimagure Orange Road OST - Madoka no Teema - HQ Audio.mp3', `${SERVER_BASE}/audio/%E9%85%8D%E6%A8%82/Kimagure%20Orange%20Road%20OST%20-%20Madoka%20no%20Teema%20-%20HQ%20Audio.mp3`);
     return;
   }
 
-  if (currentConfig.voiceMode === 'mute') {
-    return;
-  }
-
+  // 7. 🍱 吃便當 (bento)、🍛 特製咖哩 (curry)、💌 心動告白 (confess)、🌸 療癒安撫 (comfort)
   try {
     const voice = await apiBridge.getActionVoice(actionId);
-    if (voice && (voice.audioUrl || voice.filename)) {
+    if (voice && voice.fullText) {
+      if (voice.costumeId) {
+        applyCostume(voice.costumeId, false);
+      }
       showSpeech(voice.fullText);
-      const urlToPlay = voice.audioUrl || `assets/audio/${encodeURIComponent(voice.category)}/${encodeURIComponent(voice.filename)}`;
-      playAudioWithLipSync(urlToPlay, voice.fallbackUrl);
+      if (voice.sceneImage) {
+        const titleMap = {
+          bento: '🍱 まどか手作愛心便當',
+          curry: '🍛 まどか特製慢燉咖哩',
+          confess: '💌 まどか的深情告白',
+          comfort: '🌸 まどか的溫柔擁抱與撫慰'
+        };
+        showBubblePhoto({
+          title: titleMap[actionId] || '💞 まどか專屬互動',
+          imageUrl: voice.sceneImage,
+          caption: voice.fullText
+        });
+      }
+      chatHistory.push({ role: 'user', content: `（點擊互動：${actionId}）` });
+      chatHistory.push({ role: 'assistant', content: voice.fullText });
+      if (chatHistory.length > 12) chatHistory = chatHistory.slice(-12);
+
+      let mem = getOfflineMemoryState();
+      mem = recordStandaloneChatMemory(mem, `（快捷互動：${actionId}）`, voice.fullText, null, 5, true);
+      memoryState = mem;
+      updateMemoryAndAffectionUI(memoryState);
+
+      if (currentConfig.voiceMode !== 'mute' && (voice.audioUrl || voice.filename)) {
+        const urlToPlay = voice.audioUrl || `assets/audio/${encodeURIComponent(voice.category)}/${encodeURIComponent(voice.filename)}`;
+        playAudioWithLipSync(urlToPlay, voice.fallbackUrl);
+      }
     }
   } catch (err) {
     console.error('播放快捷動作語音失敗:', err);

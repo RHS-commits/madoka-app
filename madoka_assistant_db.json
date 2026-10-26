@@ -1,5 +1,5 @@
 {
-  "coupleMode": "clingy",
+  "coupleMode": "healing",
   "alarms": [
     {
       "id": "alarm_morning_default",
@@ -22,44 +22,33 @@
       "lastTriggeredDate": ""
     }
   ],
-  "todos": [
-    {
-      "id": "todo_1792862249214_o5ke",
-      "title": "睡覺",
-      "category": "night",
-      "time": "10:30",
-      "reminderTime": "10:30",
-      "sceneImage": "assets/costumes/variant_night_blue.png",
-      "completed": false,
-      "createdAt": "2026-10-24T17:17:29.214Z"
-    },
-    {
-      "id": "todo_1792862189999_jg9w",
-      "title": "和まどか寶貝一起逛街",
-      "category": "date",
-      "time": "09:30",
-      "reminderTime": "09:30",
-      "sceneImage": "assets/costumes/variant_date_wheat.png",
-      "completed": false,
-      "createdAt": "2026-10-24T17:16:29.999Z"
-    },
-    {
-      "id": "todo_1792862164607_nqg1",
-      "title": "起床",
-      "category": "home",
-      "time": "06:30",
-      "reminderTime": "06:30",
-      "sceneImage": "assets/costumes/boyfriend_shirt.png",
-      "completed": false,
-      "createdAt": "2026-10-24T17:16:04.607Z"
-    }
-  ],
+  "todos": [],
   "partnerMoodLog": [
+    {
+      "moodId": "hug",
+      "label": "🤗 想要抱抱充電",
+      "timestamp": "2026-10-25T13:42:54.650Z"
+    },
+    {
+      "moodId": "stressed",
+      "label": "😔 壓力大求安慰",
+      "timestamp": "2026-10-25T13:42:46.679Z"
+    },
+    {
+      "moodId": "spoiled",
+      "label": "🥰 想聽妳撒嬌",
+      "timestamp": "2026-10-25T13:42:42.199Z"
+    },
+    {
+      "moodId": "spoiled",
+      "label": "🥰 想聽妳撒嬌",
+      "timestamp": "2026-10-25T13:41:46.137Z"
+    },
     {
       "moodId": "tired",
       "label": "😫 工作好累",
       "timestamp": "2026-10-24T16:15:08.460Z"
     }
   ],
-  "updatedAt": "2026-10-24T17:17:29.214Z"
+  "updatedAt": "2026-10-25T13:43:19.815Z"
 }

@@ -1,5 +1,5 @@
-// sw.js - 鮎川まどか 手機APP / PWA 雲端與離線獨立運作快取引擎 (v8)
-const CACHE_NAME = 'madoka-pwa-v8';
+// sw.js - 鮎川まどか 手機APP / PWA 雲端與離線獨立運作快取引擎 (v9)
+const CACHE_NAME = 'madoka-pwa-v9';
 
 const PRECACHE_ASSETS = [
   './',
@@ -37,14 +37,16 @@ const PRECACHE_ASSETS = [
   './assets/audio/%E6%97%A5%E5%B8%B8/%E8%B5%B7%E5%BA%8A(%E7%94%9C%E8%9C%9C).mp3',
   './assets/audio/%E6%97%A5%E5%B8%B8/%E8%B5%B7%E5%BA%8A(%E5%BC%B7%E7%83%88).mp3',
   './assets/audio/%E6%97%A5%E5%B8%B8/%E9%AE%8E%E5%B7%9D%E3%81%BE%E3%81%A9%E3%81%8B%E7%9A%84%E5%96%9A%E9%86%92.mp3',
-  './assets/audio/%E6%97%A5%E5%B8%B8/%E8%B5%B7%E5%BA%8A.mp3',
+  './assets/audio/%E6%97%A5%E5%B8%B8/01(%E5%90%83%E4%BE%BF%E7%95%B6).mp3',
+  './assets/audio/%E6%97%A5%E5%B8%B8/02%E7%B5%A6%E4%BE%BF%E7%95%B6.mp3',
   './assets/audio/%E6%97%A5%E5%B8%B8/%E5%87%BA%E9%96%80%E5%89%8D%E6%8B%BF%E4%BE%BF%E7%95%B6(%E7%94%9C%E8%9C%9C).mp3',
-  './assets/audio/%E6%97%A5%E5%B8%B8/%E6%9C%89%E5%BF%83%E4%BA%8B%E5%97%8E(%E6%BA%AB%E6%9F%94).mp3',
-  './assets/audio/%E6%97%A5%E5%B8%B8/%E5%AE%89%E6%85%B0.mp3',
-  './assets/audio/%E6%97%A5%E5%B8%B8/%E6%83%85%E4%BE%B6%E4%BA%92%E5%8B%95(%E6%92%92%E5%AC%8C).mp3',
-  './assets/audio/%E6%97%A5%E5%B8%B8/%E6%83%85%E4%BE%B6%E4%BA%92%E5%8B%95(%E6%BA%AB%E6%9F%94).mp3',
-  './assets/audio/%E6%97%A5%E5%B8%B8/%E6%83%85%E4%BE%B6%E4%BA%92%E5%8B%95(%E7%86%B1%E6%83%85).mp3',
-  './assets/audio/%E6%97%A5%E5%B8%B8/%E5%92%96%E5%95%A1.mp3'
+  './assets/audio/%E6%97%A5%E5%B8%B8/%E9%82%80%E8%AB%8B%E5%90%83%E5%92%96%E5%93%A9%E9%A3%AF.mp3',
+  './assets/audio/%E6%97%A5%E5%B8%B8/%E6%83%B3%E8%A6%81%E4%B8%80%E8%B5%B7%E7%9D%A1%E8%A6%BA(%E5%AE%B3%E7%BE%9E%E7%89%88).mp3',
+  './assets/audio/%E6%84%9F%E6%83%85/%E5%91%8A%E7%99%BD.mp3',
+  './assets/audio/%E6%84%9F%E6%83%85/%E9%9D%A0%E8%BF%91%E4%BD%A0.mp3',
+  './assets/audio/%E6%A1%8C%E9%9D%A2%E4%BA%92%E5%8B%95/%E7%99%82%E8%82%B2%E5%AE%89%E6%92%AB01%E5%89%AA%E5%89%8D%E6%AE%B5.mp3',
+  './assets/audio/%E6%A1%8C%E9%9D%A2%E4%BA%92%E5%8B%95/%E7%99%82%E8%82%B2%E5%AE%89%E6%92%AB06.mp3',
+  './assets/audio/%E6%A1%8C%E9%9D%A2%E4%BA%92%E5%8B%95/%E8%AA%BF%E6%83%85%E4%BA%92%E5%8B%9502.mp3'
 ];
 
 self.addEventListener('install', (event) => {
