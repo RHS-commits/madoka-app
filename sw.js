@@ -1,6 +1,7 @@
-// sw.js - 鮎川まどか 手機APP / PWA 雲端與離線獨立運作快取引擎 (v9)
-const CACHE_NAME = 'madoka-pwa-v9';
+// sw.js - 鮎川まどか 手機APP / PWA 雲端與離線獨立運作快取引擎 (v14)
+const CACHE_NAME = 'madoka-pwa-v14';
 
+// 核心 Shell 資源 (極速安裝，體積小於 1.5MB，秒級完成安裝，避免背景佔用手機頻寬)
 const PRECACHE_ASSETS = [
   './',
   './index.html',
@@ -12,41 +13,7 @@ const PRECACHE_ASSETS = [
   './assets/icon-192.png',
   './assets/icon-512.png',
   './assets/avatar_portrait.png',
-  './assets/costumes/uniform_idle.png',
-  './assets/costumes/home_idle.png',
-  './assets/costumes/night_idle.png',
-  './assets/costumes/work_ol_idle.png',
-  './assets/costumes/boyfriend_shirt_idle.png',
-  './assets/costumes/guitar_idle.png',
-  './assets/costumes/strawhat_idle.png',
-  './assets/costumes/maid_witch_idle.png',
-  './assets/costumes/evening_gown_idle.png',
-  './assets/costumes/variant_home_curtain.png',
-  './assets/costumes/variant_work_night.jpg',
-  './assets/costumes/variant_night_blue.png',
-  './assets/costumes/variant_night_sleep.png',
-  './assets/pov_photos/pov_01_tie.png',
-  './assets/pov_photos/pov_11_cafe_latte.png',
-  './assets/pov_photos/pov_12_morning_kitchen.png',
-  './assets/pov_photos/pov_13_morning_wakeup.jpg',
-  './assets/pov_photos/pov_16_chair_wink_study.png',
-  './assets/pov_photos/pov_18_golden_gown.png',
-  './assets/pov_photos/pov_20_boyfriend_shirt.png',
-  './assets/pov_photos/pov_21_office_ol.png',
-  './assets/pov_photos/pov_22_guitar_home.png',
-  './assets/audio/%E6%97%A5%E5%B8%B8/%E8%B5%B7%E5%BA%8A(%E7%94%9C%E8%9C%9C).mp3',
-  './assets/audio/%E6%97%A5%E5%B8%B8/%E8%B5%B7%E5%BA%8A(%E5%BC%B7%E7%83%88).mp3',
-  './assets/audio/%E6%97%A5%E5%B8%B8/%E9%AE%8E%E5%B7%9D%E3%81%BE%E3%81%A9%E3%81%8B%E7%9A%84%E5%96%9A%E9%86%92.mp3',
-  './assets/audio/%E6%97%A5%E5%B8%B8/01(%E5%90%83%E4%BE%BF%E7%95%B6).mp3',
-  './assets/audio/%E6%97%A5%E5%B8%B8/02%E7%B5%A6%E4%BE%BF%E7%95%B6.mp3',
-  './assets/audio/%E6%97%A5%E5%B8%B8/%E5%87%BA%E9%96%80%E5%89%8D%E6%8B%BF%E4%BE%BF%E7%95%B6(%E7%94%9C%E8%9C%9C).mp3',
-  './assets/audio/%E6%97%A5%E5%B8%B8/%E9%82%80%E8%AB%8B%E5%90%83%E5%92%96%E5%93%A9%E9%A3%AF.mp3',
-  './assets/audio/%E6%97%A5%E5%B8%B8/%E6%83%B3%E8%A6%81%E4%B8%80%E8%B5%B7%E7%9D%A1%E8%A6%BA(%E5%AE%B3%E7%BE%9E%E7%89%88).mp3',
-  './assets/audio/%E6%84%9F%E6%83%85/%E5%91%8A%E7%99%BD.mp3',
-  './assets/audio/%E6%84%9F%E6%83%85/%E9%9D%A0%E8%BF%91%E4%BD%A0.mp3',
-  './assets/audio/%E6%A1%8C%E9%9D%A2%E4%BA%92%E5%8B%95/%E7%99%82%E8%82%B2%E5%AE%89%E6%92%AB01%E5%89%AA%E5%89%8D%E6%AE%B5.mp3',
-  './assets/audio/%E6%A1%8C%E9%9D%A2%E4%BA%92%E5%8B%95/%E7%99%82%E8%82%B2%E5%AE%89%E6%92%AB06.mp3',
-  './assets/audio/%E6%A1%8C%E9%9D%A2%E4%BA%92%E5%8B%95/%E8%AA%BF%E6%83%85%E4%BA%92%E5%8B%9502.mp3'
+  './assets/costumes/uniform_idle.png'
 ];
 
 self.addEventListener('install', (event) => {
@@ -72,35 +39,23 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-function fetchWithFastTimeout(request, timeoutMs = 1500) {
-  return new Promise((resolve, reject) => {
-    const timer = setTimeout(() => reject(new Error('SW_TIMEOUT')), timeoutMs);
-    fetch(request)
-      .then((res) => {
-        clearTimeout(timer);
-        resolve(res);
-      })
-      .catch((err) => {
-        clearTimeout(timer);
-        reject(err);
-      });
-  });
-}
-
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
   const reqUrl = new URL(event.request.url);
 
-  // API 請求交由前端 apiFetchJson 快速逾時與離線獨立引擎處理
+  // 1. API 請求交由前端引擎處理
   if (reqUrl.pathname.startsWith('/api/')) {
     return;
   }
 
-  // 音訊檔 (.mp3/.wav)：支援手機瀏覽器 HTTP Range 串流播放（避免大型 OST 歌曲被 3.5 秒逾時中斷）
-  if (/\.(mp3|wav)$/i.test(reqUrl.pathname)) {
-    if (event.request.headers.get('range')) {
-      return;
-    }
+  // 2. 音訊檔案 (.mp3/.wav/assets/audio)：全面放行！交由瀏覽器原生 HTTP 206 Partial Content (Range) 串流
+  // 徹底避免 Service Worker 快取截斷大型 OST (5~8MB) 導致 Safari / Chrome 靜音或卡頓問題
+  if (/\.(mp3|wav|ogg|m4a)$/i.test(reqUrl.pathname) || reqUrl.pathname.includes('/assets/audio/')) {
+    return;
+  }
+
+  // 3. 圖片資源 (PNG/JPG/WEBP/GIF/SVG)：Cache-First + 動態背景漸進式快取，無逾時中斷，確保圖片順暢秒現
+  if (/\.(png|jpg|jpeg|webp|gif|svg)$/i.test(reqUrl.pathname)) {
     event.respondWith(
       caches.match(event.request, { ignoreSearch: true }).then((cached) => {
         if (cached) return cached;
@@ -110,32 +65,17 @@ self.addEventListener('fetch', (event) => {
             caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone)).catch(() => {});
           }
           return networkRes;
+        }).catch(() => {
+          return cached || new Response('', { status: 408, statusText: 'Image Fetch Error' });
         });
       })
     );
     return;
   }
 
-  // 圖片採用 Cache-First，確保電腦關機或離線時瞬間載入
-  if (/\.(png|jpg|jpeg|webp|gif)$/i.test(reqUrl.pathname)) {
-    event.respondWith(
-      caches.match(event.request, { ignoreSearch: true }).then((cached) => {
-        if (cached) return cached;
-        return fetchWithFastTimeout(event.request, 5000).then((networkRes) => {
-          if (networkRes && networkRes.status === 200) {
-            const clone = networkRes.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone)).catch(() => {});
-          }
-          return networkRes;
-        });
-      })
-    );
-    return;
-  }
-
-  // 核心網頁與腳本採用 1.5 秒快速逾時 Network-First，電腦關機時立即切換離線快取
+  // 4. 核心網頁、樣式與腳本 (HTML, CSS, JS, JSON)：Network-First，斷網時無縫切換本機離線快取
   event.respondWith(
-    fetchWithFastTimeout(event.request, 1500)
+    fetch(event.request)
       .then((networkRes) => {
         if (networkRes && networkRes.status === 200) {
           const clone = networkRes.clone();
