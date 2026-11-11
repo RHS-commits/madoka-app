@@ -4,19 +4,42 @@ const SERVER_BASE = (typeof window !== 'undefined' && window.location && window.
   ? window.location.origin 
   : 'http://127.0.0.1:3829';
 
-// 行動裝置音訊解鎖器 (iOS Safari / Android Chrome 需首次觸碰解鎖音訊)
+// 行動裝置專屬常駐音訊播放器與解鎖器 (解決 iOS Safari / Android Chrome 非同步 await 後無法播放或 AudioContext 靜音問題，且零延遲不卡頓)
+const SILENT_WAV_DATA_URI = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
+const sharedVoiceAudio = new Audio();
+sharedVoiceAudio.preload = 'auto';
+sharedVoiceAudio.playsInline = true;
+
+const sharedBgmAudio = new Audio();
+sharedBgmAudio.preload = 'auto';
+sharedBgmAudio.playsInline = true;
+
 let audioUnlocked = false;
 function unlockMobileAudio() {
   if (audioUnlocked) return;
   audioUnlocked = true;
-  try {
-    const silent = new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA');
-    silent.play().then(() => {
-      silent.pause();
-    }).catch(() => {});
-  } catch (e) {}
   window.removeEventListener('touchstart', unlockMobileAudio);
   window.removeEventListener('click', unlockMobileAudio);
+  try {
+    if (!sharedVoiceAudio.getAttribute('src')) {
+      sharedVoiceAudio.src = SILENT_WAV_DATA_URI;
+      sharedVoiceAudio.volume = 0.01;
+      sharedVoiceAudio.play().then(() => {
+        if (sharedVoiceAudio.src === SILENT_WAV_DATA_URI) {
+          sharedVoiceAudio.pause();
+        }
+      }).catch(() => {});
+    }
+    if (!sharedBgmAudio.getAttribute('src')) {
+      sharedBgmAudio.src = SILENT_WAV_DATA_URI;
+      sharedBgmAudio.volume = 0.01;
+      sharedBgmAudio.play().then(() => {
+        if (sharedBgmAudio.src === SILENT_WAV_DATA_URI) {
+          sharedBgmAudio.pause();
+        }
+      }).catch(() => {});
+    }
+  } catch (e) {}
 }
 window.addEventListener('touchstart', unlockMobileAudio, { passive: true, once: true });
 window.addEventListener('click', unlockMobileAudio, { passive: true, once: true });
@@ -2830,163 +2853,107 @@ function hideBubblePhoto() {
 }
 
 
-// 音訊路徑安全解析（同時適配 Electron file:// 與 Web http:// 伺服器）
+// 音訊路徑安全解析（同時適配 Electron file://、Web http:// 伺服器與 GitHub Pages 靜態雲端）
 function resolveAudioUrl(categoryOrUrl, filename) {
   if (filename) {
     return `assets/audio/${encodeURIComponent(categoryOrUrl)}/${encodeURIComponent(filename)}`;
   }
   if (!categoryOrUrl) return '';
   if (typeof categoryOrUrl === 'string') {
-    if (categoryOrUrl.startsWith('data:') || categoryOrUrl.startsWith('http:') || categoryOrUrl.startsWith('https:')) {
+    if (categoryOrUrl.startsWith('data:')) {
       return categoryOrUrl;
     }
     if (categoryOrUrl.startsWith('/audio/')) {
       return `assets/audio/${categoryOrUrl.substring('/audio/'.length)}`;
     }
+    if ((categoryOrUrl.startsWith('http:') || categoryOrUrl.startsWith('https:')) && IS_STATIC_CLOUD_HOST) {
+      const m = categoryOrUrl.match(/\/audio\/(.+)$/);
+      if (m && !categoryOrUrl.includes('/assets/audio/')) {
+        return `assets/audio/${m[1]}`;
+      }
+    }
+    if (categoryOrUrl.startsWith('http:') || categoryOrUrl.startsWith('https:')) {
+      return categoryOrUrl;
+    }
   }
   return categoryOrUrl;
 }
 
-// 音訊播放與真實嘴巴開合（Lip-Sync 口パク）同步驅動引擎 (支援音樂自動避讓 Auto-Ducking)
-function playAudioWithLipSync(audioUrl, fallbackUrl) {
-  if (currentVoiceAudio) {
-    currentVoiceAudio.pause();
-    currentVoiceAudio = null;
+function startLipSyncMouthTimer() {
+  if (lipSyncInterval) {
+    clearInterval(lipSyncInterval);
+    lipSyncInterval = null;
   }
+  speakingIndicator.classList.remove('hidden');
+  characterAvatar.classList.add('talking');
+  let step = 0;
+  const pattern = ['idle', 'half', 'open', 'open', 'half', 'idle', 'half', 'open', 'half'];
+  lipSyncInterval = setInterval(() => {
+    if (!currentVoiceAudio || currentVoiceAudio.paused || currentVoiceAudio.ended) {
+      return;
+    }
+    setMouthState(pattern[step % pattern.length]);
+    step++;
+  }, 85);
+}
+
+// 音訊播放與真實嘴巴開合（Lip-Sync 口パク）同步驅動引擎 (原生 HTML5 直出、零重載延遲、支援自動避讓 Auto-Ducking)
+function playAudioWithLipSync(audioUrl, fallbackUrl) {
   stopLipSync();
 
-  // BGM 自動降音避讓 (Auto-Ducking)
-  duckBgm(true);
-
   const primaryUrl = resolveAudioUrl(audioUrl);
-  currentVoiceAudio = new Audio(primaryUrl);
-  currentVoiceAudio.volume = currentConfig.volume !== undefined ? currentConfig.volume : 0.8;
+  if (!primaryUrl) {
+    duckBgm(false);
+    return;
+  }
+
+  duckBgm(true);
+  currentVoiceAudio = sharedVoiceAudio;
+
+  const vol = (currentConfig.volume !== undefined && !isNaN(currentConfig.volume) && Number(currentConfig.volume) > 0.05)
+    ? Number(currentConfig.volume)
+    : 0.85;
+  currentVoiceAudio.volume = Math.min(1, Math.max(0.15, vol));
+  currentVoiceAudio.muted = false;
 
   let triedVoiceFallback = false;
-  currentVoiceAudio.addEventListener('error', (e) => {
+  const guaranteedSafeVoiceUrl = 'assets/audio/%E6%A1%8C%E9%9D%A2%E4%BA%92%E5%8B%95/%E8%AA%BF%E6%83%85%E4%BA%92%E5%8B%9502.mp3';
+
+  currentVoiceAudio.onended = () => {
+    stopLipSync();
+    duckBgm(false);
+  };
+
+  currentVoiceAudio.onerror = () => {
     if (!triedVoiceFallback) {
       triedVoiceFallback = true;
-      let fb = fallbackUrl;
-      if (!fb && !IS_STATIC_CLOUD_HOST && typeof audioUrl === 'string' && !audioUrl.startsWith('data:')) {
-        const raw = audioUrl.replace(/^(\/audio\/|assets\/audio\/)/, '');
-        fb = `${SERVER_BASE}/audio/${raw}`;
-      }
+      const fb = (!IS_STATIC_CLOUD_HOST && fallbackUrl && !fallbackUrl.includes('github.io'))
+        ? fallbackUrl
+        : (primaryUrl !== guaranteedSafeVoiceUrl ? guaranteedSafeVoiceUrl : '');
       if (fb) {
-        console.warn(`[Voice Audio] Local play failed (${primaryUrl}), trying fallback: ${fb}`);
         currentVoiceAudio.src = fb;
-        currentVoiceAudio.load();
-        currentVoiceAudio.play().catch(err => {
-          console.warn('[Voice Audio] Fallback failed:', err);
+        currentVoiceAudio.play().then(() => {
+          startLipSyncMouthTimer();
+        }).catch(() => {
           stopLipSync();
           duckBgm(false);
         });
+        return;
       }
     }
+    stopLipSync();
+    duckBgm(false);
+  };
+
+  currentVoiceAudio.src = primaryUrl;
+  startLipSyncMouthTimer();
+
+  currentVoiceAudio.play().catch(err => {
+    if (err && err.name === 'AbortError') return;
+    console.warn('[Voice Audio] play() error:', err);
+    stopLipSync();
+    duckBgm(false);
   });
-
-  let analyserWorked = false;
-
-  try {
-    if (!audioContext) {
-      audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    }
-    if (audioContext.state === 'suspended') {
-      audioContext.resume();
-    }
-
-    const source = audioContext.createMediaElementSource(currentVoiceAudio);
-    const analyser = audioContext.createAnalyser();
-    analyser.fftSize = 256;
-    analyser.smoothingTimeConstant = 0.4;
-    source.connect(analyser);
-    analyser.connect(audioContext.destination);
-
-    const bufferLength = analyser.frequencyBinCount;
-    const dataArray = new Uint8Array(bufferLength);
-
-    speakingIndicator.classList.remove('hidden');
-    characterAvatar.classList.add('talking');
-
-    currentVoiceAudio.play().then(() => {
-      analyserWorked = true;
-      let lastState = 'idle';
-      let holdFrames = 0;
-
-      lipSyncInterval = setInterval(() => {
-        analyser.getByteFrequencyData(dataArray);
-        
-        let sum = 0;
-        const speechBins = Math.min(bufferLength, 24);
-        for (let i = 1; i < speechBins; i++) {
-          sum += dataArray[i];
-        }
-        const voiceEnergy = sum / (speechBins - 1);
-
-        let targetState = 'idle';
-        if (voiceEnergy > 26) {
-          targetState = 'open';
-        } else if (voiceEnergy > 9) {
-          targetState = 'half';
-        } else {
-          targetState = 'idle';
-        }
-
-        if (targetState !== lastState) {
-          holdFrames++;
-          if (holdFrames >= 2 || (targetState === 'open' && lastState === 'idle')) {
-            setMouthState(targetState);
-            lastState = targetState;
-            holdFrames = 0;
-          }
-        } else {
-          holdFrames = 0;
-        }
-      }, 40);
-    }).catch(err => {
-      console.warn('音訊播放限制:', err);
-      if (!triedVoiceFallback && fallbackUrl) {
-        triedVoiceFallback = true;
-        currentVoiceAudio.src = fallbackUrl;
-        currentVoiceAudio.load();
-        currentVoiceAudio.play().catch(e => duckBgm(false));
-      } else {
-        duckBgm(false);
-      }
-    });
-
-    currentVoiceAudio.onended = () => {
-      stopLipSync();
-      duckBgm(false);
-    };
-    currentVoiceAudio.onerror = () => {
-      stopLipSync();
-      duckBgm(false);
-    };
-  } catch (e) {
-    console.warn('AudioContext 串接未果，啟動備用口型計時器:', e);
-    speakingIndicator.classList.remove('hidden');
-    characterAvatar.classList.add('talking');
-    currentVoiceAudio.play().catch(e => {
-      console.warn(e);
-      duckBgm(false);
-    });
-
-    let step = 0;
-    const pattern = ['idle', 'half', 'open', 'open', 'half', 'idle', 'half', 'open', 'half'];
-    lipSyncInterval = setInterval(() => {
-      setMouthState(pattern[step % pattern.length]);
-      step++;
-    }, 90);
-
-    currentVoiceAudio.onended = () => {
-      stopLipSync();
-      duckBgm(false);
-    };
-    currentVoiceAudio.onerror = () => {
-      stopLipSync();
-      duckBgm(false);
-    };
-  }
 }
 
 function stopLipSync() {
@@ -3109,39 +3076,28 @@ function playSaxophonePerformance(audioUrl, fallbackUrl) {
   }
 
   const primaryUrl = resolveAudioUrl(audioUrl);
-  currentVoiceAudio = new Audio(primaryUrl);
-  currentVoiceAudio.volume = currentConfig.volume !== undefined ? currentConfig.volume : 0.8;
-
-  let triedFallback = false;
-  currentVoiceAudio.addEventListener('error', () => {
-    if (!triedFallback && fallbackUrl && !IS_STATIC_CLOUD_HOST) {
-      triedFallback = true;
-      currentVoiceAudio.src = fallbackUrl;
-      currentVoiceAudio.load();
-      currentVoiceAudio.play().catch(() => {
-        stopLipSync();
-        duckBgm(false);
-      });
-    }
-  });
-
-  currentVoiceAudio.play().catch(err => {
-    console.warn('[Sax Performance] Play error, trying fallback:', err);
-    if (!triedFallback && fallbackUrl && !IS_STATIC_CLOUD_HOST) {
-      triedFallback = true;
-      currentVoiceAudio.src = fallbackUrl;
-      currentVoiceAudio.load();
-      currentVoiceAudio.play().catch(() => {
-        stopLipSync();
-        duckBgm(false);
-      });
-    }
-  });
+  currentVoiceAudio = sharedVoiceAudio;
+  const vol = (currentConfig.volume !== undefined && !isNaN(currentConfig.volume) && Number(currentConfig.volume) > 0.05)
+    ? Number(currentConfig.volume)
+    : 0.85;
+  currentVoiceAudio.volume = Math.min(1, Math.max(0.15, vol));
+  currentVoiceAudio.muted = false;
 
   currentVoiceAudio.onended = () => {
     stopLipSync();
     duckBgm(false);
   };
+  currentVoiceAudio.onerror = () => {
+    stopLipSync();
+    duckBgm(false);
+  };
+
+  currentVoiceAudio.src = primaryUrl;
+  currentVoiceAudio.play().catch(err => {
+    if (err && err.name === 'AbortError') return;
+    stopLipSync();
+    duckBgm(false);
+  });
 }
 
 // 點擊立繪或「✨ 戳戳互動」親暱彩蛋反應 (原聲優先，並同步連動對話紀錄與好感度)
@@ -3444,68 +3400,25 @@ function playTrackByIndex(index) {
   const track = currentTrackList[index];
   updateNowPlayingInfo(track);
 
-  if (currentBgmAudio) {
-    currentBgmAudio.pause();
-    currentBgmAudio = null;
-  }
-
+  currentBgmAudio = sharedBgmAudio;
   const primaryUrl = `assets/audio/${encodeURIComponent(track.category)}/${encodeURIComponent(track.filename)}`;
-  const fallbackUrl = IS_STATIC_CLOUD_HOST
-    ? primaryUrl
-    : `${SERVER_BASE}/audio/${encodeURIComponent(track.category)}/${encodeURIComponent(track.filename)}`;
+  const bgmVol = (currentConfig.bgmVolume !== undefined && !isNaN(currentConfig.bgmVolume) && Number(currentConfig.bgmVolume) > 0.05)
+    ? Number(currentConfig.bgmVolume)
+    : 0.5;
+  currentBgmAudio.volume = Math.min(1, Math.max(0.1, bgmVol));
+  currentBgmAudio.muted = false;
 
-  currentBgmAudio = new Audio(primaryUrl);
-  currentBgmAudio.volume = currentConfig.bgmVolume !== undefined ? currentConfig.bgmVolume : 0.45;
-
-  let triedFallback = false;
-  currentBgmAudio.addEventListener('error', (e) => {
-    if (!triedFallback && !IS_STATIC_CLOUD_HOST) {
-      triedFallback = true;
-      console.warn(`[Jukebox] Primary path failed (${primaryUrl}), trying fallback: ${fallbackUrl}`);
-      currentBgmAudio.src = fallbackUrl;
-      currentBgmAudio.load();
-      currentBgmAudio.play().then(() => {
-        isMusicPlaying = true;
-        btnMusicPlay.textContent = '⏸';
-        vinylDisc.classList.remove('paused');
-        renderMusicTrackList();
-      }).catch(err => {
-        console.error('[Jukebox] Playback failed for both local and HTTP fallback:', err);
-        isMusicPlaying = false;
-        btnMusicPlay.textContent = '▶';
-        vinylDisc.classList.add('paused');
-      });
-    }
-  });
-
-  currentBgmAudio.play().then(() => {
-    isMusicPlaying = true;
-    btnMusicPlay.textContent = '⏸';
-    vinylDisc.classList.remove('paused');
+  currentBgmAudio.onerror = () => {
+    isMusicPlaying = false;
+    btnMusicPlay.textContent = '▶';
+    vinylDisc.classList.add('paused');
     renderMusicTrackList();
-  }).catch(err => {
-    console.warn('[Jukebox] Initial play() rejected, trying fallback:', err);
-    if (!triedFallback && !IS_STATIC_CLOUD_HOST) {
-      triedFallback = true;
-      currentBgmAudio.src = fallbackUrl;
-      currentBgmAudio.load();
-      currentBgmAudio.play().then(() => {
-        isMusicPlaying = true;
-        btnMusicPlay.textContent = '⏸';
-        vinylDisc.classList.remove('paused');
-        renderMusicTrackList();
-      }).catch(e => {
-        isMusicPlaying = false;
-        btnMusicPlay.textContent = '▶';
-        vinylDisc.classList.add('paused');
-      });
-    }
-  });
+  };
 
   currentBgmAudio.onended = () => {
     if (playbackMode === 'single') {
       currentBgmAudio.currentTime = 0;
-      currentBgmAudio.play();
+      currentBgmAudio.play().catch(() => {});
     } else if (playbackMode === 'shuffle') {
       const nextIndex = Math.floor(Math.random() * currentTrackList.length);
       playTrackByIndex(nextIndex);
@@ -3513,6 +3426,21 @@ function playTrackByIndex(index) {
       playNextTrack();
     }
   };
+
+  currentBgmAudio.src = primaryUrl;
+  isMusicPlaying = true;
+  btnMusicPlay.textContent = '⏸';
+  vinylDisc.classList.remove('paused');
+  renderMusicTrackList();
+
+  currentBgmAudio.play().catch(err => {
+    if (err && err.name === 'AbortError') return;
+    console.warn('[Jukebox] play() error:', err);
+    isMusicPlaying = false;
+    btnMusicPlay.textContent = '▶';
+    vinylDisc.classList.add('paused');
+    renderMusicTrackList();
+  });
 }
 
 function pauseBgm() {
@@ -3526,16 +3454,18 @@ function pauseBgm() {
 }
 
 function resumeBgm() {
-  if (currentBgmAudio) {
-    currentBgmAudio.play().then(() => {
-      isMusicPlaying = true;
-      btnMusicPlay.textContent = '⏸';
-      vinylDisc.classList.remove('paused');
-      renderMusicTrackList();
-    });
-  } else {
+  if (!currentBgmAudio || !currentBgmAudio.getAttribute('src') || currentBgmAudio.src === SILENT_WAV_DATA_URI || currentBgmAudio.error) {
     playTrackByIndex(currentTrackIndex || 0);
+    return;
   }
+  currentBgmAudio.play().then(() => {
+    isMusicPlaying = true;
+    btnMusicPlay.textContent = '⏸';
+    vinylDisc.classList.remove('paused');
+    renderMusicTrackList();
+  }).catch(() => {
+    playTrackByIndex(currentTrackIndex || 0);
+  });
 }
 
 function playNextTrack() {
