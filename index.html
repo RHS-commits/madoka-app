@@ -469,7 +469,7 @@
   <script>
     if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=11').then(reg => {
+        navigator.serviceWorker.register('sw.js').then(reg => {
           reg.update().catch(() => {});
         }).catch(err => {
           console.log('SW registration note:', err);
@@ -477,6 +477,6 @@
       });
     }
   </script>
-  <script src="renderer.js?v=11"></script>
+  <script src="renderer.js?v=12"></script>
 </body>
 </html>
