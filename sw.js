@@ -1,5 +1,5 @@
-// sw.js - 鮎川まどか 手機APP / PWA 雲端與離線獨立運作快取引擎 (v9)
-const CACHE_NAME = 'madoka-pwa-v9';
+// sw.js - 鮎川まどか 手機APP / PWA 雲端與離線獨立運作快取引擎 (v10)
+const CACHE_NAME = 'madoka-pwa-v10';
 
 const PRECACHE_ASSETS = [
   './',

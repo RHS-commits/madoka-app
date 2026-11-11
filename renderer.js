@@ -494,12 +494,59 @@ function formatMemoryTimestamp(d = new Date()) {
   return `${yyyy}-${mm}-${dd} ${hh}:${min}`;
 }
 
+function formatLocalDateYMD(d = new Date()) {
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`;
+}
+
+function parseLocalDateYMD(str) {
+  if (!str || typeof str !== 'string') return null;
+  const m = str.match(/(\d{4})-(\d{2})-(\d{2})/);
+  if (!m) return null;
+  return new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+}
+
+function calcCalendarDayDiff(fromYMD, toYMD) {
+  const d1 = parseLocalDateYMD(fromYMD);
+  const d2 = parseLocalDateYMD(toYMD);
+  if (!d1 || !d2) return 0;
+  return Math.round((d2.getTime() - d1.getTime()) / 86400000);
+}
+
+function shiftDateYMD(baseYMD, deltaDays) {
+  const d = parseLocalDateYMD(baseYMD) || new Date();
+  d.setDate(d.getDate() + deltaDays);
+  return formatLocalDateYMD(d);
+}
+
 function normalizeMemoryState(mem) {
   if (!mem || typeof mem !== 'object') mem = {};
+
+  // 嚴格保護既有累積點數與對話次數：與 localStorage 現有數值取最大值，絕不歸零或倒退
+  try {
+    const rawExisting = localStorage.getItem(OFFLINE_KEYS.MEMORY);
+    if (rawExisting) {
+      const existing = JSON.parse(rawExisting);
+      if (existing && typeof existing === 'object') {
+        mem.affectionScore = Math.max(Number(mem.affectionScore) || 0, Number(existing.affectionScore) || 0);
+        mem.totalChats = Math.max(Number(mem.totalChats) || 0, Number(existing.totalChats) || 0);
+        mem.daysTogether = Math.max(Number(mem.daysTogether) || 0, Number(existing.daysTogether) || 0);
+        mem.streakDays = Math.max(Number(mem.streakDays) || 0, Number(existing.streakDays) || 0);
+        if (!mem.firstMetDate && existing.firstMetDate) mem.firstMetDate = existing.firstMetDate;
+        if (!mem.lastActiveDate && existing.lastActiveDate) mem.lastActiveDate = existing.lastActiveDate;
+        if (!mem.streakMigratedV10 && existing.streakMigratedV10) mem.streakMigratedV10 = existing.streakMigratedV10;
+        if (!Array.isArray(mem.activeDates) && Array.isArray(existing.activeDates)) mem.activeDates = existing.activeDates;
+      }
+    }
+  } catch (e) {}
+
   mem.affectionScore = Math.max(0, Number(mem.affectionScore) || 320);
   mem.daysTogether = Math.max(1, Number(mem.daysTogether) || 7);
   mem.streakDays = Math.max(1, Number(mem.streakDays) || 3);
   mem.totalChats = Math.max(0, Number(mem.totalChats) || 28);
+
   if (!Array.isArray(mem.memoryFacts)) mem.memoryFacts = [];
   mem.memoryFacts = mem.memoryFacts
     .map((f, idx) => {
@@ -522,6 +569,82 @@ function normalizeMemoryState(mem) {
     })
     .filter(Boolean);
   if (!Array.isArray(mem.conversationLog)) mem.conversationLog = [];
+
+  const today = formatLocalDateYMD();
+  const dateSet = new Set(Array.isArray(mem.activeDates) ? mem.activeDates.filter(Boolean) : []);
+
+  // 從歷史記憶與對話紀錄收集所有曾互動過的日期 (YYYY-MM-DD)
+  for (const f of mem.memoryFacts) {
+    if (f && typeof f.createdAt === 'string') {
+      const m = f.createdAt.match(/(\d{4}-\d{2}-\d{2})/);
+      if (m) dateSet.add(m[1]);
+    }
+    if (f && typeof f.id === 'string') {
+      const idMatch = f.id.match(/^fact_(\d{13})/);
+      if (idMatch) {
+        const ts = Number(idMatch[1]);
+        if (ts > 1700000000000) dateSet.add(formatLocalDateYMD(new Date(ts)));
+      }
+    }
+  }
+  for (const c of mem.conversationLog) {
+    if (c && typeof c.timestamp === 'string') {
+      const m = c.timestamp.match(/(\d{4}-\d{2}-\d{2})/);
+      if (m) dateSet.add(m[1]);
+    }
+  }
+
+  // 一次性補償升級：針對先前版本未寫入 lastActiveDate 導致「相伴 7 天 / 連續 3 天」卡住的老玩家自動補齊真實天數（絕不影響點數與對話次數）
+  if (!mem.streakMigratedV10) {
+    const sortedHistDates = Array.from(dateSet).sort();
+    const earliestHistYMD = sortedHistDates.length > 0 ? sortedHistDates[0] : null;
+    const daysFromEarliest = earliestHistYMD ? Math.max(0, calcCalendarDayDiff(earliestHistYMD, today)) : 0;
+    const daysSinceMobileLaunch = (mem.totalChats > 28 || mem.affectionScore > 320)
+      ? Math.max(0, calcCalendarDayDiff('2026-10-24', today))
+      : 0;
+    const chatEstimatedDays = Math.min(35, Math.floor(Math.max(0, (mem.totalChats - 28)) / 30));
+    const missedDays = Math.max(daysFromEarliest, daysSinceMobileLaunch, chatEstimatedDays);
+
+    if (missedDays > 0 && mem.streakDays <= 3 && mem.daysTogether <= 7) {
+      mem.streakDays = Math.max(mem.streakDays, 3 + missedDays);
+      mem.daysTogether = Math.max(mem.daysTogether, 7 + missedDays, mem.streakDays);
+    } else if (missedDays > 0) {
+      mem.streakDays = Math.max(mem.streakDays, 3 + missedDays);
+      mem.daysTogether = Math.max(mem.daysTogether, 7 + missedDays, mem.streakDays);
+    }
+
+    if (!mem.firstMetDate) {
+      mem.firstMetDate = shiftDateYMD(today, -(mem.daysTogether - 1));
+    }
+    mem.lastActiveDate = today;
+    mem.streakMigratedV10 = true;
+  }
+
+  dateSet.add(today);
+  mem.activeDates = Array.from(dateSet).sort().slice(-180);
+
+  if (!mem.firstMetDate) {
+    mem.firstMetDate = shiftDateYMD(today, -(mem.daysTogether - 1));
+  }
+
+  // 每日跨日自動累加機制：當今日日期與上次活躍日期不同時，自動增加連續天數與相伴天數
+  if (mem.lastActiveDate && mem.lastActiveDate !== today) {
+    const dayDiff = calcCalendarDayDiff(mem.lastActiveDate, today);
+    if (dayDiff >= 1) {
+      mem.streakDays = (Number(mem.streakDays) || 1) + 1;
+      const fromFirstMet = calcCalendarDayDiff(mem.firstMetDate, today) + 1;
+      mem.daysTogether = Math.max((Number(mem.daysTogether) || 1) + dayDiff, fromFirstMet, mem.streakDays);
+      mem.affectionScore = (Number(mem.affectionScore) || 320) + 5; // 每日相伴獎勵 +5pt
+    }
+    mem.lastActiveDate = today;
+  } else if (!mem.lastActiveDate) {
+    mem.lastActiveDate = today;
+  }
+
+  // 確保相伴總天數始終 >= 初次相遇至今的日曆天數，且 >= 連續天數
+  const calendarDaysTogether = Math.max(1, calcCalendarDayDiff(mem.firstMetDate, today) + 1);
+  mem.daysTogether = Math.max(mem.daysTogether, calendarDaysTogether, mem.streakDays);
+
   mem.levelInfo = getAffectionLevelInfo(mem.affectionScore);
   return mem;
 }
@@ -3435,7 +3558,7 @@ function checkBedtimeReminder() {
   }
 }
 
-// 每 15 分鐘檢查一次時段造型，每 30 秒檢查一次晚間 11:00 後撒嬌陪睡提醒
+// 每 15 分鐘檢查一次時段造型，每 30 秒檢查一次晚間 11:00 後撒嬌陪睡提醒與跨日天數累加
 function setupIdleGreetings() {
   setInterval(() => {
     checkTimeBasedCostume(true);
@@ -3443,6 +3566,10 @@ function setupIdleGreetings() {
 
   setInterval(() => {
     checkBedtimeReminder();
+    if (memoryState && memoryState.lastActiveDate !== formatLocalDateYMD()) {
+      memoryState = getOfflineMemoryState();
+      updateMemoryAndAffectionUI(memoryState);
+    }
   }, 30 * 1000);
 
   // 啟動 3 秒後進行初次晚間陪睡檢查
