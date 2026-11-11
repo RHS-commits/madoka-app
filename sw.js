@@ -1,11 +1,11 @@
-// sw.js - 鮎川まどか 手機APP / PWA 雲端與離線獨立運作快取引擎 (v13)
-const CACHE_NAME = 'madoka-pwa-v13';
+// sw.js - 鮎川まどか 手機APP / PWA 雲端與離線獨立運作快取引擎 (v9)
+const CACHE_NAME = 'madoka-pwa-v9';
 
 const PRECACHE_ASSETS = [
   './',
   './index.html',
   './styles.css',
-  './renderer.js?v=13',
+  './renderer.js',
   './costumes.json',
   './cloud_bundle.json',
   './manifest.json',
@@ -33,7 +33,20 @@ const PRECACHE_ASSETS = [
   './assets/pov_photos/pov_18_golden_gown.png',
   './assets/pov_photos/pov_20_boyfriend_shirt.png',
   './assets/pov_photos/pov_21_office_ol.png',
-  './assets/pov_photos/pov_22_guitar_home.png'
+  './assets/pov_photos/pov_22_guitar_home.png',
+  './assets/audio/%E6%97%A5%E5%B8%B8/%E8%B5%B7%E5%BA%8A(%E7%94%9C%E8%9C%9C).mp3',
+  './assets/audio/%E6%97%A5%E5%B8%B8/%E8%B5%B7%E5%BA%8A(%E5%BC%B7%E7%83%88).mp3',
+  './assets/audio/%E6%97%A5%E5%B8%B8/%E9%AE%8E%E5%B7%9D%E3%81%BE%E3%81%A9%E3%81%8B%E7%9A%84%E5%96%9A%E9%86%92.mp3',
+  './assets/audio/%E6%97%A5%E5%B8%B8/01(%E5%90%83%E4%BE%BF%E7%95%B6).mp3',
+  './assets/audio/%E6%97%A5%E5%B8%B8/02%E7%B5%A6%E4%BE%BF%E7%95%B6.mp3',
+  './assets/audio/%E6%97%A5%E5%B8%B8/%E5%87%BA%E9%96%80%E5%89%8D%E6%8B%BF%E4%BE%BF%E7%95%B6(%E7%94%9C%E8%9C%9C).mp3',
+  './assets/audio/%E6%97%A5%E5%B8%B8/%E9%82%80%E8%AB%8B%E5%90%83%E5%92%96%E5%93%A9%E9%A3%AF.mp3',
+  './assets/audio/%E6%97%A5%E5%B8%B8/%E6%83%B3%E8%A6%81%E4%B8%80%E8%B5%B7%E7%9D%A1%E8%A6%BA(%E5%AE%B3%E7%BE%9E%E7%89%88).mp3',
+  './assets/audio/%E6%84%9F%E6%83%85/%E5%91%8A%E7%99%BD.mp3',
+  './assets/audio/%E6%84%9F%E6%83%85/%E9%9D%A0%E8%BF%91%E4%BD%A0.mp3',
+  './assets/audio/%E6%A1%8C%E9%9D%A2%E4%BA%92%E5%8B%95/%E7%99%82%E8%82%B2%E5%AE%89%E6%92%AB01%E5%89%AA%E5%89%8D%E6%AE%B5.mp3',
+  './assets/audio/%E6%A1%8C%E9%9D%A2%E4%BA%92%E5%8B%95/%E7%99%82%E8%82%B2%E5%AE%89%E6%92%AB06.mp3',
+  './assets/audio/%E6%A1%8C%E9%9D%A2%E4%BA%92%E5%8B%95/%E8%AA%BF%E6%83%85%E4%BA%92%E5%8B%9502.mp3'
 ];
 
 self.addEventListener('install', (event) => {
@@ -49,35 +62,17 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    (async () => {
-      // 保留舊版本快取中已下載過的圖片與 JSON 資料（徹底排除 .mp3 以免干擾手機原生 Range 音訊解碼）
-      try {
-        const newCache = await caches.open(CACHE_NAME);
-        const keys = await caches.keys();
-        for (const k of keys) {
-          if (k !== CACHE_NAME) {
-            const oldCache = await caches.open(k);
-            const requests = await oldCache.keys();
-            for (const req of requests) {
-              const pathname = new URL(req.url).pathname;
-              if (/\.(png|jpg|jpeg|webp|gif|json)$/i.test(pathname)) {
-                const existing = await newCache.match(req, { ignoreSearch: true });
-                if (!existing) {
-                  const res = await oldCache.match(req);
-                  if (res) await newCache.put(req, res);
-                }
-              }
-            }
-            await caches.delete(k);
-          }
-        }
-      } catch (e) {}
-      await self.clients.claim();
-    })()
+    caches.keys().then((keys) =>
+      Promise.all(
+        keys.map((k) => {
+          if (k !== CACHE_NAME) return caches.delete(k);
+        })
+      )
+    ).then(() => self.clients.claim())
   );
 });
 
-function fetchWithFastTimeout(request, timeoutMs = 1200) {
+function fetchWithFastTimeout(request, timeoutMs = 1500) {
   return new Promise((resolve, reject) => {
     const timer = setTimeout(() => reject(new Error('SW_TIMEOUT')), timeoutMs);
     fetch(request)
@@ -101,17 +96,15 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 音訊檔 (.mp3/.wav/.ogg/.m4a)：完全交由瀏覽器原生媒體引擎直接串流與原生 HTTP 快取 (HTTP 206 Range)，不經由 Service Worker 攔截
-  if (/\.(mp3|wav|ogg|m4a)$/i.test(reqUrl.pathname) || reqUrl.pathname.includes('/assets/audio/')) {
-    return;
-  }
-
-  // 圖片與靜態 JSON 資料庫 (costumes.json / cloud_bundle.json) 採用 Cache-First，0 延遲瞬間讀取不卡頓
-  if (/\.(png|jpg|jpeg|webp|gif|json)$/i.test(reqUrl.pathname)) {
+  // 音訊檔 (.mp3/.wav)：支援手機瀏覽器 HTTP Range 串流播放（避免大型 OST 歌曲被 3.5 秒逾時中斷）
+  if (/\.(mp3|wav)$/i.test(reqUrl.pathname)) {
+    if (event.request.headers.get('range')) {
+      return;
+    }
     event.respondWith(
       caches.match(event.request, { ignoreSearch: true }).then((cached) => {
         if (cached) return cached;
-        return fetchWithFastTimeout(event.request, 4000).then((networkRes) => {
+        return fetch(event.request).then((networkRes) => {
           if (networkRes && networkRes.status === 200) {
             const clone = networkRes.clone();
             caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone)).catch(() => {});
@@ -123,9 +116,26 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 核心網頁與腳本採用 1.2 秒極速逾時 Network-First，瞬間切換快取不卡頓
+  // 圖片採用 Cache-First，確保電腦關機或離線時瞬間載入
+  if (/\.(png|jpg|jpeg|webp|gif)$/i.test(reqUrl.pathname)) {
+    event.respondWith(
+      caches.match(event.request, { ignoreSearch: true }).then((cached) => {
+        if (cached) return cached;
+        return fetchWithFastTimeout(event.request, 5000).then((networkRes) => {
+          if (networkRes && networkRes.status === 200) {
+            const clone = networkRes.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone)).catch(() => {});
+          }
+          return networkRes;
+        });
+      })
+    );
+    return;
+  }
+
+  // 核心網頁與腳本採用 1.5 秒快速逾時 Network-First，電腦關機時立即切換離線快取
   event.respondWith(
-    fetchWithFastTimeout(event.request, 1200)
+    fetchWithFastTimeout(event.request, 1500)
       .then((networkRes) => {
         if (networkRes && networkRes.status === 200) {
           const clone = networkRes.clone();

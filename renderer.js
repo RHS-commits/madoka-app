@@ -4,42 +4,19 @@ const SERVER_BASE = (typeof window !== 'undefined' && window.location && window.
   ? window.location.origin 
   : 'http://127.0.0.1:3829';
 
-// 行動裝置專屬常駐音訊播放器與解鎖器 (解決 iOS Safari / Android Chrome 非同步 await 後無法播放或 AudioContext 靜音問題，且零延遲不卡頓)
-const SILENT_WAV_DATA_URI = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
-const sharedVoiceAudio = new Audio();
-sharedVoiceAudio.preload = 'auto';
-sharedVoiceAudio.playsInline = true;
-
-const sharedBgmAudio = new Audio();
-sharedBgmAudio.preload = 'auto';
-sharedBgmAudio.playsInline = true;
-
+// 行動裝置音訊解鎖器 (iOS Safari / Android Chrome 需首次觸碰解鎖音訊)
 let audioUnlocked = false;
 function unlockMobileAudio() {
   if (audioUnlocked) return;
   audioUnlocked = true;
+  try {
+    const silent = new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA');
+    silent.play().then(() => {
+      silent.pause();
+    }).catch(() => {});
+  } catch (e) {}
   window.removeEventListener('touchstart', unlockMobileAudio);
   window.removeEventListener('click', unlockMobileAudio);
-  try {
-    if (!sharedVoiceAudio.getAttribute('src')) {
-      sharedVoiceAudio.src = SILENT_WAV_DATA_URI;
-      sharedVoiceAudio.volume = 0.01;
-      sharedVoiceAudio.play().then(() => {
-        if (sharedVoiceAudio.src === SILENT_WAV_DATA_URI) {
-          sharedVoiceAudio.pause();
-        }
-      }).catch(() => {});
-    }
-    if (!sharedBgmAudio.getAttribute('src')) {
-      sharedBgmAudio.src = SILENT_WAV_DATA_URI;
-      sharedBgmAudio.volume = 0.01;
-      sharedBgmAudio.play().then(() => {
-        if (sharedBgmAudio.src === SILENT_WAV_DATA_URI) {
-          sharedBgmAudio.pause();
-        }
-      }).catch(() => {});
-    }
-  } catch (e) {}
 }
 window.addEventListener('touchstart', unlockMobileAudio, { passive: true, once: true });
 window.addEventListener('click', unlockMobileAudio, { passive: true, once: true });
@@ -403,7 +380,7 @@ const OFFLINE_MOOD_POOL = {
   spoiled: { label: '🥰 想聽妳撒嬌', costumeId: 'boyfriend_shirt', sceneImage: 'assets/pov_photos/pov_20_boyfriend_shirt.png', reply: 'もう……リンシったら、急にそんなこと言って。……ねえ、もっと近くに来て？今日はずっとリンシにくっついてたいの……だめ？💖\n（真是的……リンシ居然突然這樣要求。……吶，再靠過來一點好嗎？今天想要一整天都黏著リンシ……不行嗎？💖）', voiceCategory: '桌面互動', voiceFile: '害羞低語11.mp3' },
   clingy_ask: { label: '🥰 想聽妳撒嬌', costumeId: 'boyfriend_shirt', sceneImage: 'assets/pov_photos/pov_20_boyfriend_shirt.png', reply: 'もう……リンシったら、急にそんなこと言って。……ねえ、もっと近くに来て？今日はずっとリンシにくっついてたいの……だめ？💖\n（真是的……リンシ居然突然這樣要求。……吶，再靠過來一點好嗎？今天想要一整天都黏著リンシ……不行嗎？💖）', voiceCategory: '桌面互動', voiceFile: '害羞低語11.mp3' },
   hug: { label: '🤗 想要抱抱充電', costumeId: 'home', sceneImage: 'assets/pov_photos/pov_13_morning_wakeup.jpg', reply: 'おいで、リンシ……ぎゅーっ！ふふ、あなたの体温、すごく温かいわね。フル充電できるまで、このまま離してあげないわよ🫂💖\n（過來吧，リンシ……緊緊抱住！呵呵，你的體溫真的好溫暖呢。在幫你充滿電之前，我就這樣不放開你喔🫂💖）', voiceCategory: '感情', voiceFile: '靠近你.mp3' },
-  celebrate: { label: '🎉 今天有好消息', costumeId: 'evening_gown', sceneImage: 'assets/pov_photos/pov_18_golden_gown.png', reply: '本当！？すごいじゃない、リンシ！あなたが頑張ってたの、私が一番よく知ってるわ。今夜はお祝いに乾杯しましょ🥂✨\n（真的嗎！？太厲害了吧，リンシ！你一直以來的努力，我比誰都清楚喔。今晚我們舉杯好好慶祝吧🥂✨）', voiceCategory: '約會', voiceFile: '慶祝生日.mp3' }
+  celebrate: { label: '🎉 今天有好消息', costumeId: 'evening_gown', sceneImage: 'assets/pov_photos/pov_18_golden_gown.png', reply: '本当！？すごいじゃない、リンシ！あなたが頑張ってたの、私が一番よく知ってるわ。今夜はお祝いに乾杯しましょ🥂✨\n（真的嗎！？太厲害了吧，リンシ！你一直以來的努力，我比誰都清楚喔。今晚我們舉杯好好慶祝吧🥂✨）', voiceCategory: '日常', voiceFile: '回來了(高興).mp3' }
 };
 
 const AFFECTION_STAGES = [
@@ -1039,7 +1016,7 @@ const STANDALONE_BEDTIME_VOICES = [
 const STANDALONE_WHATSUP_VOICES = [
   { category: '日常', filename: '怎麼了+沒事吧+抱抱(對象).mp3', japanese: 'どうしたの、{name}？大丈夫？……おいで、ぎゅっと抱きしめてあげるから、何でも私に話してね。', chinese: '怎麼了，{name}？還好嗎？……過來吧，讓我緊緊抱住你，有什麼心事都可以跟我說喔。' },
   { category: '桌面互動', filename: '療育安撫01剪前段.mp3', japanese: 'お疲れ様、{name}。無理しすぎよ、あなた。ほら、少し肩の力抜いて、私の隣で休んでね。', chinese: '辛苦了，{name}。你太勉強自己了啦。來，稍微把肩膀放鬆，在我身邊休息一下吧。' },
-  { category: '日常', filename: '怎麼了+沒事吧(對象).mp3', japanese: 'えっ、大丈夫！？どこか痛いの、{name}？心配させないでよ……ほら、見せてごらんなさい。', chinese: '咦、沒事吧！？哪裡不舒服嗎，{name}？別讓我擔心嘛……來，快讓我看看。' }
+  { category: '日常', filename: '好痛(關心你).mp3', japanese: 'えっ、大丈夫！？どこか痛いの、{name}？心配させないでよ……ほら、見せてごらんなさい。', chinese: '咦、沒事吧！？哪裡不舒服嗎，{name}？別讓我擔心嘛……來，快讓我看看。' }
 ];
 
 function formatStandaloneVoiceItem(item, customName) {
@@ -1080,7 +1057,7 @@ function pickContextualAuthenticVoice(text, replyText, fallbackModeInfo) {
     file = '邀請吃咖哩飯.mp3';
   } else if (/(晚安|おやすみ|睡|眠|ベッド)/i.test(combined)) {
     category = '日常';
-    file = Math.random() < 0.5 ? '想要一起睡覺(害羞版).mp3' : '不要了啦~不過再一下下沒關係.mp3';
+    file = Math.random() < 0.5 ? '想要一起睡覺(害羞版).mp3' : '晚安.mp3';
   } else if (/(累|辛苦|壓力|加班|お疲れ|休んで|よしよし|大丈夫)/i.test(combined)) {
     const comfortPool = [
       { category: '桌面互動', file: '療育安撫01剪前段.mp3' },
@@ -1597,54 +1574,6 @@ ${factsSummary}
   };
 }
 
-// 內建完整 12 首配樂 (BGM) 與 28 首經典 OST 原聲曲庫（即使離線或快取輪替期間也能 0 秒載入並播放）
-const STANDALONE_AUDIO_LIBRARY = {
-  bgm: [
-    { id: "bgm_madoka_theme", title: "まどかのテーマ (Madoka's Theme)", subtitle: "高音質經典薩克斯風主題曲", filename: "Kimagure Orange Road OST - Madoka no Teema - HQ Audio.mp3", category: "配樂", mood: "浪漫 / 感性" },
-    { id: "bgm_itsumo_abcb", title: "いつも ABCBで (Itsumo ABCB de)", subtitle: "ABCB 咖啡館經典爵士氛圍", filename: "Kimagure Orange Road Soundtrack - Itsumo ABCB de.mp3", category: "配樂", mood: "悠閒 / 咖啡時光" },
-    { id: "bgm_akai_boushi", title: "赤い麦わら帽子 (Akai Mugiwara Boushi)", subtitle: "A-22 紅色草帽・夏日純情回憶", filename: "Kimagure Orange Road OST - A-22 Akai Mugiwara Boushi.mp3", category: "配樂", mood: "夏日 / 懷舊" },
-    { id: "bgm_honky_tonk", title: "Honky tonk hip hop to us", subtitle: "輕快活潑的復古節拍", filename: "Kimagure Orange Road Soundtrack - Honky tonk hip hop to us.mp3", category: "配樂", mood: "活力 / 愉悅" },
-    { id: "bgm_walk_struttin", title: "Walk Struttin", subtitle: "漫步街頭的摩登律動", filename: "Kimagure Orange Road OST  Walk Struttin.mp3", category: "配樂", mood: "城市漫步 / 潮流" },
-    { id: "bgm_aozora", title: "青空をぶっとばせ! (Aozora O Buttobase!)", subtitle: "青春放晴的爽朗疾馳感", filename: "Kimagure Orange Road OST  Aozora O Buttobase!.mp3", category: "配樂", mood: "陽光 / 爽快" },
-    { id: "bgm_wangan_dancing", title: "湾岸ダンシング・ウェイ (Wangan dancing way)", subtitle: "夜間沿海公路的 City Pop 兜風感", filename: "Kimagure Orange Road Soundtrack - Wangan dancing way.mp3", category: "配樂", mood: "深夜 / 兜風" },
-    { id: "bgm_kanashii_kake", title: "哀しい賭け (Kanashii Kake)", subtitle: "動人微酸的戀愛心緒", filename: "Kimagure Orange Road Soundtrack -Kanashii Kake.mp3", category: "配樂", mood: "深情 / 抒情" },
-    { id: "bgm_gimonfu", title: "疑問符はNAISHO (Gimonfu wa NAISHO)", subtitle: "少女心中不可言說的秘密", filename: "Kimagure Orange Road Soundtrack - Gimonfu wa NAISHO.mp3", category: "配樂", mood: "俏皮 / 秘密" },
-    { id: "bgm_aerobics", title: "エアロビクス・オン・RAP (Aerobics On RAP)", subtitle: "活力滿點的 80s 律動健身節奏", filename: "Kimagure Orange Road OST  Aerobics On RAP.mp3", category: "配樂", mood: "運動 / 動感" },
-    { id: "bgm_esp", title: "E S P Ni Mo T P O", subtitle: "超能力引發的奇妙日常", filename: "Kimagure Orange Road OST  E S P Ni Mo T P O.mp3", category: "配樂", mood: "逗趣 / 奇幻" },
-    { id: "bgm_warudakumi", title: "Exclamationの悪だくみ", subtitle: "A-27 惡作劇小算盤", filename: "Kimagure Orange Road きまぐれオレンジロード BGM A-27 Exclamationの悪だくみ.mp3", category: "配樂", mood: "小惡魔 / 趣味" }
-  ],
-  ost: [
-    { id: "ost_natsu_mirage_tsuru", title: "夏のミラージュ (Natsu no Mirage) - 鶴ひろみ", subtitle: "原作聲優 鶴ひろみ 親唱限定版！", filename: "歌う声優夏のミラージュ鶴ひろみ.mp3", category: "OST", artist: "鶴ひろみ (鮎川まどか)" },
-    { id: "ost_ride_on", title: "Ride On - 鶴ひろみ", subtitle: "鮎川圓個人代表抒情單曲", filename: "Ride On by Hiromi Tsuru (鶴 ひろみ), presented by Madoka from Kimagure Orange Road.mp3", category: "OST", artist: "鶴ひろみ" },
-    { id: "ost_dance_in_the_memories", title: "ダンス・イン・ザ・メモリーズ (Dance in the Memories)", subtitle: "神級經典片尾曲 ED", filename: "ダンスインザメモリーズ  Dance in the Memories.mp3", category: "OST", artist: "中原めいこ" },
-    { id: "ost_kagami_no_actress", title: "鏡の中のアクトレス (Kagami no Naka no Actress)", subtitle: "熱血人氣片頭曲 OP3", filename: "鏡の中のアクトレス  Kagami no Naka no Actress.mp3", category: "OST", artist: "中原めいこ" },
-    { id: "ost_natsu_no_mirage", title: "夏のミラージュ (Natsu no Mirage)", subtitle: "初代傳奇片頭曲 OP1", filename: "夏のミラージュ  Natsu no Mirage.mp3", category: "OST", artist: "和田加奈子" },
-    { id: "ost_orange_mystery", title: "オレンジ・ミステリー (Orange Mystery)", subtitle: "迷人都市節奏片頭曲 OP2", filename: "オレンジミステリー  Orange Mystery.mp3", category: "OST", artist: "長島秀幸" },
-    { id: "ost_night_of_summer_side", title: "NIGHT OF SUMMER SIDE", subtitle: "經典動感初夏夜節拍", filename: "Kimagure Orange Road OST NIGHT OF SUMMER SIDE.mp3", category: "OST", artist: "池田政典" },
-    { id: "ost_choose_me", title: "チューズ・ミー (Choose Me)", subtitle: "戀愛的心跳選擇", filename: "チューズミー  Choose Me.mp3", category: "OST", artist: "坪倉唯子" },
-    { id: "ost_furimuite_my_darling", title: "ふり向いてマイ・ダーリン (Furimuite My Darling)", subtitle: "甜美撒嬌片尾曲 ED1", filename: "ふり向いてマイダーリン  Furimuite My Darling.mp3", category: "OST", artist: "藤代美奈子" },
-    { id: "ost_yasashii_jealousy", title: "優しいジェラシー (Yasashii Jealousy)", subtitle: "溫柔的吃醋與愛意", filename: "優しいジェラシー  Yasashii Jealousy.mp3", category: "OST", artist: "富澤聖子" },
-    { id: "ost_ano_sora_wo_dakishimete", title: "あの空を抱きしめて (Ano Sora wo Dakishimete)", subtitle: "擁抱那一整片藍天", filename: "あの空を抱きしめて  Ano Sora wo Dakishimete.mp3", category: "OST", artist: "和田加奈子" },
-    { id: "ost_kaze_no_manazashi", title: "風のまなざし (Kaze no Manazashi)", subtitle: "微風中深情的凝視", filename: "風のまなざし  Kaze no Manazashi.mp3", category: "OST", artist: "和田加奈子" },
-    { id: "ost_whispering_misty_night", title: "Whispering Misty Night", subtitle: "薄霧夜色裡的呢喃", filename: "Whispering Misty Night.mp3", category: "OST", artist: "Kimagure Orange Road OST" },
-    { id: "ost_bayside_dancer", title: "BAYSIDE DANCER", subtitle: "海灣邊的節奏舞蹈", filename: "BAYSIDE DANCER.mp3", category: "OST", artist: "Kimagure Orange Road OST" },
-    { id: "ost_night_and_day", title: "NIGHT & DAY", subtitle: "日夜思念的旋律", filename: "NIGHT & DAY.mp3", category: "OST", artist: "Kimagure Orange Road OST" },
-    { id: "ost_breaking_heart", title: "ブレイキング・ハート (Breaking Heart)", subtitle: "動人搖滾抒情", filename: "ブレイキングハート  Breaking Heart.mp3", category: "OST", artist: "坪倉唯子" },
-    { id: "ost_kiken_na_triangle", title: "危険なトライアングル (Kiken na Triangle)", subtitle: "危險又迷人的三角戀曲", filename: "危険なトライアングル  Kiken na Triangle.mp3", category: "OST", artist: "池田政典" },
-    { id: "ost_again", title: "Again", subtitle: "重溫相遇的最初感動", filename: "Again.mp3", category: "OST", artist: "和田加奈子" },
-    { id: "ost_tokidoki_blue", title: "ときどきBlue (Tokidoki Blue)", subtitle: "偶爾微藍的少女心思", filename: "ときどきBlue  Tokidoki Blue.mp3", category: "OST", artist: "橘友賀" },
-    { id: "ost_mou_hitotsu_no_yesterday", title: "もうひとつのイエスタデイ (Mou Hitotsu no Yesterday)", subtitle: "另一個昨日的美好回想", filename: "もうひとつのイエスタデイ  Mou Hitotsu no Yesterday.mp3", category: "OST", artist: "和田加奈子" },
-    { id: "ost_kogane_iro", title: "こがね色の坂道 (Kogane-iro no Sakamichi)", subtitle: "夕陽斜照的金色坡道", filename: "こがね色の坂道  Kogane-iro no Sakamichi.mp3", category: "OST", artist: "和田加奈子" },
-    { id: "ost_aoi_boyfriend", title: "青いボーイフレンド (Aoi Boyfriend)", subtitle: "青澀純真的戀人模樣", filename: "青いボーイフレンド  Aoi Boyfriend.mp3", category: "OST", artist: "河内りえ" },
-    { id: "ost_girigiri_love", title: "ギリギリLOVE (Girigiri LOVE)", subtitle: "瀕臨邊界的熾烈情感", filename: "ギリギリLOVE  Girigiri LOVE.mp3", category: "OST", artist: "Kimagure Orange Road OST" },
-    { id: "ost_kono_mune_ni", title: "この胸にONE MORE TIME (Kono Mune ni ONE MORE TIME)", subtitle: "再愛一次的溫柔期盼", filename: "この胸にONE MORE TIME  Kono Mune ni ONE MORE TIME.mp3", category: "OST", artist: "Kimagure Orange Road OST" },
-    { id: "ost_heart_wo_nice_catch", title: "Heart Wo Nice Catch", subtitle: "精準捕獲愛的心跳", filename: "Kimagure Orange Road OST  Heart Wo Nice Catch.mp3", category: "OST", artist: "Kimagure Orange Road OST" },
-    { id: "ost_mogitate_no_koi", title: "もぎたての恋", subtitle: "鮮摘初戀的清甜滋味", filename: "もぎたての恋  河内りえ.mp3", category: "OST", artist: "河内りえ" },
-    { id: "ost_kimagure_tenshi", title: "きまぐれ天使", subtitle: "任性又溫柔的降臨", filename: "きまぐれ天使  河内りえ.mp3", category: "OST", artist: "河内りえ" },
-    { id: "ost_sarubia", title: "サルビアの花のように (Sarubia no hana no you ni)", subtitle: "如一串紅花般熱烈盛開", filename: "サルビアの花のように  Sarubia no hana no you ni.mp3", category: "OST", artist: "和田加奈子" }
-  ]
-};
-
 const apiBridge = {
   loadConfig: async () => {
     try {
@@ -1715,7 +1644,9 @@ const apiBridge = {
       if (window.madokaAPI && window.madokaAPI.getAudioLibrary) return await window.madokaAPI.getAudioLibrary();
       return await apiFetchJson('/api/audio/library');
     } catch (e) {
-      return STANDALONE_AUDIO_LIBRARY;
+      const bundle = await loadCloudBundle();
+      if (bundle && bundle.audioLibrary) return bundle.audioLibrary;
+      return { bgm: [], ost: [] };
     }
   },
   getPokeVoice: async () => {
@@ -2032,7 +1963,7 @@ const apiBridge = {
         replyJa: ja,
         replyZh: zh,
         praiseReply: justCompleted ? `${ja}\n（${zh}）` : '',
-        voice: justCompleted ? { category: '桌面互動', filename: '療育安撫06.mp3', audioUrl: 'assets/audio/%E6%A1%8C%E9%9D%A2%E4%BA%92%E5%8B%95/%E7%99%82%E8%82%B2%E5%AE%89%E6%92%AB06.mp3' } : null,
+        voice: justCompleted ? { category: '日常', filename: '回來了(高興).mp3', audioUrl: 'assets/audio/%E6%97%A5%E5%B8%B8/%E5%9B%9E%E4%BE%86%E4%BA%86(%E9%AB%98%E8%88%88).mp3' } : null,
         state: st,
         memory: mem
       };
@@ -2236,8 +2167,8 @@ SAX_PERFORMANCE_FRAMES.forEach(src => {
   preloadImg.src = src;
 });
 
-// 音樂留聲機狀態 (預設直接載入完整 12 首 BGM + 28 首 OST 曲庫)
-let audioLibrary = STANDALONE_AUDIO_LIBRARY;
+// 音樂留聲機狀態
+let audioLibrary = { bgm: [], ost: [] };
 let currentMusicTab = 'bgm';
 let currentTrackList = [];
 let currentTrackIndex = 0;
@@ -2332,22 +2263,34 @@ const cfgBgmVol = document.getElementById('cfg-bgm-vol');
 const bgmVolValue = document.getElementById('bgm-vol-value');
 const cfgBedtimeReminder = document.getElementById('cfg-bedtime-reminder');
 
-// 初始化 (0ms 瞬間掛載互動事件與預設曲庫/記憶，消除啟動等待與卡頓)
+// 初始化
 window.addEventListener('DOMContentLoaded', async () => {
-  // 1. 立即同步載入本機快取設定、曲庫、記憶與助理狀態，0 延遲渲染畫面並綁定所有按鈕事件
   try {
-    const cachedCfg = localStorage.getItem(OFFLINE_KEYS.CONFIG);
-    if (cachedCfg) {
-      currentConfig = { ...currentConfig, ...JSON.parse(cachedCfg) };
+    const loadedCostumes = await apiBridge.loadCostumes();
+    if (loadedCostumes && loadedCostumes.length > 0) {
+      COSTUMES = loadedCostumes;
     }
-    applyConfigToUI(currentConfig);
-  } catch (e) {}
-
-  audioLibrary = STANDALONE_AUDIO_LIBRARY;
-  setupMusicJukeboxUI();
+  } catch (e) {
+    console.warn('載入造型清單失敗:', e);
+  }
 
   try {
-    memoryState = getOfflineMemoryState();
+    currentConfig = await apiBridge.loadConfig();
+    applyConfigToUI(currentConfig);
+  } catch (err) {
+    console.error('載入設定失敗:', err);
+  }
+
+  try {
+    audioLibrary = await apiBridge.getAudioLibrary();
+    setupMusicJukeboxUI();
+  } catch (err) {
+    console.warn('載入音訊曲庫失敗:', err);
+  }
+
+  // 載入永久記憶資料庫與情侶 POV 相簿/PixAI 指令集
+  try {
+    memoryState = await apiBridge.getMemoryState();
     updateMemoryAndAffectionUI(memoryState);
     if (memoryState && Array.isArray(memoryState.conversationLog) && memoryState.conversationLog.length > 0) {
       chatHistory = memoryState.conversationLog.slice(-10).map(item => ({
@@ -2355,75 +2298,48 @@ window.addEventListener('DOMContentLoaded', async () => {
         content: item.content
       }));
     }
-  } catch (e) {}
+  } catch (err) {
+    console.warn('載入永久記憶狀態失敗:', err);
+  }
 
   try {
-    assistantState = getOfflineAssistantState();
+    povData = await apiBridge.getPovData();
+    renderPovGalleryAndPrompts();
+  } catch (err) {
+    console.warn('載入情侶 POV 相簿與 PixAI 資料失敗:', err);
+  }
+
+  try {
+    assistantState = await apiBridge.getAssistantState();
     renderAssistantAllUI();
-  } catch (e) {}
+  } catch (err) {
+    console.warn('載入隨身助理與戀人狀態失敗:', err);
+  }
 
   setupEventListeners();
   setupMemoryAndPovListeners();
   setupAssistantAndCareListeners();
   setupWardrobeUI();
   setupIdleGreetings();
-  checkTimeBasedCostume(false);
-
-  // 2. 背景平行載入完整 22 套造型清單與 24 張 POV 相簿（不阻塞任何按鈕或音樂播放）
-  Promise.allSettled([
-    apiBridge.loadCostumes().then(loadedCostumes => {
-      if (loadedCostumes && loadedCostumes.length > 0) {
-        COSTUMES = loadedCostumes;
-        setupWardrobeUI();
-        applyCostume(currentConfig.currentCostume || 'uniform', false);
-      }
-    }),
-    apiBridge.loadConfig().then(cfg => {
-      if (cfg) {
-        currentConfig = cfg;
-        applyConfigToUI(currentConfig);
-      }
-    }),
-    apiBridge.getAudioLibrary().then(lib => {
-      if (lib && ((lib.bgm && lib.bgm.length > 0) || (lib.ost && lib.ost.length > 0))) {
-        audioLibrary = lib;
-        if (!isMusicPlaying) setupMusicJukeboxUI();
-      }
-    }),
-    apiBridge.getPovData().then(data => {
-      if (data) {
-        povData = data;
-        renderPovGalleryAndPrompts();
-      }
-    })
-  ]);
+  checkTimeBasedCostume(false); // 初次啟動時段造型檢查
 });
 
 function applyConfigToUI(cfg) {
-  if (cfg.volume === undefined || isNaN(cfg.volume) || Number(cfg.volume) <= 0.05) {
-    cfg.volume = 0.85;
-  }
-  if (cfg.bgmVolume === undefined || isNaN(cfg.bgmVolume) || Number(cfg.bgmVolume) <= 0.05) {
-    cfg.bgmVolume = 0.5;
-  }
-  if (!cfg.voiceMode) {
-    cfg.voiceMode = 'authentic';
-  }
   cfgUserName.value = cfg.userName || 'リンシ';
   if (cfgVoiceMode) cfgVoiceMode.value = cfg.voiceMode || 'authentic';
   cfgGeminiKey.value = cfg.geminiApiKey || '';
   cfgMinimaxKey.value = cfg.minimaxApiKey || '';
   cfgMinimaxVoice.value = cfg.minimaxVoiceId || '';
   cfgLang.value = cfg.languageMode || 'ja-with-zh';
-  cfgVol.value = cfg.volume;
+  cfgVol.value = cfg.volume !== undefined ? cfg.volume : 0.8;
   volValue.textContent = `${Math.round(cfgVol.value * 100)}%`;
 
   if (cfgBgmVol) {
-    cfgBgmVol.value = cfg.bgmVolume;
+    cfgBgmVol.value = cfg.bgmVolume !== undefined ? cfg.bgmVolume : 0.45;
     bgmVolValue.textContent = `${Math.round(cfgBgmVol.value * 100)}%`;
   }
   if (musicVol) {
-    musicVol.value = cfg.bgmVolume;
+    musicVol.value = cfg.bgmVolume !== undefined ? cfg.bgmVolume : 0.45;
     musicVolVal.textContent = `${Math.round(musicVol.value * 100)}%`;
   }
 
@@ -2853,107 +2769,163 @@ function hideBubblePhoto() {
 }
 
 
-// 音訊路徑安全解析（同時適配 Electron file://、Web http:// 伺服器與 GitHub Pages 靜態雲端）
+// 音訊路徑安全解析（同時適配 Electron file:// 與 Web http:// 伺服器）
 function resolveAudioUrl(categoryOrUrl, filename) {
   if (filename) {
     return `assets/audio/${encodeURIComponent(categoryOrUrl)}/${encodeURIComponent(filename)}`;
   }
   if (!categoryOrUrl) return '';
   if (typeof categoryOrUrl === 'string') {
-    if (categoryOrUrl.startsWith('data:')) {
+    if (categoryOrUrl.startsWith('data:') || categoryOrUrl.startsWith('http:') || categoryOrUrl.startsWith('https:')) {
       return categoryOrUrl;
     }
     if (categoryOrUrl.startsWith('/audio/')) {
       return `assets/audio/${categoryOrUrl.substring('/audio/'.length)}`;
     }
-    if ((categoryOrUrl.startsWith('http:') || categoryOrUrl.startsWith('https:')) && IS_STATIC_CLOUD_HOST) {
-      const m = categoryOrUrl.match(/\/audio\/(.+)$/);
-      if (m && !categoryOrUrl.includes('/assets/audio/')) {
-        return `assets/audio/${m[1]}`;
-      }
-    }
-    if (categoryOrUrl.startsWith('http:') || categoryOrUrl.startsWith('https:')) {
-      return categoryOrUrl;
-    }
   }
   return categoryOrUrl;
 }
 
-function startLipSyncMouthTimer() {
-  if (lipSyncInterval) {
-    clearInterval(lipSyncInterval);
-    lipSyncInterval = null;
-  }
-  speakingIndicator.classList.remove('hidden');
-  characterAvatar.classList.add('talking');
-  let step = 0;
-  const pattern = ['idle', 'half', 'open', 'open', 'half', 'idle', 'half', 'open', 'half'];
-  lipSyncInterval = setInterval(() => {
-    if (!currentVoiceAudio || currentVoiceAudio.paused || currentVoiceAudio.ended) {
-      return;
-    }
-    setMouthState(pattern[step % pattern.length]);
-    step++;
-  }, 85);
-}
-
-// 音訊播放與真實嘴巴開合（Lip-Sync 口パク）同步驅動引擎 (原生 HTML5 直出、零重載延遲、支援自動避讓 Auto-Ducking)
+// 音訊播放與真實嘴巴開合（Lip-Sync 口パク）同步驅動引擎 (支援音樂自動避讓 Auto-Ducking)
 function playAudioWithLipSync(audioUrl, fallbackUrl) {
+  if (currentVoiceAudio) {
+    currentVoiceAudio.pause();
+    currentVoiceAudio = null;
+  }
   stopLipSync();
 
-  const primaryUrl = resolveAudioUrl(audioUrl);
-  if (!primaryUrl) {
-    duckBgm(false);
-    return;
-  }
-
+  // BGM 自動降音避讓 (Auto-Ducking)
   duckBgm(true);
-  currentVoiceAudio = sharedVoiceAudio;
 
-  const vol = (currentConfig.volume !== undefined && !isNaN(currentConfig.volume) && Number(currentConfig.volume) > 0.05)
-    ? Number(currentConfig.volume)
-    : 0.85;
-  currentVoiceAudio.volume = Math.min(1, Math.max(0.15, vol));
-  currentVoiceAudio.muted = false;
+  const primaryUrl = resolveAudioUrl(audioUrl);
+  currentVoiceAudio = new Audio(primaryUrl);
+  currentVoiceAudio.volume = currentConfig.volume !== undefined ? currentConfig.volume : 0.8;
 
   let triedVoiceFallback = false;
-  const guaranteedSafeVoiceUrl = 'assets/audio/%E6%A1%8C%E9%9D%A2%E4%BA%92%E5%8B%95/%E8%AA%BF%E6%83%85%E4%BA%92%E5%8B%9502.mp3';
-
-  currentVoiceAudio.onended = () => {
-    stopLipSync();
-    duckBgm(false);
-  };
-
-  currentVoiceAudio.onerror = () => {
+  currentVoiceAudio.addEventListener('error', (e) => {
     if (!triedVoiceFallback) {
       triedVoiceFallback = true;
-      const fb = (!IS_STATIC_CLOUD_HOST && fallbackUrl && !fallbackUrl.includes('github.io'))
-        ? fallbackUrl
-        : (primaryUrl !== guaranteedSafeVoiceUrl ? guaranteedSafeVoiceUrl : '');
+      let fb = fallbackUrl;
+      if (!fb && typeof audioUrl === 'string' && !audioUrl.startsWith('data:')) {
+        const raw = audioUrl.replace(/^(\/audio\/|assets\/audio\/)/, '');
+        fb = `${SERVER_BASE}/audio/${raw}`;
+      }
       if (fb) {
+        console.warn(`[Voice Audio] Local play failed (${primaryUrl}), trying fallback: ${fb}`);
         currentVoiceAudio.src = fb;
-        currentVoiceAudio.play().then(() => {
-          startLipSyncMouthTimer();
-        }).catch(() => {
+        currentVoiceAudio.load();
+        currentVoiceAudio.play().catch(err => {
+          console.warn('[Voice Audio] Fallback failed:', err);
           stopLipSync();
           duckBgm(false);
         });
-        return;
       }
     }
-    stopLipSync();
-    duckBgm(false);
-  };
-
-  currentVoiceAudio.src = primaryUrl;
-  startLipSyncMouthTimer();
-
-  currentVoiceAudio.play().catch(err => {
-    if (err && err.name === 'AbortError') return;
-    console.warn('[Voice Audio] play() error:', err);
-    stopLipSync();
-    duckBgm(false);
   });
+
+  let analyserWorked = false;
+
+  try {
+    if (!audioContext) {
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (audioContext.state === 'suspended') {
+      audioContext.resume();
+    }
+
+    const source = audioContext.createMediaElementSource(currentVoiceAudio);
+    const analyser = audioContext.createAnalyser();
+    analyser.fftSize = 256;
+    analyser.smoothingTimeConstant = 0.4;
+    source.connect(analyser);
+    analyser.connect(audioContext.destination);
+
+    const bufferLength = analyser.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
+
+    speakingIndicator.classList.remove('hidden');
+    characterAvatar.classList.add('talking');
+
+    currentVoiceAudio.play().then(() => {
+      analyserWorked = true;
+      let lastState = 'idle';
+      let holdFrames = 0;
+
+      lipSyncInterval = setInterval(() => {
+        analyser.getByteFrequencyData(dataArray);
+        
+        let sum = 0;
+        const speechBins = Math.min(bufferLength, 24);
+        for (let i = 1; i < speechBins; i++) {
+          sum += dataArray[i];
+        }
+        const voiceEnergy = sum / (speechBins - 1);
+
+        let targetState = 'idle';
+        if (voiceEnergy > 26) {
+          targetState = 'open';
+        } else if (voiceEnergy > 9) {
+          targetState = 'half';
+        } else {
+          targetState = 'idle';
+        }
+
+        if (targetState !== lastState) {
+          holdFrames++;
+          if (holdFrames >= 2 || (targetState === 'open' && lastState === 'idle')) {
+            setMouthState(targetState);
+            lastState = targetState;
+            holdFrames = 0;
+          }
+        } else {
+          holdFrames = 0;
+        }
+      }, 40);
+    }).catch(err => {
+      console.warn('音訊播放限制:', err);
+      if (!triedVoiceFallback && fallbackUrl) {
+        triedVoiceFallback = true;
+        currentVoiceAudio.src = fallbackUrl;
+        currentVoiceAudio.load();
+        currentVoiceAudio.play().catch(e => duckBgm(false));
+      } else {
+        duckBgm(false);
+      }
+    });
+
+    currentVoiceAudio.onended = () => {
+      stopLipSync();
+      duckBgm(false);
+    };
+    currentVoiceAudio.onerror = () => {
+      stopLipSync();
+      duckBgm(false);
+    };
+  } catch (e) {
+    console.warn('AudioContext 串接未果，啟動備用口型計時器:', e);
+    speakingIndicator.classList.remove('hidden');
+    characterAvatar.classList.add('talking');
+    currentVoiceAudio.play().catch(e => {
+      console.warn(e);
+      duckBgm(false);
+    });
+
+    let step = 0;
+    const pattern = ['idle', 'half', 'open', 'open', 'half', 'idle', 'half', 'open', 'half'];
+    lipSyncInterval = setInterval(() => {
+      setMouthState(pattern[step % pattern.length]);
+      step++;
+    }, 90);
+
+    currentVoiceAudio.onended = () => {
+      stopLipSync();
+      duckBgm(false);
+    };
+    currentVoiceAudio.onerror = () => {
+      stopLipSync();
+      duckBgm(false);
+    };
+  }
 }
 
 function stopLipSync() {
@@ -3076,28 +3048,39 @@ function playSaxophonePerformance(audioUrl, fallbackUrl) {
   }
 
   const primaryUrl = resolveAudioUrl(audioUrl);
-  currentVoiceAudio = sharedVoiceAudio;
-  const vol = (currentConfig.volume !== undefined && !isNaN(currentConfig.volume) && Number(currentConfig.volume) > 0.05)
-    ? Number(currentConfig.volume)
-    : 0.85;
-  currentVoiceAudio.volume = Math.min(1, Math.max(0.15, vol));
-  currentVoiceAudio.muted = false;
+  currentVoiceAudio = new Audio(primaryUrl);
+  currentVoiceAudio.volume = currentConfig.volume !== undefined ? currentConfig.volume : 0.8;
+
+  let triedFallback = false;
+  currentVoiceAudio.addEventListener('error', () => {
+    if (!triedFallback && fallbackUrl) {
+      triedFallback = true;
+      currentVoiceAudio.src = fallbackUrl;
+      currentVoiceAudio.load();
+      currentVoiceAudio.play().catch(() => {
+        stopLipSync();
+        duckBgm(false);
+      });
+    }
+  });
+
+  currentVoiceAudio.play().catch(err => {
+    console.warn('[Sax Performance] Play error, trying fallback:', err);
+    if (!triedFallback && fallbackUrl) {
+      triedFallback = true;
+      currentVoiceAudio.src = fallbackUrl;
+      currentVoiceAudio.load();
+      currentVoiceAudio.play().catch(() => {
+        stopLipSync();
+        duckBgm(false);
+      });
+    }
+  });
 
   currentVoiceAudio.onended = () => {
     stopLipSync();
     duckBgm(false);
   };
-  currentVoiceAudio.onerror = () => {
-    stopLipSync();
-    duckBgm(false);
-  };
-
-  currentVoiceAudio.src = primaryUrl;
-  currentVoiceAudio.play().catch(err => {
-    if (err && err.name === 'AbortError') return;
-    stopLipSync();
-    duckBgm(false);
-  });
 }
 
 // 點擊立繪或「✨ 戳戳互動」親暱彩蛋反應 (原聲優先，並同步連動對話紀錄與好感度)
@@ -3387,11 +3370,6 @@ function setupMusicControls() {
 }
 
 function playTrackByIndex(index) {
-  if (!currentTrackList || currentTrackList.length === 0) {
-    currentTrackList = currentMusicTab === 'bgm'
-      ? ((audioLibrary && audioLibrary.bgm && audioLibrary.bgm.length > 0) ? audioLibrary.bgm : STANDALONE_AUDIO_LIBRARY.bgm)
-      : ((audioLibrary && audioLibrary.ost && audioLibrary.ost.length > 0) ? audioLibrary.ost : STANDALONE_AUDIO_LIBRARY.ost);
-  }
   if (!currentTrackList || currentTrackList.length === 0) return;
   if (index < 0) index = currentTrackList.length - 1;
   if (index >= currentTrackList.length) index = 0;
@@ -3400,25 +3378,66 @@ function playTrackByIndex(index) {
   const track = currentTrackList[index];
   updateNowPlayingInfo(track);
 
-  currentBgmAudio = sharedBgmAudio;
-  const primaryUrl = `assets/audio/${encodeURIComponent(track.category)}/${encodeURIComponent(track.filename)}`;
-  const bgmVol = (currentConfig.bgmVolume !== undefined && !isNaN(currentConfig.bgmVolume) && Number(currentConfig.bgmVolume) > 0.05)
-    ? Number(currentConfig.bgmVolume)
-    : 0.5;
-  currentBgmAudio.volume = Math.min(1, Math.max(0.1, bgmVol));
-  currentBgmAudio.muted = false;
+  if (currentBgmAudio) {
+    currentBgmAudio.pause();
+    currentBgmAudio = null;
+  }
 
-  currentBgmAudio.onerror = () => {
-    isMusicPlaying = false;
-    btnMusicPlay.textContent = '▶';
-    vinylDisc.classList.add('paused');
+  const primaryUrl = `assets/audio/${encodeURIComponent(track.category)}/${encodeURIComponent(track.filename)}`;
+  const fallbackUrl = `${SERVER_BASE}/audio/${encodeURIComponent(track.category)}/${encodeURIComponent(track.filename)}`;
+
+  currentBgmAudio = new Audio(primaryUrl);
+  currentBgmAudio.volume = currentConfig.bgmVolume !== undefined ? currentConfig.bgmVolume : 0.45;
+
+  let triedFallback = false;
+  currentBgmAudio.addEventListener('error', (e) => {
+    if (!triedFallback) {
+      triedFallback = true;
+      console.warn(`[Jukebox] Primary path failed (${primaryUrl}), trying fallback: ${fallbackUrl}`);
+      currentBgmAudio.src = fallbackUrl;
+      currentBgmAudio.load();
+      currentBgmAudio.play().then(() => {
+        isMusicPlaying = true;
+        btnMusicPlay.textContent = '⏸';
+        vinylDisc.classList.remove('paused');
+        renderMusicTrackList();
+      }).catch(err => {
+        console.error('[Jukebox] Playback failed for both local and HTTP fallback:', err);
+        isMusicPlaying = false;
+        btnMusicPlay.textContent = '▶';
+        vinylDisc.classList.add('paused');
+      });
+    }
+  });
+
+  currentBgmAudio.play().then(() => {
+    isMusicPlaying = true;
+    btnMusicPlay.textContent = '⏸';
+    vinylDisc.classList.remove('paused');
     renderMusicTrackList();
-  };
+  }).catch(err => {
+    console.warn('[Jukebox] Initial play() rejected, trying fallback:', err);
+    if (!triedFallback) {
+      triedFallback = true;
+      currentBgmAudio.src = fallbackUrl;
+      currentBgmAudio.load();
+      currentBgmAudio.play().then(() => {
+        isMusicPlaying = true;
+        btnMusicPlay.textContent = '⏸';
+        vinylDisc.classList.remove('paused');
+        renderMusicTrackList();
+      }).catch(e => {
+        isMusicPlaying = false;
+        btnMusicPlay.textContent = '▶';
+        vinylDisc.classList.add('paused');
+      });
+    }
+  });
 
   currentBgmAudio.onended = () => {
     if (playbackMode === 'single') {
       currentBgmAudio.currentTime = 0;
-      currentBgmAudio.play().catch(() => {});
+      currentBgmAudio.play();
     } else if (playbackMode === 'shuffle') {
       const nextIndex = Math.floor(Math.random() * currentTrackList.length);
       playTrackByIndex(nextIndex);
@@ -3426,21 +3445,6 @@ function playTrackByIndex(index) {
       playNextTrack();
     }
   };
-
-  currentBgmAudio.src = primaryUrl;
-  isMusicPlaying = true;
-  btnMusicPlay.textContent = '⏸';
-  vinylDisc.classList.remove('paused');
-  renderMusicTrackList();
-
-  currentBgmAudio.play().catch(err => {
-    if (err && err.name === 'AbortError') return;
-    console.warn('[Jukebox] play() error:', err);
-    isMusicPlaying = false;
-    btnMusicPlay.textContent = '▶';
-    vinylDisc.classList.add('paused');
-    renderMusicTrackList();
-  });
 }
 
 function pauseBgm() {
@@ -3454,18 +3458,14 @@ function pauseBgm() {
 }
 
 function resumeBgm() {
-  if (!currentBgmAudio || !currentBgmAudio.getAttribute('src') || currentBgmAudio.src === SILENT_WAV_DATA_URI || currentBgmAudio.error) {
-    playTrackByIndex(currentTrackIndex || 0);
-    return;
+  if (currentBgmAudio) {
+    currentBgmAudio.play().then(() => {
+      isMusicPlaying = true;
+      btnMusicPlay.textContent = '⏸';
+      vinylDisc.classList.remove('paused');
+      renderMusicTrackList();
+    });
   }
-  currentBgmAudio.play().then(() => {
-    isMusicPlaying = true;
-    btnMusicPlay.textContent = '⏸';
-    vinylDisc.classList.remove('paused');
-    renderMusicTrackList();
-  }).catch(() => {
-    playTrackByIndex(currentTrackIndex || 0);
-  });
 }
 
 function playNextTrack() {
@@ -4620,7 +4620,7 @@ async function checkAlarmsAndReminders() {
       } catch (e) {}
 
       if (currentConfig.voiceMode !== 'mute') {
-        playAudioWithLipSync('assets/audio/%E6%A1%8C%E9%9D%A2%E4%BA%92%E5%8B%95/%E7%99%82%E8%82%B2%E5%AE%89%E6%92%AB06.mp3');
+        playAudioWithLipSync('assets/audio/%E6%97%A5%E5%B8%B8/%E6%83%85%E4%BE%B6%E4%BA%92%E5%8B%95(%E6%BA%AB%E6%9F%94).mp3');
       }
       break;
     }
