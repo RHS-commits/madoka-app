@@ -16,16 +16,37 @@ function safeEncodeAudioPath(rawPath) {
   }
 }
 
-// 行動裝置音訊解鎖器 (iOS Safari / Android Chrome 需首次觸碰解鎖音訊)
+// 持久化雙聲道音訊播放器（維持行動裝置手勢解鎖授權，確保換曲與連續語音不中斷）
+const SILENT_WAV_DATA_URI = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
+const persistentVoiceAudio = new Audio();
+persistentVoiceAudio.preload = 'auto';
+persistentVoiceAudio.playsInline = true;
+
+const persistentBgmAudio = new Audio();
+persistentBgmAudio.preload = 'auto';
+persistentBgmAudio.playsInline = true;
+
+let voicePlayToken = 0;
+let bgmPlayToken = 0;
+
+// 行動裝置音訊解鎖器 (iOS Safari / Android Chrome 需首次觸碰解鎖持久化音訊通道)
 let audioUnlocked = false;
 function unlockMobileAudio() {
   if (audioUnlocked) return;
   audioUnlocked = true;
   try {
-    const silent = new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA');
-    silent.play().then(() => {
-      silent.pause();
-    }).catch(() => {});
+    if (!persistentVoiceAudio.getAttribute('src') && persistentVoiceAudio.paused) {
+      persistentVoiceAudio.src = SILENT_WAV_DATA_URI;
+      persistentVoiceAudio.play().then(() => {
+        persistentVoiceAudio.pause();
+      }).catch(() => {});
+    }
+    if (!persistentBgmAudio.getAttribute('src') && persistentBgmAudio.paused) {
+      persistentBgmAudio.src = SILENT_WAV_DATA_URI;
+      persistentBgmAudio.play().then(() => {
+        persistentBgmAudio.pause();
+      }).catch(() => {});
+    }
   } catch (e) {}
 }
 window.addEventListener('touchstart', unlockMobileAudio, { passive: true });
@@ -2386,7 +2407,7 @@ function setupEventListeners() {
   cfgAutoTimeCostume.addEventListener('change', (e) => {
     currentConfig.autoTimeCostume = e.target.checked;
     apiBridge.saveConfig({ autoTimeCostume: e.target.checked });
-    if (e.target.checked) checkTimeBasedCostume(true);
+    if (e.target.checked) checkTimeBasedCostume(true, true);
   });
 
   cfgVol.addEventListener('input', (e) => {
@@ -2448,6 +2469,45 @@ function setupEventListeners() {
   setupMusicControls();
 }
 
+// 圖片預載入快取與防競態控制
+let costumeLoadToken = 0;
+const loadedImageUrlSet = new Set();
+
+function preloadImageSafe(src) {
+  return new Promise((resolve) => {
+    if (!src) return resolve(false);
+    if (loadedImageUrlSet.has(src)) return resolve(true);
+    const img = new Image();
+    img.onload = () => {
+      loadedImageUrlSet.add(src);
+      resolve(true);
+    };
+    img.onerror = () => resolve(false);
+    img.src = src;
+  });
+}
+
+// 精準計算當前分鐘所屬排程時段（完全對齊 costumes.json 時段設定）
+function getScheduledCostumeSlot(now = new Date()) {
+  const mins = now.getHours() * 60 + now.getMinutes();
+  if (mins >= 420 && mins < 690) {
+    return { slot: 'morning_uniform', costumeId: 'uniform' };   // 07:00 - 11:30
+  } else if (mins >= 690 && mins < 840) {
+    return { slot: 'cafe', costumeId: 'cafe' };                 // 11:30 - 14:00
+  } else if (mins >= 840 && mins < 990) {
+    return { slot: 'afternoon_uniform', costumeId: 'uniform' }; // 14:00 - 16:30
+  } else if (mins >= 990 && mins < 1110) {
+    return { slot: 'casual', costumeId: 'casual' };             // 16:30 - 18:30
+  } else if (mins >= 1110 && mins < 1260) {
+    return { slot: 'date', costumeId: 'date' };                 // 18:30 - 21:00
+  } else if (mins >= 1260 && mins < 1320) {
+    return { slot: 'bath', costumeId: 'bath' };                 // 21:00 - 22:00
+  } else if (mins >= 1320 && mins < 1410) {
+    return { slot: 'night', costumeId: 'night' };               // 22:00 - 23:30
+  }
+  return { slot: 'home', costumeId: 'home' };                   // 23:30 - 07:00
+}
+
 // 渲染造型衣櫃列表 (22 大情境與同系列款式輪播)
 function setupWardrobeUI() {
   costumeGrid.innerHTML = '';
@@ -2464,7 +2524,7 @@ function setupWardrobeUI() {
       <span class="costume-badge">${c.tag}</span>
     `;
     card.addEventListener('click', () => {
-      applyCostume(c.id, true);
+      applyCostume(c.id, true, { isManual: true });
       wardrobeModal.classList.add('hidden');
     });
     costumeGrid.appendChild(card);
@@ -2474,7 +2534,7 @@ function setupWardrobeUI() {
     btnRandomCostume.onclick = () => {
       const others = COSTUMES.filter(c => c.id !== currentConfig.currentCostume);
       const pick = others[Math.floor(Math.random() * others.length)] || COSTUMES[0];
-      applyCostume(pick.id, true);
+      applyCostume(pick.id, true, { isManual: true });
       wardrobeModal.classList.add('hidden');
     };
   }
@@ -2497,7 +2557,7 @@ function cycleCurrentCostumeVariant() {
     // 若當前造型僅 1 張，隨機切換到另一套新造型
     const others = COSTUMES.filter(c => c.id !== costume.id);
     const pick = others[Math.floor(Math.random() * others.length)] || COSTUMES[0];
-    applyCostume(pick.id, true);
+    applyCostume(pick.id, true, { isManual: true });
     return;
   }
   const curIdx = currentVariantIdxMap[costume.id] || 0;
@@ -2505,12 +2565,16 @@ function cycleCurrentCostumeVariant() {
   currentVariantIdxMap[costume.id] = nextIdx;
   const nextSrc = variants[nextIdx];
 
-  characterAvatar.classList.add('outfit-changing');
-  imgIdle.src = nextSrc;
-  if (imgTalkHalf) imgTalkHalf.src = nextSrc;
-  if (imgTalkOpen) imgTalkOpen.src = nextSrc;
-  setMouthState('idle');
-  setTimeout(() => characterAvatar.classList.remove('outfit-changing'), 500);
+  const myToken = ++costumeLoadToken;
+  preloadImageSafe(nextSrc).then((ok) => {
+    if (myToken !== costumeLoadToken || !ok) return;
+    characterAvatar.classList.add('outfit-changing');
+    imgIdle.src = nextSrc;
+    if (imgTalkHalf) imgTalkHalf.src = nextSrc;
+    if (imgTalkOpen) imgTalkOpen.src = nextSrc;
+    setMouthState('idle');
+    setTimeout(() => characterAvatar.classList.remove('outfit-changing'), 500);
+  });
 
   const rect = characterAvatar.getBoundingClientRect();
   createFloatingEffect(rect.left + rect.width / 2, rect.top + rect.height * 0.35, ['✨', '👗', '💖']);
@@ -2527,32 +2591,31 @@ function updateWardrobeActiveState() {
   });
 }
 
-// 口型狀態控制：'idle' | 'half' | 'open'
+// 口型狀態控制：'idle' | 'half' | 'open'（僅在圖片已完全載入時才切換，避免閃爍或消失）
 function setMouthState(state) {
-  if (state === 'open') {
+  const canShowOpen = imgTalkOpen && imgTalkOpen.getAttribute('src') && imgTalkOpen.complete && imgTalkOpen.naturalWidth > 0;
+  const canShowHalf = imgTalkHalf && imgTalkHalf.getAttribute('src') && imgTalkHalf.complete && imgTalkHalf.naturalWidth > 0;
+
+  if (state === 'open' && canShowOpen) {
     imgIdle.classList.add('hidden');
     imgIdle.classList.remove('active');
     if (imgTalkHalf) {
       imgTalkHalf.classList.add('hidden');
       imgTalkHalf.classList.remove('active');
     }
-    if (imgTalkOpen) {
-      imgTalkOpen.classList.remove('hidden');
-      imgTalkOpen.classList.add('active');
-    }
-  } else if (state === 'half') {
+    imgTalkOpen.classList.remove('hidden');
+    imgTalkOpen.classList.add('active');
+  } else if ((state === 'half' || state === 'open') && canShowHalf) {
     imgIdle.classList.add('hidden');
     imgIdle.classList.remove('active');
     if (imgTalkOpen) {
       imgTalkOpen.classList.add('hidden');
       imgTalkOpen.classList.remove('active');
     }
-    if (imgTalkHalf) {
-      imgTalkHalf.classList.remove('hidden');
-      imgTalkHalf.classList.add('active');
-    }
+    imgTalkHalf.classList.remove('hidden');
+    imgTalkHalf.classList.add('active');
   } else {
-    // idle (閉嘴)
+    // idle (閉嘴) 或口型幀尚未下載完成時，保持顯示靜態主圖
     if (imgTalkHalf) {
       imgTalkHalf.classList.add('hidden');
       imgTalkHalf.classList.remove('active');
@@ -2566,36 +2629,57 @@ function setMouthState(state) {
   }
 }
 
-// 換裝核心函數（同步更新三態立繪幀並預載入）
-function applyCostume(costumeId, playReaction = false) {
+// 換裝核心函數（先預載再平滑替換，避免下載過程中圖片消失，並同步時段紀錄）
+function applyCostume(costumeId, playReaction = false, options = {}) {
   stopSaxPerformance(false);
   const costume = COSTUMES.find(c => c.id === costumeId) || COSTUMES[0];
   currentConfig.currentCostume = costume.id;
-  apiBridge.saveConfig({ currentCostume: costume.id });
+  currentVariantIdxMap[costume.id] = 0;
 
-  // 換裝動態效果
-  characterAvatar.classList.add('outfit-changing');
-  
+  // 若為使用者手動選擇或隨機換裝，記錄當前時段避免在下個時段到來前被自動覆寫
+  const currentSlot = getScheduledCostumeSlot(new Date()).slot;
+  if (!options.isAutoTime) {
+    currentConfig.lastAutoCostumeSlot = currentSlot;
+  }
+  apiBridge.saveConfig({
+    currentCostume: costume.id,
+    lastAutoCostumeSlot: currentConfig.lastAutoCostumeSlot
+  });
+
   const idleSrc = costume.imageIdle || costume.image;
   const halfSrc = costume.imageTalkHalf || idleSrc;
   const openSrc = costume.imageTalkOpen || idleSrc;
 
-  imgIdle.src = idleSrc;
-  if (imgTalkHalf) imgTalkHalf.src = halfSrc;
-  if (imgTalkOpen) imgTalkOpen.src = openSrc;
-
-  // 預載入口型圖檔，消除首次播放語音時的黑屏閃爍
-  [halfSrc, openSrc].forEach(src => {
-    const p = new Image();
-    p.src = src;
-  });
-
-  setMouthState('idle');
-  setTimeout(() => characterAvatar.classList.remove('outfit-changing'), 600);
-
-  // 更新稱謂標籤
+  // 更新稱謂標籤與衣櫃高亮
   costumeTagBadge.textContent = costume.tag;
   updateWardrobeActiveState();
+
+  const myToken = ++costumeLoadToken;
+  const swapSprites = () => {
+    if (myToken !== costumeLoadToken) return;
+    characterAvatar.classList.add('outfit-changing');
+    imgIdle.src = idleSrc;
+    setMouthState('idle');
+    setTimeout(() => characterAvatar.classList.remove('outfit-changing'), 600);
+
+    // 靜態主圖就緒後再背景預載半張/全張口型圖，避免同時搶佔手機頻寬
+    preloadImageSafe(halfSrc).then((ok) => {
+      if (myToken === costumeLoadToken && ok && imgTalkHalf) imgTalkHalf.src = halfSrc;
+    });
+    preloadImageSafe(openSrc).then((ok) => {
+      if (myToken === costumeLoadToken && ok && imgTalkOpen) imgTalkOpen.src = openSrc;
+    });
+  };
+
+  if (loadedImageUrlSet.has(idleSrc) || imgIdle.getAttribute('src') === idleSrc) {
+    swapSprites();
+  } else {
+    preloadImageSafe(idleSrc).then((ok) => {
+      if (ok || myToken === costumeLoadToken) {
+        swapSprites();
+      }
+    });
+  }
 
   if (playReaction) {
     if (currentConfig.voiceMode === 'mute') {
@@ -2625,31 +2709,22 @@ function applyCostume(costumeId, playReaction = false) {
   }
 }
 
-// 依照當前時間自動切換造型（9 大情境排程）
-function checkTimeBasedCostume(notify = false) {
+// 依照當前時間自動切換造型（分鐘級精準排程，尊重使用者當下手動換裝，直到下個時段到來才自動切換）
+function checkTimeBasedCostume(notify = false, force = false) {
   if (currentConfig.autoTimeCostume === false) return;
 
-  const hour = new Date().getHours();
-  let targetId = 'uniform';
+  const { slot, costumeId } = getScheduledCostumeSlot(new Date());
+  const slotChanged = slot !== currentConfig.lastAutoCostumeSlot;
 
-  if (hour >= 23 || hour < 7) {
-    targetId = 'home';    // 23:30 ~ 07:00 居家晨曦
-  } else if (hour >= 22 && hour < 23) {
-    targetId = 'night';   // 22:00 ~ 23:00 夜晚放鬆
-  } else if (hour >= 21 && hour < 22) {
-    targetId = 'bath';    // 21:00 ~ 22:00 沐浴時光
-  } else if (hour >= 18 && hour < 21) {
-    targetId = 'date';    // 18:30 ~ 21:00 浪漫約會
-  } else if (hour >= 16 && hour < 18) {
-    targetId = 'casual';  // 16:30 ~ 18:30 休閒運動
-  } else if (hour >= 11 && hour < 14) {
-    targetId = 'cafe';    // 11:30 ~ 14:00 Abcb咖啡館打工
-  } else {
-    targetId = 'uniform'; // 07:00 ~ 11:30 / 14:00 ~ 16:30 學生水手服
+  if (!force && !slotChanged) {
+    return;
   }
 
-  if (targetId !== currentConfig.currentCostume) {
-    applyCostume(targetId, notify);
+  currentConfig.lastAutoCostumeSlot = slot;
+  if (costumeId !== currentConfig.currentCostume || force) {
+    applyCostume(costumeId, notify, { isAutoTime: true });
+  } else {
+    apiBridge.saveConfig({ lastAutoCostumeSlot: slot });
   }
 }
 
@@ -2803,46 +2878,51 @@ function resolveAudioUrl(categoryOrUrl, filename) {
   return safeEncodeAudioPath(categoryOrUrl);
 }
 
-// 音訊播放與真實嘴巴開合（Lip-Sync 口パク）同步驅動引擎 (支援音樂自動避讓 Auto-Ducking)
+// 音訊播放與真實嘴巴開合（Lip-Sync 口パク）同步驅動引擎 (支援持久化音訊通道與音樂自動避讓 Auto-Ducking)
 function playAudioWithLipSync(audioUrl, fallbackUrl) {
-  if (currentVoiceAudio) {
-    currentVoiceAudio.pause();
-    currentVoiceAudio = null;
-  }
+  const myToken = ++voicePlayToken;
+  persistentVoiceAudio.pause();
+  currentVoiceAudio = persistentVoiceAudio;
   stopLipSync();
 
   // BGM 自動降音避讓 (Auto-Ducking)
   duckBgm(true);
 
   const primaryUrl = resolveAudioUrl(audioUrl);
-  currentVoiceAudio = new Audio(primaryUrl);
-  currentVoiceAudio.preload = 'auto';
-  currentVoiceAudio.volume = currentConfig.volume !== undefined ? currentConfig.volume : 0.8;
+  persistentVoiceAudio.src = primaryUrl;
+  persistentVoiceAudio.volume = currentConfig.volume !== undefined ? currentConfig.volume : 0.8;
 
   let triedVoiceFallback = false;
-  currentVoiceAudio.addEventListener('error', (e) => {
+  persistentVoiceAudio.onerror = () => {
+    if (myToken !== voicePlayToken) return;
     if (!triedVoiceFallback) {
       triedVoiceFallback = true;
-      let fb = fallbackUrl;
+      let fb = fallbackUrl ? resolveAudioUrl(fallbackUrl) : '';
       if (!fb && typeof audioUrl === 'string' && !audioUrl.startsWith('data:')) {
         const raw = audioUrl.replace(/^(\/audio\/|assets\/audio\/)/, '');
         fb = safeEncodeAudioPath(`assets/audio/${raw}`);
       }
       if (fb && fb !== primaryUrl) {
         console.warn(`[Voice Audio] Local play failed (${primaryUrl}), trying fallback: ${fb}`);
-        currentVoiceAudio.src = fb;
-        currentVoiceAudio.load();
-        currentVoiceAudio.play().catch(err => {
-          console.warn('[Voice Audio] Fallback failed:', err);
+        persistentVoiceAudio.src = fb;
+        persistentVoiceAudio.load();
+        persistentVoiceAudio.play().catch(() => {
+          if (myToken !== voicePlayToken) return;
           stopLipSync();
           duckBgm(false);
         });
-      } else {
-        stopLipSync();
-        duckBgm(false);
+        return;
       }
     }
-  });
+    stopLipSync();
+    duckBgm(false);
+  };
+
+  persistentVoiceAudio.onended = () => {
+    if (myToken !== voicePlayToken) return;
+    stopLipSync();
+    duckBgm(false);
+  };
 
   // 啟用嘴巴動作與說話指示器
   speakingIndicator.classList.remove('hidden');
@@ -2851,26 +2931,21 @@ function playAudioWithLipSync(audioUrl, fallbackUrl) {
   let step = 0;
   const pattern = ['idle', 'half', 'open', 'open', 'half', 'idle', 'half', 'open', 'half'];
   lipSyncInterval = setInterval(() => {
+    if (myToken !== voicePlayToken) return;
     setMouthState(pattern[step % pattern.length]);
     step++;
   }, 90);
 
-  currentVoiceAudio.onended = () => {
-    stopLipSync();
-    duckBgm(false);
-  };
-  currentVoiceAudio.onerror = () => {
-    stopLipSync();
-    duckBgm(false);
-  };
-
-  currentVoiceAudio.play().catch(err => {
+  persistentVoiceAudio.load();
+  persistentVoiceAudio.play().catch(err => {
+    if (myToken !== voicePlayToken) return;
     console.warn('音訊播放限制或失敗:', err);
     if (!triedVoiceFallback && fallbackUrl) {
       triedVoiceFallback = true;
-      currentVoiceAudio.src = fallbackUrl;
-      currentVoiceAudio.load();
-      currentVoiceAudio.play().catch(() => {
+      persistentVoiceAudio.src = resolveAudioUrl(fallbackUrl);
+      persistentVoiceAudio.load();
+      persistentVoiceAudio.play().catch(() => {
+        if (myToken !== voicePlayToken) return;
         stopLipSync();
         duckBgm(false);
       });
@@ -2960,10 +3035,9 @@ function stopSaxPerformance(restoreCostumeSprites = true) {
 }
 
 function playSaxophonePerformance(audioUrl, fallbackUrl) {
-  if (currentVoiceAudio) {
-    currentVoiceAudio.pause();
-    currentVoiceAudio = null;
-  }
+  const myToken = ++voicePlayToken;
+  persistentVoiceAudio.pause();
+  currentVoiceAudio = persistentVoiceAudio;
   stopLipSync();
   duckBgm(true);
 
@@ -2992,7 +3066,7 @@ function playSaxophonePerformance(audioUrl, fallbackUrl) {
   if (currentConfig.voiceMode === 'mute') {
     // 靜音模式下仍展示 18 秒完整 5 張吹奏畫面輪播
     setTimeout(() => {
-      if (isSaxPerforming) {
+      if (myToken === voicePlayToken && isSaxPerforming) {
         stopLipSync();
         duckBgm(false);
       }
@@ -3001,39 +3075,50 @@ function playSaxophonePerformance(audioUrl, fallbackUrl) {
   }
 
   const primaryUrl = resolveAudioUrl(audioUrl);
-  currentVoiceAudio = new Audio(primaryUrl);
-  currentVoiceAudio.volume = currentConfig.volume !== undefined ? currentConfig.volume : 0.8;
+  persistentVoiceAudio.src = primaryUrl;
+  persistentVoiceAudio.volume = currentConfig.volume !== undefined ? currentConfig.volume : 0.8;
 
   let triedFallback = false;
-  currentVoiceAudio.addEventListener('error', () => {
-    if (!triedFallback && fallbackUrl) {
+  persistentVoiceAudio.onerror = () => {
+    if (myToken !== voicePlayToken) return;
+    const fb = fallbackUrl ? resolveAudioUrl(fallbackUrl) : '';
+    if (!triedFallback && fb && fb !== primaryUrl) {
       triedFallback = true;
-      currentVoiceAudio.src = fallbackUrl;
-      currentVoiceAudio.load();
-      currentVoiceAudio.play().catch(() => {
+      persistentVoiceAudio.src = fb;
+      persistentVoiceAudio.load();
+      persistentVoiceAudio.play().catch(() => {
+        if (myToken !== voicePlayToken) return;
         stopLipSync();
         duckBgm(false);
       });
+    } else {
+      stopLipSync();
+      duckBgm(false);
     }
-  });
+  };
 
-  currentVoiceAudio.play().catch(err => {
-    console.warn('[Sax Performance] Play error, trying fallback:', err);
-    if (!triedFallback && fallbackUrl) {
-      triedFallback = true;
-      currentVoiceAudio.src = fallbackUrl;
-      currentVoiceAudio.load();
-      currentVoiceAudio.play().catch(() => {
-        stopLipSync();
-        duckBgm(false);
-      });
-    }
-  });
-
-  currentVoiceAudio.onended = () => {
+  persistentVoiceAudio.onended = () => {
+    if (myToken !== voicePlayToken) return;
     stopLipSync();
     duckBgm(false);
   };
+
+  persistentVoiceAudio.load();
+  persistentVoiceAudio.play().catch(err => {
+    if (myToken !== voicePlayToken) return;
+    console.warn('[Sax Performance] Play error, trying fallback:', err);
+    const fb = fallbackUrl ? resolveAudioUrl(fallbackUrl) : '';
+    if (!triedFallback && fb && fb !== primaryUrl) {
+      triedFallback = true;
+      persistentVoiceAudio.src = fb;
+      persistentVoiceAudio.load();
+      persistentVoiceAudio.play().catch(() => {
+        if (myToken !== voicePlayToken) return;
+        stopLipSync();
+        duckBgm(false);
+      });
+    }
+  });
 }
 
 // 點擊立繪或「✨ 戳戳互動」親暱彩蛋反應 (原聲優先，並同步連動對話紀錄與好感度)
@@ -3322,92 +3407,77 @@ function setupMusicControls() {
   }
 }
 
+function updateBgmMediaSession(track) {
+  if (typeof navigator === 'undefined' || !('mediaSession' in navigator) || !track) return;
+  try {
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: track.title || '鮎川まどか 原聲音樂',
+      artist: track.artist || track.subtitle || 'Kimagure Orange Road',
+      album: 'まどか專屬留聲機',
+      artwork: [{ src: 'assets/icon-192.png', sizes: '192x192', type: 'image/png' }]
+    });
+    navigator.mediaSession.setActionHandler('play', () => resumeBgm());
+    navigator.mediaSession.setActionHandler('pause', () => pauseBgm());
+    navigator.mediaSession.setActionHandler('previoustrack', () => playPrevTrack());
+    navigator.mediaSession.setActionHandler('nexttrack', () => playNextTrack());
+  } catch (e) {}
+}
+
 function playTrackByIndex(index) {
   if (!currentTrackList || currentTrackList.length === 0) return;
   if (index < 0) index = currentTrackList.length - 1;
   if (index >= currentTrackList.length) index = 0;
 
+  const myToken = ++bgmPlayToken;
   currentTrackIndex = index;
   const track = currentTrackList[index];
   updateNowPlayingInfo(track);
+  updateBgmMediaSession(track);
 
-  if (currentBgmAudio) {
-    currentBgmAudio.pause();
-    currentBgmAudio = null;
-  }
+  // 複用同一個持久化 Audio 實例以保留行動瀏覽器自動連播權限
+  persistentBgmAudio.pause();
+  currentBgmAudio = persistentBgmAudio;
 
   const primaryUrl = safeEncodeAudioPath(`assets/audio/${track.category}/${track.filename}`);
-  currentBgmAudio = new Audio(primaryUrl);
-  currentBgmAudio.preload = 'auto';
-  currentBgmAudio.volume = currentConfig.bgmVolume !== undefined ? currentConfig.bgmVolume : 0.45;
+  persistentBgmAudio.src = primaryUrl;
+  persistentBgmAudio.volume = currentConfig.bgmVolume !== undefined ? currentConfig.bgmVolume : 0.45;
 
   let triedFallback = false;
-  currentBgmAudio.addEventListener('error', (e) => {
+  persistentBgmAudio.onerror = () => {
+    if (myToken !== bgmPlayToken) return;
     if (!triedFallback) {
       triedFallback = true;
       const fallbackUrl = `assets/audio/${encodeURIComponent(track.category)}/${encodeURIComponent(track.filename)}`;
       if (fallbackUrl !== primaryUrl) {
         console.warn(`[Jukebox] Primary path failed (${primaryUrl}), trying fallback: ${fallbackUrl}`);
-        currentBgmAudio.src = fallbackUrl;
-        currentBgmAudio.load();
-        currentBgmAudio.play().then(() => {
+        persistentBgmAudio.src = fallbackUrl;
+        persistentBgmAudio.load();
+        persistentBgmAudio.play().then(() => {
+          if (myToken !== bgmPlayToken) return;
           isMusicPlaying = true;
           btnMusicPlay.textContent = '⏸';
           vinylDisc.classList.remove('paused');
           renderMusicTrackList();
         }).catch(err => {
+          if (myToken !== bgmPlayToken) return;
           console.error('[Jukebox] Playback failed for fallback:', err);
           isMusicPlaying = false;
           btnMusicPlay.textContent = '▶';
           vinylDisc.classList.add('paused');
         });
-      } else {
-        isMusicPlaying = false;
-        btnMusicPlay.textContent = '▶';
-        vinylDisc.classList.add('paused');
+        return;
       }
     }
-  });
+    isMusicPlaying = false;
+    btnMusicPlay.textContent = '▶';
+    vinylDisc.classList.add('paused');
+  };
 
-  currentBgmAudio.play().then(() => {
-    isMusicPlaying = true;
-    btnMusicPlay.textContent = '⏸';
-    vinylDisc.classList.remove('paused');
-    renderMusicTrackList();
-  }).catch(err => {
-    console.warn('[Jukebox] Initial play() rejected:', err);
-    if (!triedFallback) {
-      triedFallback = true;
-      const fallbackUrl = `assets/audio/${encodeURIComponent(track.category)}/${encodeURIComponent(track.filename)}`;
-      if (fallbackUrl !== primaryUrl) {
-        currentBgmAudio.src = fallbackUrl;
-        currentBgmAudio.load();
-        currentBgmAudio.play().then(() => {
-          isMusicPlaying = true;
-          btnMusicPlay.textContent = '⏸';
-          vinylDisc.classList.remove('paused');
-          renderMusicTrackList();
-        }).catch(e => {
-          isMusicPlaying = false;
-          btnMusicPlay.textContent = '▶';
-          vinylDisc.classList.add('paused');
-        });
-      } else {
-        isMusicPlaying = false;
-        btnMusicPlay.textContent = '▶';
-        vinylDisc.classList.add('paused');
-      }
-    } else {
-      isMusicPlaying = false;
-      btnMusicPlay.textContent = '▶';
-      vinylDisc.classList.add('paused');
-    }
-  });
-
-  currentBgmAudio.onended = () => {
+  persistentBgmAudio.onended = () => {
+    if (myToken !== bgmPlayToken) return;
     if (playbackMode === 'single') {
-      currentBgmAudio.currentTime = 0;
-      currentBgmAudio.play();
+      persistentBgmAudio.currentTime = 0;
+      persistentBgmAudio.play().catch(() => {});
     } else if (playbackMode === 'shuffle') {
       const nextIndex = Math.floor(Math.random() * currentTrackList.length);
       playTrackByIndex(nextIndex);
@@ -3415,6 +3485,42 @@ function playTrackByIndex(index) {
       playNextTrack();
     }
   };
+
+  persistentBgmAudio.load();
+  persistentBgmAudio.play().then(() => {
+    if (myToken !== bgmPlayToken) return;
+    isMusicPlaying = true;
+    btnMusicPlay.textContent = '⏸';
+    vinylDisc.classList.remove('paused');
+    renderMusicTrackList();
+  }).catch(err => {
+    if (myToken !== bgmPlayToken) return;
+    console.warn('[Jukebox] Initial play() rejected:', err);
+    if (!triedFallback) {
+      triedFallback = true;
+      const fallbackUrl = `assets/audio/${encodeURIComponent(track.category)}/${encodeURIComponent(track.filename)}`;
+      if (fallbackUrl !== primaryUrl) {
+        persistentBgmAudio.src = fallbackUrl;
+        persistentBgmAudio.load();
+        persistentBgmAudio.play().then(() => {
+          if (myToken !== bgmPlayToken) return;
+          isMusicPlaying = true;
+          btnMusicPlay.textContent = '⏸';
+          vinylDisc.classList.remove('paused');
+          renderMusicTrackList();
+        }).catch(() => {
+          if (myToken !== bgmPlayToken) return;
+          isMusicPlaying = false;
+          btnMusicPlay.textContent = '▶';
+          vinylDisc.classList.add('paused');
+        });
+        return;
+      }
+    }
+    isMusicPlaying = false;
+    btnMusicPlay.textContent = '▶';
+    vinylDisc.classList.add('paused');
+  });
 }
 
 function pauseBgm() {
@@ -3480,9 +3586,9 @@ function duckBgm(duck) {
 let lastBedtimeWindow = '';
 
 async function triggerBedtimeCoax(isManual = false) {
-  // 1. 若開啟了時段自動換裝，深夜自動換上溫暖毛衣(night)或居家服(home)
+  // 1. 若開啟了時段自動換裝，依當前精準時段自動切換夜晚(night)或居家服(home)
   if (currentConfig.autoTimeCostume !== false && currentConfig.currentCostume !== 'night' && currentConfig.currentCostume !== 'home' && currentConfig.currentCostume !== 'bath') {
-    applyCostume('night', false);
+    checkTimeBasedCostume(false, true);
   }
 
   // 2. 噴射溫馨夜晚睡意特效
@@ -3528,11 +3634,20 @@ function checkBedtimeReminder() {
   }
 }
 
-// 每 15 分鐘檢查一次時段造型，每 30 秒檢查一次晚間 11:00 後撒嬌陪睡提醒與跨日天數累加
+// 每分鐘精準檢查一次時段造型，每 30 秒檢查一次晚間 11:00 後撒嬌陪睡提醒與跨日天數累加
 function setupIdleGreetings() {
   setInterval(() => {
-    checkTimeBasedCostume(true);
-  }, 15 * 60 * 1000);
+    checkTimeBasedCostume(true, false);
+  }, 60 * 1000);
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+      checkTimeBasedCostume(false, false);
+    }
+  });
+  window.addEventListener('focus', () => {
+    checkTimeBasedCostume(false, false);
+  });
 
   setInterval(() => {
     checkBedtimeReminder();
