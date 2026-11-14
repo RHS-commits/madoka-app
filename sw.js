@@ -1,5 +1,5 @@
-// sw.js - 鮎川まどか 手機APP / PWA 雲端與離線獨立運作快取引擎 (v16)
-const CACHE_NAME = 'madoka-pwa-v16';
+// sw.js - 鮎川まどか 手機APP / PWA 雲端與離線獨立運作快取引擎 (v17)
+const CACHE_NAME = 'madoka-pwa-v17';
 
 // 核心 Shell 資源 (極速安裝，體積小於 1.5MB，秒級完成安裝，避免背景佔用手機頻寬)
 const PRECACHE_ASSETS = [
