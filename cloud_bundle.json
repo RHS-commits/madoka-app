@@ -186,11 +186,12 @@
       "id": "date",
       "name": "月台等待露肩私服",
       "tag": "🎡 浪漫約會",
-      "image": "assets/costumes/date_idle.png",
-      "imageIdle": "assets/costumes/date_idle.png",
-      "imageTalkHalf": "assets/costumes/date_talk_half.png",
-      "imageTalkOpen": "assets/costumes/date_talk_open.png",
+      "image": "assets/costumes/variant_work_night.jpg",
+      "imageIdle": "assets/costumes/variant_work_night.jpg",
+      "imageTalkHalf": "assets/costumes/variant_work_night.jpg",
+      "imageTalkOpen": "assets/costumes/variant_work_night.jpg",
       "variants": [
+        "assets/costumes/variant_work_night.jpg",
         "assets/costumes/date_idle.png",
         "assets/costumes/variant_date_wheat.png"
       ],

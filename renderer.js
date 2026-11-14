@@ -94,10 +94,10 @@ const DEFAULT_COSTUMES = [
     id: "date",
     name: "月台等待露肩私服",
     tag: "🎡 浪漫約會",
-    image: "assets/costumes/date_idle.png",
-    imageIdle: "assets/costumes/date_idle.png",
-    imageTalkHalf: "assets/costumes/date_talk_half.png",
-    imageTalkOpen: "assets/costumes/date_talk_open.png",
+    image: "assets/costumes/variant_work_night.jpg",
+    imageIdle: "assets/costumes/variant_work_night.jpg",
+    imageTalkHalf: "assets/costumes/variant_work_night.jpg",
+    imageTalkOpen: "assets/costumes/variant_work_night.jpg",
     timeHint: "18:30 - 21:00",
     reaction: "待たせちゃったかしら？今日のコーデ、どう……？リンシに似合ってるって言われたくて選んだの。\n（讓你久等了嗎？今天的穿搭、覺得怎麼樣……？因為想被你誇獎才選這件的。）",
     tts: "待たせちゃったかしら？今日のコーデ、どう？リンシに似合ってるって言われたくて選んだの。"
@@ -2469,8 +2469,9 @@ function setupEventListeners() {
   setupMusicControls();
 }
 
-// 圖片預載入快取與防競態控制
+// 圖片預載入快取與防競態／防閃爍控制
 let costumeLoadToken = 0;
+let mouthFramesReadyToken = 0;
 const loadedImageUrlSet = new Set();
 
 function preloadImageSafe(src) {
@@ -2479,8 +2480,15 @@ function preloadImageSafe(src) {
     if (loadedImageUrlSet.has(src)) return resolve(true);
     const img = new Image();
     img.onload = () => {
-      loadedImageUrlSet.add(src);
-      resolve(true);
+      const finish = () => {
+        loadedImageUrlSet.add(src);
+        resolve(true);
+      };
+      if (typeof img.decode === 'function') {
+        img.decode().then(finish).catch(finish);
+      } else {
+        finish();
+      }
     };
     img.onerror = () => resolve(false);
     img.src = src;
@@ -2566,15 +2574,24 @@ function cycleCurrentCostumeVariant() {
   const nextSrc = variants[nextIdx];
 
   const myToken = ++costumeLoadToken;
-  preloadImageSafe(nextSrc).then((ok) => {
-    if (myToken !== costumeLoadToken || !ok) return;
+  const applyVariantSrc = () => {
+    if (myToken !== costumeLoadToken) return;
     characterAvatar.classList.add('outfit-changing');
     imgIdle.src = nextSrc;
     if (imgTalkHalf) imgTalkHalf.src = nextSrc;
     if (imgTalkOpen) imgTalkOpen.src = nextSrc;
+    mouthFramesReadyToken = myToken;
     setMouthState('idle');
-    setTimeout(() => characterAvatar.classList.remove('outfit-changing'), 500);
-  });
+    setTimeout(() => characterAvatar.classList.remove('outfit-changing'), 280);
+  };
+
+  if (loadedImageUrlSet.has(nextSrc)) {
+    applyVariantSrc();
+  } else {
+    preloadImageSafe(nextSrc).then((ok) => {
+      if (ok && myToken === costumeLoadToken) applyVariantSrc();
+    });
+  }
 
   const rect = characterAvatar.getBoundingClientRect();
   createFloatingEffect(rect.left + rect.width / 2, rect.top + rect.height * 0.35, ['✨', '👗', '💖']);
@@ -2591,10 +2608,11 @@ function updateWardrobeActiveState() {
   });
 }
 
-// 口型狀態控制：'idle' | 'half' | 'open'（僅在圖片已完全載入時才切換，避免閃爍或消失）
+// 口型狀態控制：'idle' | 'half' | 'open'（僅在當套服裝的口型圖已完全載入解碼時才切換，徹底消除舊衣與新衣交錯閃爍）
 function setMouthState(state) {
-  const canShowOpen = imgTalkOpen && imgTalkOpen.getAttribute('src') && imgTalkOpen.complete && imgTalkOpen.naturalWidth > 0;
-  const canShowHalf = imgTalkHalf && imgTalkHalf.getAttribute('src') && imgTalkHalf.complete && imgTalkHalf.naturalWidth > 0;
+  const mouthReady = (mouthFramesReadyToken === costumeLoadToken);
+  const canShowOpen = mouthReady && imgTalkOpen && imgTalkOpen.getAttribute('src') && imgTalkOpen.complete && imgTalkOpen.naturalWidth > 0;
+  const canShowHalf = mouthReady && imgTalkHalf && imgTalkHalf.getAttribute('src') && imgTalkHalf.complete && imgTalkHalf.naturalWidth > 0;
 
   if (state === 'open' && canShowOpen) {
     imgIdle.classList.add('hidden');
@@ -2615,7 +2633,7 @@ function setMouthState(state) {
     imgTalkHalf.classList.remove('hidden');
     imgTalkHalf.classList.add('active');
   } else {
-    // idle (閉嘴) 或口型幀尚未下載完成時，保持顯示靜態主圖
+    // idle (閉嘴) 或新服裝口型幀尚未解碼完成時，穩固顯示靜態主圖不閃爍
     if (imgTalkHalf) {
       imgTalkHalf.classList.add('hidden');
       imgTalkHalf.classList.remove('active');
@@ -2629,7 +2647,7 @@ function setMouthState(state) {
   }
 }
 
-// 換裝核心函數（先預載再平滑替換，避免下載過程中圖片消失，並同步時段紀錄）
+// 換裝核心函數（先預載解碼再原子替換，避免閃爍並確保立即切換）
 function applyCostume(costumeId, playReaction = false, options = {}) {
   stopSaxPerformance(false);
   const costume = COSTUMES.find(c => c.id === costumeId) || COSTUMES[0];
@@ -2650,32 +2668,42 @@ function applyCostume(costumeId, playReaction = false, options = {}) {
   const halfSrc = costume.imageTalkHalf || idleSrc;
   const openSrc = costume.imageTalkOpen || idleSrc;
 
-  // 更新稱謂標籤與衣櫃高亮
+  // 立即更新稱謂標籤與衣櫃高亮
   costumeTagBadge.textContent = costume.tag;
   updateWardrobeActiveState();
 
   const myToken = ++costumeLoadToken;
+  // 立即切回 idle 層，避免說話期間閃現上一套服裝的口型圖
+  setMouthState('idle');
+
   const swapSprites = () => {
     if (myToken !== costumeLoadToken) return;
     characterAvatar.classList.add('outfit-changing');
     imgIdle.src = idleSrc;
     setMouthState('idle');
-    setTimeout(() => characterAvatar.classList.remove('outfit-changing'), 600);
+    setTimeout(() => characterAvatar.classList.remove('outfit-changing'), 280);
 
-    // 靜態主圖就緒後再背景預載半張/全張口型圖，避免同時搶佔手機頻寬
-    preloadImageSafe(halfSrc).then((ok) => {
-      if (myToken === costumeLoadToken && ok && imgTalkHalf) imgTalkHalf.src = halfSrc;
-    });
-    preloadImageSafe(openSrc).then((ok) => {
-      if (myToken === costumeLoadToken && ok && imgTalkOpen) imgTalkOpen.src = openSrc;
+    if (halfSrc === idleSrc && openSrc === idleSrc) {
+      if (imgTalkHalf) imgTalkHalf.src = idleSrc;
+      if (imgTalkOpen) imgTalkOpen.src = idleSrc;
+      mouthFramesReadyToken = myToken;
+      return;
+    }
+
+    // 背景同步預載與解碼口型圖，兩張皆完成後才開放口型切換
+    Promise.all([preloadImageSafe(halfSrc), preloadImageSafe(openSrc)]).then(([okHalf, okOpen]) => {
+      if (myToken !== costumeLoadToken) return;
+      if (okHalf && imgTalkHalf) imgTalkHalf.src = halfSrc;
+      if (okOpen && imgTalkOpen) imgTalkOpen.src = openSrc;
+      mouthFramesReadyToken = myToken;
     });
   };
 
   if (loadedImageUrlSet.has(idleSrc) || imgIdle.getAttribute('src') === idleSrc) {
     swapSprites();
   } else {
-    preloadImageSafe(idleSrc).then((ok) => {
-      if (ok || myToken === costumeLoadToken) {
+    preloadImageSafe(idleSrc).then(() => {
+      if (myToken === costumeLoadToken) {
         swapSprites();
       }
     });
